@@ -246,6 +246,35 @@ p{margin:0}.mut{color:var(--mut);font-size:14px}
 .st-lnk{animation:fadeUp .5s ease 1.9s backwards}
 .sa{width:100%;box-sizing:border-box;padding:14px 16px;border-radius:14px;border:1px solid var(--bd2);background:var(--card2);color:var(--tx);font:inherit;font-size:18px;outline:none}.sa:focus{border-color:var(--ac)}.sa.ok{border-color:var(--ok);background:var(--okb)}.sa.bad{border-color:var(--no);background:var(--nob)}.opt:disabled{cursor:default}.opt.bad:disabled{opacity:1}
 .kp{margin-bottom:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.kp button{display:flex;align-items:center;justify-content:center;text-align:center;padding:12px 0;line-height:1;font:inherit;font-size:22px;font-weight:600;border-radius:14px;border:1px solid var(--bd2);background:var(--card2);color:var(--tx);cursor:pointer}.kp button:active{background:var(--acd)}.kp button:disabled{opacity:.4}.sa{text-align:center;font-size:24px;letter-spacing:1px}
+.sum .rc summary{display:block;padding:4px 0;min-height:0;font-weight:600;cursor:pointer}.sum .rc div{margin-top:4px;color:var(--ac);font-weight:700}
+/* ===== Thang chữ thống nhất: 12 nhãn · 14 phụ · 16 nội dung · 20 tiêu đề · 24 số liệu ===== */
+.tag,.eyebrow,.chip,.sec,.pill,.count,.sn,.chart em{font-size:12px}
+.mut,.hint,.stat,.hrow,.lnk,.tchip,.kpi span,.rscore span,.ring .rc span{font-size:14px}
+.q,.opt,.row .st,.sumbody li,.tile b,.rname,.rrow,.hrow b,.btn,.pick button{font-size:16px}
+.q{font-weight:600;line-height:1.5}
+.opt,.row .st{line-height:1.5}
+.big,h2,.top .ttl{font-size:20px;line-height:1.3}
+h1,.stat b,.kpi b{font-size:24px}
+.icon-btn{font-size:16px;color:var(--tx)}.icon-btn svg{display:block}
+.snd{width:44px;height:44px}
+.opt,.btn,.pick button,.tile,.card{border-radius:14px}
+.btn,.pick button{min-height:48px;font-weight:600}
+.sh{font-size:15px;font-weight:700}
+.sum .rc summary{font-size:16px}.sum .rc div{font-size:15px}
+.tag{text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+/* ===== Bộ lọc dạng câu: lưới đều 2 cột, không thừa khoảng trống ===== */
+#pick{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+#pick::before{content:"Lọc theo dạng câu";grid-column:1/-1;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+#pick button{margin:0;width:100%;text-align:center;justify-content:center}
+#pick button:last-child:nth-child(even){grid-column:1/-1}
+/* ===== Khu tùy chọn: tách riêng, dạng hàng công tắc ===== */
+.pick:not(#pick){display:grid;grid-template-columns:1fr;gap:8px;margin-top:20px;padding-top:16px;border-top:1px solid var(--bd2)}
+.pick:not(#pick)::before{content:"Tùy chọn";font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
+.pick:not(#pick) button{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin:0;text-align:left;padding:12px 14px;border-radius:12px;background:var(--card2);border:1px solid transparent;font-weight:600;color:var(--tx)}
+.pick:not(#pick) button.on{border-color:var(--ac);background:var(--acd);color:var(--tx)}
+#ordbtn::after,#kpbtn::after{content:"Tắt";font-size:12px;font-weight:700;padding:2px 10px;border-radius:99px;background:var(--bd);color:var(--mut)}
+#ordbtn.on::after,#kpbtn.on::after{content:"Bật";background:var(--ac);color:var(--onac)}
+.pick:not(#pick) [data-act=answers]::after{content:"›";font-size:22px;line-height:1;color:var(--mut)}
 </style>
 <script>try{var _t=localStorage.getItem("quiz.theme");if(_t)document.documentElement.dataset.theme=_t}catch(e){}</script>
 <link rel="manifest" href="manifest.json">
@@ -4298,6 +4327,21 @@ const quizData = {
   ]
 };
 
+const _svg = d => `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
+const IC = { back: _svg('<path d="M15 5l-7 7 7 7"/>'), menu: _svg('<path d="M4 7h16M4 12h16M4 17h16"/>'), close: _svg('<path d="M6 6l12 12M18 6L6 18"/>'),
+  volOn: _svg('<path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 010 7"/>'), volOff: _svg('<path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9l4 6M21 9l-4 6"/>') };
+/* ===== Câu trọng tâm (tô đỏ trong đề cương KTTX2) ===== */
+const HOT_IDS = new Set(["biology-1-H-01", "biology-1-B-01", "biology-1-H-03", "biology-1-H-04", "biology-1-B-02", "biology-1-T-01", "biology-1-T-04", "biology-1-N-01", "biology-1-N-02", "biology-1-N-03", "biology-1-N-04", "biology-1-N-05", "biology-1-N-06", "biology-1-N-09", "biology-1-N-10", "biology-1-N-12", "biology-2-B-01", "biology-2-B-02", "biology-2-B-03", "biology-2-H-06", "biology-2-B-06", "biology-2-H-08", "biology-2-B-07", "biology-2-B-08", "biology-2-B-09", "biology-2-B-10", "biology-2-H-11", "biology-2-H-14", "biology-2-H-15", "biology-2-B-14", "biology-2-B-15", "biology-2-H-19", "biology-2-H-20", "biology-2-H-21", "biology-2-H-22", "biology-2-H-23", "biology-2-B-16", "biology-2-B-17", "biology-2-B-18", "biology-2-B-19", "biology-2-H-25", "biology-2-B-20", "biology-2-H-28", "biology-2-V-03", "biology-2-H-30", "biology-2-T-04", "biology-2-T-06", "biology-1-N-07"]);
+const HOT_KEYS = {"biology-1": ["**Chức năng DNA**: lưu giữ – bảo quản – truyền đạt thông tin di truyền (và tạo biến dị → tiến hóa). **Không** xúc tác phản ứng, **không** vận chuyển amino acid.", "DNA mạch kép: **A = T, G = C** (A–T: 2 liên kết H; G–C: 3 liên kết H) ⇒ **A + G = T + C = 50%**, (A+G)/(T+C) = **1**. Biết %A ⇒ %T = %A, %G = %C = 50% − %A (A = 20% ⇒ G = C = 30%).", "Trên **một mạch** thì A+G không cố định; tỉ lệ (A+G)/(T+C) mạch này = **nghịch đảo** mạch kia. Số liệu A ≠ T hoặc G ≠ C ⇒ **không phải DNA mạch kép**. Mạch 1 không có G ⇒ mạch 2 không có C.", "Tái bản theo **nguyên tắc bổ sung + bán bảo toàn** (mỗi DNA con = 1 mạch cũ + 1 mạch mới); giống mẹ nhờ bắt cặp **A–T, G–C**. Diễn ra ở **kì trung gian** (pha S), không phải kì giữa.", "Chạc chữ Y: DNA polymerase chỉ nối nucleotide vào đầu **3'** (mạch mới kéo dài **5' → 3'**). Khuôn 3'→5' ⇒ mạch mới **liên tục**; khuôn 5'→3' ⇒ **gián đoạn** (đoạn **Okazaki**, nhiều đoạn mồi RNA, nối bằng **ligase**).", "Truyền thông tin từ tế bào mẹ sang con / thế hệ sau = **tái bản DNA**; phiên mã, dịch mã là **biểu hiện** thông tin."], "biology-2": ["**Gene** = đoạn DNA mã hóa chuỗi polypeptide hoặc RNA. Cấu trúc (mạch gốc 3'→5'): **vùng điều hòa – vùng mã hóa – vùng kết thúc**. Vùng điều hòa có trình tự cho RNA polymerase bám, **không** được phiên mã.", "**Exon** mã hóa amino acid, **intron** không. Gene **phân mảnh** (nhân thực, có intron) khác gene **không phân mảnh** (nhân sơ, mã hóa liên tục). **Hệ gene** = toàn bộ DNA trong **tế bào**.", "**RNA**: mạch đơn, 4 loại nucleotide **A, U, G, C**. **mRNA** làm khuôn dịch mã; **tRNA** mang anticodon, vận chuyển amino acid (\"người phiên dịch\"); **rRNA** cấu tạo ribosome.", "Phiên mã: RNA polymerase di chuyển trên mạch gốc theo **3'→5'**, RNA kéo dài **5'→3'**. Phiên mã ngược: tổng hợp cDNA từ RNA nhờ **reverse transcriptase**.", "**Mã di truyền** là bộ ba, đọc liên tục 5'→3'. 64 bộ ba: **61 mã hóa amino acid**, 3 kết thúc **UAA, UAG, UGA**; mở đầu **5'AUG3'** (methionine).", "Tính chất: **đặc hiệu** (1 bộ ba – 1 amino acid), **thoái hóa** (nhiều bộ ba – 1 amino acid), **phổ biến** (chung các loài, trừ vài ngoại lệ). Đọc kĩ đề để phân biệt!", "Dịch mã kết thúc khi ribosome gặp **UAA/UAG/UGA**. Trực tiếp tham gia: mRNA, tRNA, ribosome, amino acid; **DNA không** tham gia trực tiếp.", "**Triplet** = bộ ba trên **DNA**; **codon** = trên **mRNA**; **anticodon** = trên **tRNA**."]};
+quizData.subjects.forEach(s => (s.chapters || []).forEach(c => {
+  c.questions.forEach(q => { if (HOT_IDS.has(q.id)) q.hot = true; });
+  if (HOT_KEYS[c.id] && c.questions.some(q => q.hot)) (c.summary = c.summary || []).unshift({ title: "Ý mấu chốt (cô hay hỏi, có thể sửa đề)", points: HOT_KEYS[c.id] });
+}));
+const MEO = {"biology-1": ["**Tổng 50%**: A + G = T + C = 50% ⇒ biết %A thì G = C = 50% − %A.", "**Hai chiều ngược nhau**: mạch mới kéo dài **5'→3'**, enzyme đọc khuôn **3'→5'**.", "**Liên tục** ↔ khuôn 3'→5'. **Gián đoạn** ↔ khuôn 5'→3' ⇒ **Okazaki** + nhiều đoạn mồi + ligase nối.", "**Bán bảo toàn**: mỗi DNA con = 1 mạch cũ + 1 mạch mới; diễn ra ở kì **trung gian**.", "Đề cho số liệu A ≠ T hoặc G ≠ C ⇒ **không phải DNA mạch kép** (mạch đơn)."], "biology-2": ["**Triplet – codon – anticodon** = **D – m – t**: DNA, mRNA, tRNA.", "**Đặc hiệu** = 1 bộ ba chỉ 1 amino acid. **Thoái hóa** = nhiều bộ ba cùng 1 amino acid (\"thừa\"). **Phổ biến** = các loài dùng chung bộ mã.", "**61 + 3 = 64**. 3 bộ ba kết thúc: **UAA, UAG, UGA** (chữ U đứng đầu, rồi A-A, A-G, G-A).", "**mRNA = khuôn**, **tRNA = tài xế chở amino acid** (có anticodon), **rRNA = xây ribosome**.", "**RNA có U**, mạch đơn; chữ **T chỉ có ở DNA**. DNA không tham gia trực tiếp vào dịch mã.", "**Exon = Express** (mã hóa, được biểu hiện); **Intron = In-between** (xen giữa, bị cắt bỏ).", "Gene cấu trúc: **điều hòa → mã hóa → kết thúc**; vùng điều hòa chỉ cho RNA polymerase bám, **không** phiên mã."]}, REC = {"biology-1": ["DNA mạch kép có A = 20%, G = ?||G = 30% (A + G = 50%).", "Mạch mới kéo dài theo chiều nào?||5'→3'.", "Khuôn 5'→3' tổng hợp mạch kiểu gì? Gồm những gì?||Gián đoạn: đoạn Okazaki, nhiều mồi RNA, nối bằng ligase.", "Tái bản diễn ra ở kì nào? Nguyên tắc nào?||Kì trung gian; bổ sung + bán bảo toàn.", "A–T và G–C có mấy liên kết H?||A–T: 2; G–C: 3.", "DNA có chức năng xúc tác phản ứng không?||Không. DNA lưu giữ, truyền đạt thông tin và tạo biến dị."], "biology-2": ["Triplet, codon, anticodon nằm ở đâu?||DNA, mRNA, tRNA.", "Mã di truyền có bao nhiêu bộ ba mã hóa amino acid? Bộ ba kết thúc?||61; UAA, UAG, UGA.", "\"1 bộ ba chỉ 1 amino acid\" là tính gì? \"Nhiều bộ ba cùng 1 amino acid\"?||Đặc hiệu; thoái hóa.", "Ba loại RNA làm gì?||mRNA: khuôn dịch mã; tRNA: chở amino acid; rRNA: cấu tạo ribosome.", "Bộ ba mở đầu? Mã hóa gì?||5'AUG3'; methionine.", "Exon và intron khác nhau thế nào?||Exon mã hóa amino acid; intron không mã hóa.", "Phiên mã ngược cần enzyme nào? Tạo ra gì?||Reverse transcriptase; cDNA từ RNA."]};
+quizData.subjects.forEach(s => (s.chapters || []).forEach(c => { if (MEO[c.id] && c.summary) c.summary.splice(1, 0, { title: "Mẹo nhớ nhanh", points: MEO[c.id] }, { title: "Tự nhẩm: nghĩ đáp án rồi chạm để lật", points: REC[c.id] }); }));
+const pt = p => { const [a, b] = p.split("||"); return b ? `<details class="rc"><summary>${rich(a)}</summary><div>${rich(b)}</div></details>` : rich(p); };
+const hotN = c => c.questions.filter(q => q.hot).length;
+
 /* ============================================================
    2. QUIZ ENGINE — dùng chung mọi môn, không biết gì về môn cụ thể
    ============================================================ */
@@ -4310,7 +4354,7 @@ const LETTERS = "ABCDEFGH";
 const getSubject = id => quizData.subjects.find(s => s.id === id);
 const getChapter = (sid, cid) => ((getSubject(sid) || {}).chapters || []).find(c => c.id === cid);
 const chapterTags = ch => { const m = new Map(); ch.questions.forEach(q => m.set(q.tag, (m.get(q.tag) || 0) + 1)); return [...m]; };
-const countFor = (ch, tag) => tag === "all" ? ch.questions.length : ch.questions.filter(q => q.tag === tag).length;
+const countFor = (ch, tag) => tag === "all" ? ch.questions.length + hotN(ch) : tag === "hot" ? hotN(ch) : ch.questions.filter(q => q.tag === tag).length;
 
 /* Mỗi loại câu hỏi: prepare (xáo trộn) · render · select · ready · check · reveal · feedback · review */
 const TYPES = {
@@ -4419,7 +4463,7 @@ const MENU = [
   { title: "Câu trả lời ngắn", html: shortModeHTML }
 ];
 function openMenu() {
-  $modal.innerHTML = `<div class="dwrap"><div class="dscrim" data-act="stay"></div><aside class="drawer"><div class="dh"><b style="font-size:19px">Menu</b><button class="icon-btn" data-act="stay" aria-label="Đóng">✕</button></div>${MENU.map(m => `<div class="sec">${m.title}</div>${m.html()}`).join("")}</aside></div>`;
+  $modal.innerHTML = `<div class="dwrap"><div class="dscrim" data-act="stay"></div><aside class="drawer"><div class="dh"><b style="font-size:19px">Menu</b><button class="icon-btn" data-act="stay" aria-label="Đóng">${IC.close}</button></div>${MENU.map(m => `<div class="sec">${m.title}</div>${m.html()}`).join("")}</aside></div>`;
 }
 
 /* ---------- Hiệu ứng: âm thanh (Web Audio, không cần file) + pháo giấy ---------- */
@@ -4480,9 +4524,9 @@ const chap = () => getChapter(S.subjectId, S.chapterId);
    tag: lọc theo nhóm ("all" = tất cả) · retryList: danh sách câu gốc để làm lại câu sai */
 function startQuiz(subjectId, chapterId, tag = "all", retryList = null) {
   const ch = getChapter(subjectId, chapterId); if (!ch) return;
-  const src = retryList || ch.questions.filter(q => tag === "all" || q.tag === tag);
+  const src = retryList || ch.questions.filter(q => tag === "all" || (tag === "hot" ? q.hot : q.tag === tag));
   if (!src.length) return;
-  Object.assign(S, { subjectId, chapterId, tag, retry: !!retryList, list: shuffle(src).map(prepare), idx: 0, correct: 0, wrong: [], locked: false, t0: Date.now(), dur: 0 });
+  Object.assign(S, { subjectId, chapterId, tag, retry: !!retryList, list: (retryList || tag !== "all" ? shuffle(src) : [...shuffle(src), ...shuffle(src.filter(q => q.hot))]).map(prepare), idx: 0, correct: 0, wrong: [], locked: false, t0: Date.now(), dur: 0 });
   go("quiz");
 }
 
@@ -4490,7 +4534,7 @@ function startQuiz(subjectId, chapterId, tag = "all", retryList = null) {
    4. UI RENDERING — chỉ đọc state + data, không chứa câu hỏi
    ============================================================ */
 const $app = document.getElementById("app"), $modal = document.getElementById("modal");
-const topbar = (title, sub) => `<div class="top"><button class="icon-btn" data-act="back" aria-label="Quay lại">←</button><div><div class="ttl">${title}</div>${sub ? `<div class="mut">${sub}</div>` : ""}</div></div>`;
+const topbar = (title, sub) => `<div class="top"><button class="icon-btn" data-act="back" aria-label="Quay lại">${IC.back}</button><div><div class="ttl">${title}</div>${sub ? `<div class="mut">${sub}</div>` : ""}</div></div>`;
 
 
 /* ===== Thống kê học tập (lưu localStorage, chỉ trên máy này) ===== */
@@ -4522,7 +4566,7 @@ function statsHTML() {
 function fmtScore(x) { return String(+x.toFixed(2)); }
 function fmtDur(ms) { const t = Math.max(0, Math.round(ms / 1000)), h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), sec = t % 60; return (h ? h + " giờ " : "") + (h || m ? m + " phút " : "") + sec + " giây"; }
 const VIEWS = {
-  home: () => `<div class="top"><button class="icon-btn" data-act="menu" aria-label="Menu">☰</button></div>${resumeHTML()}<div class="sec">Môn học</div><div class="grid two stagger">` +
+  home: () => `<div class="top"><button class="icon-btn" data-act="menu" aria-label="Menu">${IC.menu}</button></div>${resumeHTML()}<div class="sec">Môn học</div><div class="grid two stagger">` +
     quizData.subjects.filter(s => s.chapters.length).map((s, i) => { const n = s.chapters.length; return `<button class="tile ${n ? "" : "off"}" style="--i:${i}" ${n ? `data-act="subject" data-id="${s.id}"` : "disabled"}><span class="tt"><b>${esc(s.name)}</b><span class="mut">${n ? `${n} bài học${s.description ? " · " + esc(s.description) : ""}` : "Chưa có dữ liệu"}</span></span>${n ? '<span class="go">›</span>' : ""}</button>`; }).join("") + `</div>` + statsHTML(),
 
   subject: () => { const s = getSubject(S.subjectId); return topbar(`${esc(s.name)}`, "Chọn bài học") + `<div class="grid stagger">` +
@@ -4530,15 +4574,15 @@ const VIEWS = {
 
   intro: () => { const s = getSubject(S.subjectId), c = chap(), tags = chapterTags(c);
     const hasShort = c.questions.some(q => q.type === "short");
-    const sum = c.summary && c.summary.length ? `<details class="sum"><summary>📌 Tóm tắt ý cần nhớ<span class="chev">›</span></summary><div class="sumbody">${c.summary.map((g, i) => `<div class="sh"><span class="sn">${i + 1}</span>${esc(g.title)}</div><ul>${g.points.map(p => `<li>${rich(p)}</li>`).join("")}</ul>`).join("")}</div></details>` : "";
+    const sum = c.summary && c.summary.length ? `<details class="sum"><summary>Tóm tắt ý cần nhớ<span class="chev">›</span></summary><div class="sumbody">${c.summary.map((g, i) => `<div class="sh"><span class="sn">${i + 1}</span>${esc(g.title)}</div><ul>${g.points.map(p => `<li>${pt(p)}</li>`).join("")}</ul>`).join("")}</div></details>` : "";
     return topbar(esc(s.name)) + `<div class="card"><div class="eyebrow">${esc(c.title)}</div><div class="big">${esc(c.subtitle)}</div>${c.description ? `<p class="mut">${esc(c.description)}</p>` : ""}<p class="mut">${c.questions.length} câu hỏi</p>` +
-    (tags.length > 1 ? `<div class="pick" id="pick">${[["all", "Tất cả", c.questions.length], ...tags.map(([t, n]) => [t, t, n])].map(([t, l, n]) => `<button class="${S.tag === t ? "on" : ""}" data-act="tag" data-tag="${esc(t)}">${esc(l)} · ${n}</button>`).join("")}</div>` : "") +
-    `<div class="pick"><button id="ordbtn" class="${keepOrder ? "on" : ""}" data-act="order">🔒 Không xáo trộn</button><button data-act="answers">👁 Xem đáp án</button>${hasShort ? `<button id="kpbtn" class="${shortChoice ? "" : "on"}" data-act="kpmode">⌨️ Nhập số (trả lời ngắn)</button>` : ""}</div></div>` + sum +
+    (tags.length > 1 ? `<div class="pick" id="pick">${[["all", "Tất cả", c.questions.length], ...(hotN(c) ? [["hot", "Trọng tâm", hotN(c)]] : []), ...tags.map(([t, n]) => [t, t, n])].map(([t, l, n]) => `<button class="${S.tag === t ? "on" : ""}" data-act="tag" data-tag="${esc(t)}">${esc(l)} · ${n}</button>`).join("")}</div>` : "") +
+    `<div class="pick"><button id="ordbtn" class="${keepOrder ? "on" : ""}" data-act="order">Giữ thứ tự câu</button><button data-act="answers">Xem đáp án</button>${hasShort ? `<button id="kpbtn" class="${shortChoice ? "" : "on"}" data-act="kpmode">Nhập số (trả lời ngắn)</button>` : ""}</div></div>` + sum +
     `<div class="dock"><button class="btn" id="start" data-act="start">Bắt đầu kiểm tra (${countFor(c, S.tag)} câu)</button></div>`; },
 
   quiz: () => { const r = cur(), n = S.list.length;
-    return `<div class="qhead"><button class="icon-btn" data-act="back" aria-label="Thoát">←</button><div class="bar"><i id="bar" style="transform:scaleX(${S.idx / n})"></i></div><span class="count">${S.idx + 1}/${n}</span><button class="icon-btn snd" data-act="sound" aria-label="Bật/tắt âm thanh">${sfx.on ? "🔊" : "🔇"}</button></div>` +
-    `<div class="card"><div class="tag">${S.retry ? "LÀM LẠI · " : ""}${esc(chap().title)} · ${esc(r.src.tag)}</div><p class="q">${esc(r.src.question)}</p>${qimg(r.src)}<div id="opts">${TYPES[r.type].render(r)}</div><div id="res"></div></div>` +
+    return `<div class="qhead"><button class="icon-btn" data-act="back" aria-label="Thoát">${IC.back}</button><div class="bar"><i id="bar" style="transform:scaleX(${S.idx / n})"></i></div><span class="count">${S.idx + 1}/${n}</span><button class="icon-btn snd" data-act="sound" aria-label="Bật/tắt âm thanh">${sfx.on ? IC.volOn : IC.volOff}</button></div>` +
+    `<div class="card"><div class="tag">${S.retry ? "LÀM LẠI · " : ""}${esc(chap().title)} · ${r.src.hot ? "Trọng tâm · " : ""}${esc(r.src.tag)}</div><p class="q">${esc(r.src.question)}</p>${qimg(r.src)}<div id="opts">${TYPES[r.type].render(r)}</div><div id="res"></div></div>` +
     `<div class="dock"><button class="btn" id="go" data-act="next" disabled>Xác nhận</button></div>`; },
 
   result: () => { const n = S.list.length, w = n - S.correct, sc = fmtScore(S.correct / n * 10), c = chap(), sb = getSubject(S.subjectId);
@@ -4552,9 +4596,9 @@ const VIEWS = {
     `<button class="lnk" data-act="chapters">Về danh sách bài</button></div></div>`; },
 
   answers: () => { const c = chap(), cnt = {};
-    const rows = c.questions.map(q => { cnt[q.tag] = (cnt[q.tag] || 0) + 1; return { q, n: cnt[q.tag] }; }).filter(x => S.tag === "all" || x.q.tag === S.tag);
+    const rows = c.questions.map(q => { cnt[q.tag] = (cnt[q.tag] || 0) + 1; return { q, n: cnt[q.tag] }; }).filter(x => S.tag === "all" || (S.tag === "hot" ? x.q.hot : x.q.tag === S.tag));
     const rv = q => q.type === "single" ? { options: q.options, answer: q.answer, picked: null } : q.type === "short" || q.type === "short_mc" ? { answers: q.answers } : { statements: q.statements.map(t => ({ text: t.text, answer: t.answer, picked: t.answer })) };
-    return topbar(`${esc(c.title)} · Đáp án`, `${rows.length} câu · đúng thứ tự đề`) + rows.map(({ q, n }) => `<div class="card"><div class="tag">${esc(q.tag)} · Câu ${n}</div><p class="q">${esc(q.question)}</p>${qimg(q)}${TYPES[q.type].review(rv(q))}</div>`).join(""); },
+    return topbar(`${esc(c.title)} · Đáp án`, `${rows.length} câu · đúng thứ tự đề`) + rows.map(({ q, n }) => `<div class="card"><div class="tag">${q.hot ? "Trọng tâm · " : ""}${esc(q.tag)} · Câu ${n}</div><p class="q">${esc(q.question)}</p>${qimg(q)}${TYPES[q.type].review(rv(q))}</div>`).join(""); },
 
   review: () => topbar("Xem lại", `${S.wrong.length} câu sai`) + S.wrong.map(r => `<div class="card"><div class="tag">${esc(r.src.tag)}</div><p class="q">${esc(r.src.question)}</p>${qimg(r.src)}${TYPES[r.type].review(r)}</div>`).join("")
 };
@@ -4605,7 +4649,7 @@ function showKeys(r) {
   const q = $app.querySelector("p.q"); if (q) q.innerHTML = hl(r.src.question, keys);
   if (r.options) $app.querySelectorAll("[data-act=ans] span").forEach((el, k) => { if (r.options[k] != null) el.innerHTML = hl(r.options[k], keys); });
   if (r.statements) $app.querySelectorAll(".st").forEach((el, k) => { const t = r.statements[k]; if (t) el.innerHTML = `<b>${"abcdefgh"[k]})</b> ` + hl(t.text, keys); });
-  return `<div class="hint">💡 Điểm nhấn của câu này: ${keys.map(k => `<b>${esc(k)}</b>`).join(" · ")}</div>`;
+  return `<div class="hint">Điểm nhấn: ${keys.map(k => `<b>${esc(k)}</b>`).join(" · ")}</div>`;
 }
 function next() {
   const r = cur(), T = TYPES[r.type], n = S.list.length, btn = document.getElementById("go");
@@ -4676,12 +4720,12 @@ const ACTIONS = {
   stay: closeModal,
   leave: () => { closeModal(); go("intro"); },
   review: () => go("review"),
-  retry: () => startQuiz(S.subjectId, S.chapterId, S.tag, S.wrong.map(r => r.src)),
+  retry: () => startQuiz(S.subjectId, S.chapterId, S.tag, [...new Set(S.wrong.map(r => r.src))]),
   restart: () => startQuiz(S.subjectId, S.chapterId, S.tag),
   sound: () => {
     sfx.on = !sfx.on;
     try { localStorage.setItem("quiz.sound", sfx.on ? "1" : "0"); } catch (e) {}
-    const b = document.querySelector("[data-act=sound]"); if (b) b.textContent = sfx.on ? "🔊" : "🔇";
+    const b = document.querySelector("[data-act=sound]"); if (b) b.innerHTML = sfx.on ? IC.volOn : IC.volOff;
     playSound("tick");
   },
   chapters: () => go("subject")
