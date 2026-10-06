@@ -6,9 +6,7 @@
 <style>
 :root{--bg:#000;--bgr:0,0,0;--s1:rgba(5,5,5,.55);--card:rgba(12,12,14,.62);--card2:rgba(28,28,32,.7);--pop:#111;--bd:rgba(255,255,255,.09);--bd2:rgba(255,255,255,.2);--tx:#f2f2f3;--tx2:#d6d6db;--mut:#8b8b94;--ac:#8ab4ff;--ac2:#a78bfa;--ac3:#4ade80;--acd:rgba(138,180,255,.14);--onac:#000;--ok:#4ade80;--okb:rgba(6,33,15,.85);--no:#ff6b6b;--nob:rgba(38,12,12,.85);--g1:rgba(138,180,255,.30);--g2:rgba(167,139,250,.22);--g3:rgba(74,222,128,.12);--r:16px}
 /* Theme 1: Rừng xuân (Aquadulce · Aroma Green · Winter Mist · Tarragon · Antique Moss · Chalet Green) */
-html[data-theme=green]{--bg:#07120b;--bgr:7,18,11;--s1:rgba(9,22,14,.55);--card:rgba(14,32,21,.6);--card2:rgba(30,58,38,.6);--pop:#10261a;--bd:rgba(205,232,212,.14);--bd2:rgba(205,232,212,.3);--tx:#eef7ef;--tx2:#cfe3d3;--mut:#8fb09a;--ac:#bad17a;--ac2:#97c49e;--ac3:#cde8d4;--acd:rgba(186,209,122,.14);--g1:rgba(128,163,47,.34);--g2:rgba(108,155,118,.30);--g3:rgba(205,232,212,.12)}
 /* Theme 2: Đêm xanh (Icy Blue · Cornflower · Persian · Dusk · Deep Navy) */
-html[data-theme=blue]{--bg:#070e2e;--bgr:7,14,46;--s1:rgba(9,21,64,.55);--card:rgba(14,26,80,.55);--card2:rgba(40,60,150,.4);--pop:#0e1a52;--bd:rgba(171,210,250,.15);--bd2:rgba(171,210,250,.32);--tx:#eaf2ff;--tx2:#c6d6f5;--mut:#8ea3d6;--ac:#abd2fa;--ac2:#7692ff;--ac3:#cfe4ff;--acd:rgba(171,210,250,.14);--g1:rgba(27,44,193,.55);--g2:rgba(118,146,255,.32);--g3:rgba(61,81,140,.5)}
 
 /* Theme sáng */
 html[data-theme=light]{--bg:#f3f5fb;--bgr:243,245,251;--s1:rgba(255,255,255,.7);--card:rgba(255,255,255,.82);--card2:rgba(232,237,248,.9);--pop:#fff;--bd:rgba(20,30,70,.12);--bd2:rgba(20,30,70,.26);--tx:#161a2e;--tx2:#3a4262;--mut:#667090;--ac:#3b6df0;--ac2:#7c5cf0;--ac3:#16a34a;--acd:rgba(59,109,240,.12);--onac:#fff;--ok:#15803d;--okb:rgba(220,252,231,.95);--no:#dc2626;--nob:rgba(254,226,226,.95);--g1:rgba(59,109,240,.22);--g2:rgba(124,92,240,.16);--g3:rgba(22,163,74,.10)}
@@ -177,7 +175,7 @@ p{margin:0}.mut{color:var(--mut);font-size:14px}
 @media(hover:hover){.btn:not(:disabled):hover{transform:translateY(-2px);box-shadow:0 12px 28px -8px var(--ac)}}
 @keyframes btnshine{0%{left:-60%}55%,100%{left:130%}}
 @keyframes btnready{from{transform:scale(.94)}}
-@keyframes btnpulse{0%,100%{box-shadow:0 8px 24px -8px var(--ac),0 0 0 0 rgba(138,180,255,.45)}50%{box-shadow:0 8px 24px -8px var(--ac),0 0 0 8px rgba(138,180,255,0)}}
+@keyframes btnpulse{0%,100%{box-shadow:0 8px 24px -8px var(--ac),0 0 0 0 rgba(var(--acr,138,180,255),.45)}50%{box-shadow:0 8px 24px -8px var(--ac),0 0 0 8px rgba(var(--acr,138,180,255),0)}}
 .opt{transition:transform .15s ease,border-color .2s ease,background .2s ease,box-shadow .25s ease}
 .opt:active{transform:scale(.98)}
 .opt.sel{box-shadow:0 0 0 3px var(--acd),0 6px 18px -8px var(--ac);animation:pop .3s ease}
@@ -275,6 +273,70 @@ h1,.stat b,.kpi b{font-size:24px}
 #ordbtn::after,#kpbtn::after{content:"Tắt";font-size:12px;font-weight:700;padding:2px 10px;border-radius:99px;background:var(--bd);color:var(--mut)}
 #ordbtn.on::after,#kpbtn.on::after{content:"Bật";background:var(--ac);color:var(--onac)}
 .pick:not(#pick) [data-act=answers]::after{content:"›";font-size:22px;line-height:1;color:var(--mut)}
+.dock.two{display:flex;gap:10px}.dock.two .btn{width:auto;margin-top:0}.dock.two #skip{flex:0 0 34%}.dock.two #go{flex:1}#skip[hidden]{display:none}
+/* ===== Làm bài: nút cố định dưới cùng + chữ nhỏ gọn hơn ===== */
+body[data-view=quiz] main{padding-top:calc(8px + env(safe-area-inset-top,0px));padding-bottom:calc(88px + env(safe-area-inset-bottom,0px))}
+body[data-view=quiz] .dock{position:fixed;left:0;right:0;bottom:0;margin:0 auto;max-width:640px;box-sizing:border-box;padding:14px 16px calc(10px + env(safe-area-inset-bottom,0px));z-index:5;background:linear-gradient(to top,rgba(var(--bgr),.97) 62%,rgba(var(--bgr),0))}
+body[data-view=quiz] .dock .btn{min-height:48px;padding:12px 16px}
+body[data-view=quiz] .card{padding:14px;margin-bottom:8px}
+body[data-view=quiz] .q{font-size:14.5px;line-height:1.45;font-weight:600;margin-bottom:4px}
+body[data-view=quiz] .tag{font-size:11px;margin-bottom:4px}
+body[data-view=quiz] .opt{font-size:14px;line-height:1.4;padding:9px 12px;min-height:40px;margin:6px 0}
+body[data-view=quiz] .row{padding:7px 0}
+body[data-view=quiz] .row .st{font-size:14px;line-height:1.4}
+body[data-view=quiz] .tf{margin-top:5px}
+body[data-view=quiz] .tf .opt{margin:0}
+body[data-view=quiz] .hint{font-size:13px}
+body[data-view=quiz] .qhead .icon-btn{width:38px;height:38px}
+/* ===== Hiệu ứng mở đầu nhanh hơn ===== */
+.screen.enter{animation-duration:.14s}
+.screen.enter .sec,.screen.enter .top{animation-duration:.2s}
+.stagger>*{animation-duration:.28s;animation-delay:calc(var(--i,0)*22ms)}
+.stagger .ico{animation-duration:.25s;animation-delay:calc(var(--i,0)*22ms + 50ms)}
+.stagger .go{animation-duration:.2s;animation-delay:calc(var(--i,0)*22ms + 70ms)}
+.stagger .eyebrow{animation-duration:.25s;animation-delay:calc(var(--i,0)*22ms + 40ms)}
+.stagger .chip{animation-duration:.2s}
+.stagger .chip:nth-child(n){animation-delay:calc(var(--i,0)*22ms + 90ms)}
+.kpis>.kpi{animation-duration:.28s}
+.kpis>.kpi:nth-child(1){animation-delay:.03s}.kpis>.kpi:nth-child(2){animation-delay:.07s}.kpis>.kpi:nth-child(3){animation-delay:.11s}.kpis>.kpi:nth-child(4){animation-delay:.15s}
+.screen.enter .sec.st1{animation-delay:.03s}.screen.enter .sec.st2{animation-delay:.25s}
+.st-chart{animation-duration:.28s;animation-delay:.18s}
+.chart i{animation-duration:.35s;animation-delay:calc(.22s + var(--b,0)*25ms)}
+.chart span{animation-duration:.25s;animation-delay:calc(.4s + var(--b,0)*25ms)}
+.chart em{animation-duration:.25s;animation-delay:calc(.25s + var(--b,0)*20ms)}
+.st-rows{animation-duration:.28s;animation-delay:.28s}
+.st-rows .hrow{animation-duration:.22s}
+.st-rows .hrow:nth-child(1){animation-delay:.33s}.st-rows .hrow:nth-child(2){animation-delay:.37s}.st-rows .hrow:nth-child(3){animation-delay:.41s}.st-rows .hrow:nth-child(4){animation-delay:.45s}
+.st-rows .hrow>b{animation-duration:.25s}
+.st-rows .hrow:nth-child(1)>b{animation-delay:.4s}.st-rows .hrow:nth-child(2)>b{animation-delay:.44s}.st-rows .hrow:nth-child(3)>b{animation-delay:.48s}.st-rows .hrow:nth-child(4)>b{animation-delay:.52s}
+.st-lnk{animation-duration:.25s;animation-delay:.5s}
+.result.card{animation-duration:.2s}
+.btn:not(.alt):not(:disabled){animation:btnready .2s ease,btnpulse 2.4s ease-in-out .3s infinite}
+/* Đổi giao diện: mọi thứ đổi màu cùng lúc, không trễ, không kẹt màu cũ */
+.card,.tile,.kpi,.stat,.sum,.icon-btn,.tchip{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
+/* Hiệu ứng đổi sáng/tối: vòng tròn loang ra từ điểm bấm (View Transitions) */
+::view-transition-old(root),::view-transition-new(root){animation:none;mix-blend-mode:normal}
+::view-transition-old(root){z-index:1}::view-transition-new(root){z-index:2}
+html.nt .bg,html.nt .bg *,html.nt main,html.nt main *,html.nt main *::before,html.nt main *::after,html.nt #modal,html.nt #modal *,html.nt #modal *::before,html.nt #modal *::after{transition:none!important}
+/* ===== Giao diện mới: Thác nước (tối) + Sương mai (sáng) · bảng chọn màu sáng/tối ===== */
+html[data-theme=mist]{--bg:#e4ecec;--bgr:228,236,236;--s1:rgba(255,255,255,.6);--card:rgba(255,255,255,.72);--card2:rgba(201,216,217,.8);--pop:#f6fafa;--bd:rgba(13,23,25,.12);--bd2:rgba(13,23,25,.26);--tx:#0d1719;--tx2:#203133;--mut:#577377;--ac:#3a5255;--ac2:#577377;--ac3:#16a34a;--acd:rgba(58,82,85,.12);--onac:#fff;--ok:#15803d;--okb:rgba(220,252,231,.95);--no:#dc2626;--nob:rgba(254,226,226,.95);--g1:rgba(121,149,155,.35);--g2:rgba(169,187,189,.4);--g3:rgba(87,115,119,.18)}
+html[data-theme=mist] .scrim,html[data-theme=mist] .dscrim{background:rgba(13,23,25,.35)}
+html[data-theme=mist] .card,html[data-theme=mist] .tile,html[data-theme=mist] .kpi,html[data-theme=mist] .stat,html[data-theme=mist] .sum{box-shadow:0 6px 22px -12px rgba(13,23,25,.3)}
+.tpick{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;align-items:start}
+.tpick .sec{margin:0 2px 8px}
+.tpick .trow{padding:10px;min-height:46px;margin-bottom:8px;gap:9px;font-size:14px;text-align:left}
+.tpick .trow i{width:22px;height:22px}
+.drawer .tpick{margin-top:0}
+.dialog.wide{max-width:440px}
+.dialog.wide .btn{margin-top:10px}
+.gear{display:flex;align-items:center;justify-content:center;gap:8px;margin:28px auto 8px;padding:11px 18px;border:1px solid var(--bd);border-radius:99px;background:var(--card);color:var(--tx2);font-size:14px}
+.gear svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+/* ===== Obsidian (tối sâu · xanh đen + ngọc lam) & Sóng biển (sáng) ===== */
+html[data-theme=obsidian]{--bg:#030a0c;--bgr:3,10,12;--s1:rgba(2,7,9,.6);--card:rgba(8,20,23,.93);--card2:#0f2226;--pop:#081518;--bd:rgba(160,205,205,.10);--bd2:rgba(160,205,205,.22);--tx:#e6efec;--tx2:#bccfcd;--mut:#7f9a9d;--ac:#62c9dc;--ac2:#3fa9b8;--ac3:#8fe0ec;--acr:98,201,220;--acd:rgba(98,201,220,.13);--onac:#031318;--g1:rgba(30,110,125,.11);--g2:rgba(40,120,110,.07);--g3:rgba(20,80,90,.09)}
+html[data-theme=noir]{--bg:#050506;--bgr:5,5,6;--s1:rgba(0,0,0,.55);--card:rgba(15,15,16,.96);--card2:#19191b;--pop:#0d0d0e;--bd:rgba(255,255,255,.07);--bd2:rgba(255,255,255,.17);--tx:#ece9e4;--tx2:#c2beb7;--mut:#8a867f;--ac:#d4b483;--ac2:#b8925a;--ac3:#ead8b4;--acr:212,180,131;--acd:rgba(212,180,131,.12);--onac:#1a1305;--g1:rgba(120,90,50,.07);--g2:rgba(90,70,70,.05);--g3:rgba(70,70,80,.06)}
+html[data-theme=wave]{--bg:#edf4f3;--bgr:237,244,243;--s1:rgba(255,255,255,.7);--card:rgba(255,255,255,.88);--card2:#dceaea;--pop:#ffffff;--bd:rgba(13,40,45,.12);--bd2:rgba(13,40,45,.26);--tx:#0d2326;--tx2:#2c4a4e;--mut:#4c6d71;--ac:#0b7285;--ac2:#3da5b5;--ac3:#16a34a;--acr:11,114,133;--acd:rgba(11,114,133,.11);--onac:#fff;--ok:#15803d;--okb:rgba(220,252,231,.95);--no:#dc2626;--nob:rgba(254,226,226,.95);--g1:rgba(61,165,181,.20);--g2:rgba(160,212,205,.35);--g3:rgba(208,228,225,.5)}
+html[data-theme=wave] .scrim,html[data-theme=wave] .dscrim{background:rgba(13,35,38,.35)}
+html[data-theme=wave] .card,html[data-theme=wave] .tile,html[data-theme=wave] .kpi,html[data-theme=wave] .stat,html[data-theme=wave] .sum{box-shadow:0 6px 22px -14px rgba(13,60,70,.35)}
 </style>
 <script>try{var _t=localStorage.getItem("quiz.theme");if(_t)document.documentElement.dataset.theme=_t}catch(e){}</script>
 <link rel="manifest" href="manifest.json">
@@ -4432,20 +4494,34 @@ const prepare = q => { const t = effType(q); return { src: q, type: t, ...TYPES[
 
 /* ---------- Giao diện (theme) ---------- */
 const THEMES = {
-  default: { name: "Tối", tc: "#000000", sw: "linear-gradient(135deg,#8ab4ff,#a78bfa)" },
-  green: { name: "Rừng xuân", tc: "#07120b", sw: "linear-gradient(135deg,#bad17a,#6c9b76)" },
-  blue: { name: "Đêm xanh", tc: "#070e2e", sw: "linear-gradient(135deg,#abd2fa,#1b2cc1)" },
-  light: { name: "Sáng", tc: "#f3f5fb", sw: "linear-gradient(135deg,#ffffff,#9db8f5)" }
+  default: { name: "Onyx", mode: "dark", tc: "#000000", sw: "linear-gradient(135deg,#8ab4ff,#a78bfa)" },
+  obsidian: { name: "Obsidian", mode: "dark", tc: "#030a0c", sw: "linear-gradient(135deg,#62c9dc 35%,#081518 36%)" },
+  noir: { name: "Noir", mode: "dark", tc: "#050506", sw: "linear-gradient(135deg,#d4b483 35%,#0f0f10 36%)" },
+  light: { name: "Porcelain", mode: "light", tc: "#f3f5fb", sw: "linear-gradient(135deg,#ffffff,#9db8f5)" },
+  mist: { name: "Glacier", mode: "light", tc: "#e4ecec", sw: "linear-gradient(135deg,#ffffff,#a9bbbd)" },
+  wave: { name: "Lagoon", mode: "light", tc: "#edf4f3", sw: "linear-gradient(135deg,#ffffff 35%,#3da5b5 36%)" }
 };
+const isLight = k => !!THEMES[k] && THEMES[k].mode === "light";
+/* pref: màu đang chọn cho từng chế độ — công tắc ☀/🌙 chuyển qua lại giữa hai màu này */
+const pref = { light: "light", dark: "default" };
+try {
+  const l = localStorage.getItem("quiz.lt"), d = localStorage.getItem("quiz.dk") || localStorage.getItem("quiz.dark");
+  if (isLight(l)) pref.light = l; if (THEMES[d] && !isLight(d)) pref.dark = d;
+} catch (e) {}
 let theme = document.documentElement.dataset.theme;
 if (!THEMES[theme]) theme = "default";
 function setTheme(t, save) {
   theme = THEMES[t] ? t : "default";
-  document.documentElement.dataset.theme = theme;
+  const lt = isLight(theme); pref[lt ? "light" : "dark"] = theme;
+  const root = document.documentElement;
+  root.classList.add("nt");
+  root.dataset.theme = theme;
   const m = document.querySelector('meta[name=theme-color]'); if (m) m.content = THEMES[theme].tc;
-  const cs = document.querySelector('meta[name=color-scheme]'); if (cs) cs.content = theme === "light" ? "light" : "dark";
-  const tg = document.getElementById("tgl"); if (tg) { tg.classList.toggle("light", theme === "light"); tg.setAttribute("aria-checked", theme === "light"); }
-  if (save) { try { localStorage.setItem("quiz.theme", theme); } catch (e) {} }
+  const cs = document.querySelector('meta[name=color-scheme]'); if (cs) cs.content = lt ? "light" : "dark";
+  const tg = document.getElementById("tgl"); if (tg) { tg.classList.toggle("light", lt); tg.setAttribute("aria-checked", lt); }
+  void root.offsetHeight;
+  requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove("nt")));
+  if (save) { try { localStorage.setItem("quiz.theme", theme); localStorage.setItem(lt ? "quiz.lt" : "quiz.dk", theme); } catch (e) {} }
 }
 /* Công tắc mặt trời / mặt trăng: gạt để đổi sáng ↔ tối (nhớ giao diện tối đang dùng) */
 (function () {
@@ -4455,7 +4531,9 @@ function setTheme(t, save) {
   document.body.appendChild(b);
 })();
 setTheme(theme, false);
-const themesHTML = () => Object.entries(THEMES).map(([k, t]) => `<button class="trow${k === theme ? " on" : ""}" data-act="theme" data-t="${k}" style="--sw:${t.sw}"><i></i>${t.name}<span class="ck">✓</span></button>`).join("");
+const themeCols = () => ["light", "dark"].map(m => `<div><div class="sec">${m === "light" ? "Giao diện sáng" : "Giao diện tối"}</div>${Object.entries(THEMES).filter(([k, v]) => v.mode === m).map(([k, v]) => `<button class="trow${k === pref[m] ? " on" : ""}" data-act="theme" data-t="${k}" style="--sw:${v.sw}"><i></i>${v.name}<span class="ck">✓</span></button>`).join("")}</div>`).join("");
+const themesHTML = () => `<div class="tpick">${themeCols()}</div>`;
+const syncTheme = () => document.querySelectorAll(".trow[data-t]").forEach(b => b.classList.toggle("on", pref[THEMES[b.dataset.t].mode] === b.dataset.t));
 /* Menu ☰ — thêm mục mới: chỉ cần thêm một object vào MENU */
 const shortModeHTML = () => [[1, "Chọn đáp án (trắc nghiệm)"], [0, "Nhập số bằng bàn phím"]].map(([m, t]) => `<button class="trow${+shortChoice === m ? " on" : ""}" data-act="shortmode" data-m="${m}" style="--sw:var(--ac)"><i></i>${t}<span class="ck">✓</span></button>`).join("");
 const MENU = [
@@ -4567,7 +4645,7 @@ function fmtScore(x) { return String(+x.toFixed(2)); }
 function fmtDur(ms) { const t = Math.max(0, Math.round(ms / 1000)), h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), sec = t % 60; return (h ? h + " giờ " : "") + (h || m ? m + " phút " : "") + sec + " giây"; }
 const VIEWS = {
   home: () => `<div class="top"><button class="icon-btn" data-act="menu" aria-label="Menu">${IC.menu}</button></div>${resumeHTML()}<div class="sec">Môn học</div><div class="grid two stagger">` +
-    quizData.subjects.filter(s => s.chapters.length).map((s, i) => { const n = s.chapters.length; return `<button class="tile ${n ? "" : "off"}" style="--i:${i}" ${n ? `data-act="subject" data-id="${s.id}"` : "disabled"}><span class="tt"><b>${esc(s.name)}</b><span class="mut">${n ? `${n} bài học${s.description ? " · " + esc(s.description) : ""}` : "Chưa có dữ liệu"}</span></span>${n ? '<span class="go">›</span>' : ""}</button>`; }).join("") + `</div>` + statsHTML(),
+    quizData.subjects.filter(s => s.chapters.length).map((s, i) => { const n = s.chapters.length; return `<button class="tile ${n ? "" : "off"}" style="--i:${i}" ${n ? `data-act="subject" data-id="${s.id}"` : "disabled"}><span class="tt"><b>${esc(s.name)}</b><span class="mut">${n ? `${n} bài học${s.description ? " · " + esc(s.description) : ""}` : "Chưa có dữ liệu"}</span></span>${n ? '<span class="go">›</span>' : ""}</button>`; }).join("") + `</div>` + statsHTML() + `<button class="gear" data-act="themes"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Màu giao diện</button>`,
 
   subject: () => { const s = getSubject(S.subjectId); return topbar(`${esc(s.name)}`, "Chọn bài học") + `<div class="grid stagger">` +
     s.chapters.map((c, i) => `<button class="tile chap" style="--i:${i}" data-act="chapter" data-id="${c.id}"><span class="eyebrow">${esc(c.title)}</span><b>${esc(c.subtitle)}</b>${c.description ? `<span class="mut">${esc(c.description)}</span>` : ""}<span class="chips"><span class="chip">${c.questions.length} câu</span>${chapterTags(c).map(([t]) => `<span class="chip">${esc(t)}</span>`).join("")}</span></button>`).join("") + `</div>`; },
@@ -4583,7 +4661,7 @@ const VIEWS = {
   quiz: () => { const r = cur(), n = S.list.length;
     return `<div class="qhead"><button class="icon-btn" data-act="back" aria-label="Thoát">${IC.back}</button><div class="bar"><i id="bar" style="transform:scaleX(${S.idx / n})"></i></div><span class="count">${S.idx + 1}/${n}</span><button class="icon-btn snd" data-act="sound" aria-label="Bật/tắt âm thanh">${sfx.on ? IC.volOn : IC.volOff}</button></div>` +
     `<div class="card"><div class="tag">${S.retry ? "LÀM LẠI · " : ""}${esc(chap().title)} · ${r.src.hot ? "Trọng tâm · " : ""}${esc(r.src.tag)}</div><p class="q">${esc(r.src.question)}</p>${qimg(r.src)}<div id="opts">${TYPES[r.type].render(r)}</div><div id="res"></div></div>` +
-    `<div class="dock"><button class="btn" id="go" data-act="next" disabled>Xác nhận</button></div>`; },
+    `<div class="dock${r.type === "true_false" ? " two" : ""}">${r.type === "true_false" ? '<button class="btn alt" id="skip" data-act="skip">Bỏ qua</button>' : ""}<button class="btn" id="go" data-act="next" disabled>Xác nhận</button></div>`; },
 
   result: () => { const n = S.list.length, w = n - S.correct, sc = fmtScore(S.correct / n * 10), c = chap(), sb = getSubject(S.subjectId);
     const ico = { clock: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>', ok: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.8"/></svg>' };
@@ -4607,15 +4685,15 @@ const VIEWS = {
 const AFTER = {
   home() {
     document.querySelectorAll(".kpi b[data-n]").forEach((el, i) => {
-      const v = +el.dataset.n, suf = el.dataset.s || "", t0 = performance.now() + 450 + i * 90;
+      const v = +el.dataset.n, suf = el.dataset.s || "", t0 = performance.now() + 80 + i * 40;
       el.textContent = "0" + suf;
-      (function tick(now) { const k = Math.max(0, Math.min(1, (now - t0) / 800)), e = 1 - Math.pow(1 - k, 3); el.textContent = Math.round(v * e) + suf; if (k < 1) requestAnimationFrame(tick); })(t0);
+      (function tick(now) { const k = Math.max(0, Math.min(1, (now - t0) / 380)), e = 1 - Math.pow(1 - k, 3); el.textContent = Math.round(v * e) + suf; if (k < 1) requestAnimationFrame(tick); })(t0);
     });
   },
   result() {
     const el = document.getElementById("scoreN"); if (!el) return;
     const v = +el.dataset.v, t0 = performance.now();
-    (function tick(now) { const k = Math.min(1, (now - t0) / 900), e = 1 - Math.pow(1 - k, 3); el.textContent = k < 1 ? (v * e).toFixed(2) : fmtScore(v); if (k < 1) requestAnimationFrame(tick); })(t0);
+    (function tick(now) { const k = Math.min(1, (now - t0) / 450), e = 1 - Math.pow(1 - k, 3); el.textContent = k < 1 ? (v * e).toFixed(2) : fmtScore(v); if (k < 1) requestAnimationFrame(tick); })(t0);
   }
 };
 
@@ -4664,6 +4742,7 @@ function next() {
     return;
   }
   S.locked = true;
+  const sk0 = document.getElementById("skip"); if (sk0) sk0.hidden = true;
   document.getElementById("opts").classList.add("locked");
   const last = S.idx === n - 1;
   if (!r.missed) { S.correct++; if (!last) confetti(); }
@@ -4673,7 +4752,46 @@ function next() {
   btn.textContent = last ? "Xem kết quả" : "Câu tiếp theo";
 }
 
+/* Đổi giao diện có hiệu ứng: màu mới loang tròn ra từ (x, y). Trình duyệt cũ: mờ dần nhẹ. */
+function themeSwitch(apply, x, y) {
+  const root = document.documentElement;
+  if (!x && !y) { x = innerWidth / 2; y = innerHeight / 2; }
+  if (matchMedia("(prefers-reduced-motion: reduce)").matches) return apply();
+  if (document.startViewTransition) {
+    const r = Math.hypot(Math.max(x, innerWidth - x), Math.max(y, innerHeight - y));
+    let vt; try { vt = document.startViewTransition(apply); } catch (e) { return apply(); }
+    vt.ready.then(() => root.animate(
+      { clipPath: [`circle(0px at ${x}px ${y}px)`, `circle(${r}px at ${x}px ${y}px)`] },
+      { duration: 650, easing: "cubic-bezier(.4,0,.2,1)", pseudoElement: "::view-transition-new(root)" }
+    )).catch(() => {});
+  } else {
+    apply();
+    try { root.animate([{ opacity: .4 }, { opacity: 1 }], { duration: 380, easing: "ease-out" }); } catch (e) {}
+  }
+}
+let lastTap = { x: 0, y: 0 };
+
+/* Bỏ qua (chỉ câu Đúng/Sai): hiện đáp án, tính là câu sai (đưa vào phần làm lại), bấm "Câu tiếp theo" để sang câu mới */
+function skip() {
+  const r = cur(); if (S.locked || !r || r.type !== "true_false") return;
+  const n = S.list.length, last = S.idx === n - 1;
+  if (!r.missed) { r.missed = true; S.wrong.push(r); }
+  $app.querySelectorAll("[data-act=ans]").forEach(el => {
+    const s = r.statements[+el.dataset.k];
+    el.classList.remove("sel", "bad", "ok");
+    if ((el.dataset.v === "1") === s.answer) el.classList.add("ok");
+  });
+  S.locked = true;
+  document.getElementById("opts").classList.add("locked");
+  document.getElementById("res").innerHTML = showKeys(r);
+  document.getElementById("bar").style.transform = `scaleX(${(S.idx + 1) / n})`;
+  const sk = document.getElementById("skip"); if (sk) sk.hidden = true;
+  const go = document.getElementById("go"); go.disabled = false; go.textContent = last ? "Xem kết quả" : "Câu tiếp theo";
+  playSound("wrong");
+}
+
 const ACTIONS = {
+  skip,
   menu: openMenu,
   order: () => {
     keepOrder = !keepOrder;
@@ -4683,14 +4801,12 @@ const ACTIONS = {
   },
   answers: () => go("answers"),
   mode: () => {
-    let dark = "default"; try { dark = localStorage.getItem("quiz.dark") || "default"; } catch (e) {}
-    if (!THEMES[dark] || dark === "light") dark = "default";
-    if (theme === "light") setTheme(dark, true);
-    else { try { localStorage.setItem("quiz.dark", theme); } catch (e) {} setTheme("light", true); }
-    document.querySelectorAll(".trow[data-t]").forEach(b => b.classList.toggle("on", b.dataset.t === theme));
+    const b = document.getElementById("tgl"), r = b ? b.getBoundingClientRect() : null;
+    themeSwitch(() => { setTheme(isLight(theme) ? pref.dark : pref.light, true); syncTheme(); }, r ? r.left + r.width / 2 : lastTap.x, r ? r.top + r.height / 2 : lastTap.y);
     playSound("tick");
   },
-  theme: d => { setTheme(d.t, true); document.querySelectorAll(".trow[data-t]").forEach(b => b.classList.toggle("on", b.dataset.t === theme)); playSound("tick"); },
+  theme: d => { themeSwitch(() => { setTheme(d.t, true); syncTheme(); }, lastTap.x, lastTap.y); playSound("tick"); },
+  themes: () => { $modal.innerHTML = `<div class="scrim"><div class="dialog wide"><h2>Màu giao diện</h2><p class="mut">Chọn màu cho chế độ sáng và chế độ tối. Công tắc ☀/🌙 phía trên sẽ chuyển qua lại giữa hai màu bạn đã chọn.</p><div class="tpick">${themeCols()}</div><button class="btn" data-act="stay">Xong</button></div></div>`; },
   kpmode: () => {
     shortChoice = !shortChoice;
     try { localStorage.setItem("quiz.shortmc", shortChoice ? "1" : "0"); } catch (e) {}
@@ -4743,6 +4859,7 @@ document.addEventListener("keydown", e => {
   else if (e.key === "Enter") { const b = document.getElementById("go"); if (b && !b.disabled) b.click(); }
 });
 document.addEventListener("click", e => {
+  lastTap = { x: e.clientX, y: e.clientY };
   const el = e.target.closest("[data-act]");
   if (el && ACTIONS[el.dataset.act]) ACTIONS[el.dataset.act](el.dataset);
 });
