@@ -354,6 +354,8 @@ html[data-theme=mist] .card,html[data-theme=mist] .tile,html[data-theme=mist] .k
 .drawer .tpick{margin-top:0}
 .dialog.wide{max-width:440px}
 .dialog.wide .btn{margin-top:10px}
+.gears{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:28px auto 8px}
+.gears .gear{margin:0}
 .gear{display:flex;align-items:center;justify-content:center;gap:8px;margin:28px auto 8px;padding:11px 18px;border:1px solid var(--bd);border-radius:99px;background:var(--card);color:var(--tx2);font-size:14px}
 .gear svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 /* ===== Obsidian (tối sâu · xanh đen + ngọc lam) & Sóng biển (sáng) ===== */
@@ -481,6 +483,7 @@ body[data-view=home] main{padding-top:calc(14px + env(safe-area-inset-top,0px))}
 .vc::before{content:"→";position:absolute;top:0;left:50%;transform:translateX(-50%);font-size:.7em;line-height:1}
 .dock.two #cno{flex:0 0 40%}.dock.two #cyes{flex:1}
 @media (prefers-reduced-motion:reduce){.fci{transition:none}}
+.wico{display:inline-block;margin-right:6px;color:var(--no);font-weight:700}
 .warnq{font-size:13px;line-height:1.5;color:var(--mut);border-left:3px solid var(--no);padding:2px 0 2px 10px;margin:6px 0 12px}
 </style>
 <script>try{var _t=localStorage.getItem("quiz.theme");if(_t)document.documentElement.dataset.theme=_t}catch(e){}</script>
@@ -4541,7 +4544,7 @@ const quizData = {
           "id": "chemistry-2",
           "title": "Chương 2",
           "subtitle": "Carbohydrate",
-          "description": "Gồm phần Tóm tắt ý cần nhớ (cái cần thuộc, cái cần hiểu, bẫy và mẹo) và câu Đúng/Sai, Trả lời ngắn.",
+          "description": "Gồm phần Tóm tắt ý cần nhớ (cái cần thuộc, cái cần hiểu, bẫy và mẹo), 40 câu trắc nghiệm nhiều lựa chọn, 10 câu Đúng/Sai và 12 câu Trả lời ngắn (nguyên văn đề cương).",
           "summary": [
             {
               "title": "Cần THUỘC: công thức và phân loại",
@@ -4615,25 +4618,546 @@ const quizData = {
           ],
           "questions": [
             {
+              "id": "chemistry-2-B-01",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Carbohydrate là gì?",
+              "options": [
+                "Carbohydrate là những hợp chất hữu cơ đa chức và đa số chúng có công thức chung là Cₙ(H₂O)ₘ.",
+                "Carbohydrate là những hợp chất hữu cơ tạp chức và đa số chúng có công thức chung là Cₙ(H₂O)ₘ.",
+                "Carbohydrate là những hợp chất hữu cơ tạp chức.",
+                "Carbohydrate là những hợp chất hữu cơ đa chức và đa số chúng có công thức chung là Cₙ(H₂O)ₙ."
+              ],
+              "answer": 1
+            },
+            {
+              "id": "chemistry-2-B-02",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Hai chất đồng phân của nhau là",
+              "options": [
+                "glucose và tinh bột.",
+                "fructose và glucose.",
+                "fructose và tinh bột.",
+                "saccharose và glucose."
+              ],
+              "answer": 1
+            },
+            {
+              "id": "chemistry-2-B-03",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Chất thuộc loại disaccharide là",
+              "options": [
+                "glucose.",
+                "saccharose.",
+                "cellulose.",
+                "fructose."
+              ],
+              "answer": 1
+            },
+            {
+              "id": "chemistry-2-B-04",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Tinh bột và cellulose thuộc loại",
+              "options": [
+                "monosaccharide.",
+                "lipid.",
+                "disaccharide.",
+                "polysaccharide."
+              ],
+              "answer": 3
+            },
+            {
+              "id": "chemistry-2-B-05",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Trong phân tử của carbohydrate luôn có",
+              "options": [
+                "nhóm chức aldehyde.",
+                "nhóm chức ketone.",
+                "nhóm chức alcohol.",
+                "nhóm chức acid."
+              ],
+              "answer": 2
+            },
+            {
+              "id": "chemistry-2-B-06",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Công thức phân tử chung của glucose và fructose là",
+              "options": [
+                "C₆H₁₀O₅.",
+                "C₆H₁₂O₆.",
+                "C₅H₁₀O₅.",
+                "C₁₂H₂₂O₁₁."
+              ],
+              "answer": 1
+            },
+            {
+              "id": "chemistry-2-B-07",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Glucose quan trọng đối với cơ thể sống vì nó",
+              "options": [
+                "là nguồn cung cấp nước và carbon dioxide.",
+                "cung cấp năng lượng cho quá trình sinh hoá tế bào.",
+                "xúc tác cho các quá trình sinh hoá.",
+                "làm giảm quá trình oxi hoá của gốc tự do."
+              ],
+              "answer": 1
+            },
+            {
+              "id": "chemistry-2-B-08",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Carbohydrate nào sau đây là thành phần chính của mật ong?",
+              "options": [
+                "Glucose.",
+                "Maltose.",
+                "Saccharose.",
+                "Fructose."
+              ],
+              "answer": 3
+            },
+            {
+              "id": "chemistry-2-B-09",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Hợp chất đường chiếm thành phần chủ yếu trong quả nho chín là:",
+              "options": [
+                "Glucose",
+                "Fructose",
+                "Saccharose",
+                "Tinh bột"
+              ],
+              "answer": 0
+            },
+            {
+              "id": "chemistry-2-H-01",
+              "type": "single",
+              "tag": "Hiểu",
+              "question": "Có thể phân biệt glucose và fructose bằng cách cho từng chất tác dụng với",
+              "options": [
+                "Cu(OH)₂ trong môi trường kiềm, đun nóng.",
+                "thuốc thử Tollens.",
+                "dung dịch chứa Cu(OH)₂.",
+                "nước bromine."
+              ],
+              "answer": 3
+            },
+            {
+              "id": "chemistry-2-H-02",
+              "type": "single",
+              "tag": "Hiểu",
+              "question": "Glucose và fructose hòa tan Cu(OH)₂ ở nhiệt độ thường tạo dung dịch xanh lam qua phản ứng nào sau đây?",
+              "options": [
+                "2C₆H₁₂O₆ + Cu(OH)₂ → (C₆H₁₁O₆)₂Cu + 2H₂O",
+                "CH₂OH-[CHOH]₄-CHO + 2Cu(OH)₂ + NaOH →(t°) CH₂OH-[CHOH]₄-COONa + Cu₂O + 3H₂O",
+                "CH₂OH-[CHOH]₄-CHO + 2[Ag(NH₃)₂]OH →(t°) CH₂OH-[CHOH]₄-COONH₄ + 2Ag + 3NH₃ + H₂O",
+                "CH₂OH-[CHOH]₄-CHO + Br₂ + H₂O →(t°) CH₂OH-[CHOH]₄-COOH + 2HBr"
+              ],
+              "answer": 0
+            },
+            {
+              "id": "chemistry-2-B-10",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Glucose và fructose bị oxi hóa bởi thuốc thử Tollens qua phản ứng nào sau đây?",
+              "options": [
+                "2C₆H₁₂O₆ + Cu(OH)₂ → (C₆H₁₁O₆)₂Cu + 2H₂O",
+                "CH₂OH-[CHOH]₄-CHO + 2Cu(OH)₂ + NaOH →(t°) CH₂OH-[CHOH]₄-COONa + Cu₂O + 3H₂O",
+                "CH₂OH-[CHOH]₄-CHO + 2[Ag(NH₃)₂]OH →(t°) CH₂OH-[CHOH]₄-COONH₄ + 2Ag + 3NH₃ + H₂O",
+                "CH₂OH-[CHOH]₄-CHO + Br₂ + H₂O →(t°) CH₂OH-[CHOH]₄-COOH + 2HBr"
+              ],
+              "answer": 2
+            },
+            {
+              "id": "chemistry-2-B-11",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Glucose có thể lên men tạo ethanol qua phản ứng nào sau đây?",
+              "options": [
+                "2C₆H₁₂O₆ + Cu(OH)₂ → (C₆H₁₁O₆)₂Cu + 2H₂O",
+                "C₆H₁₂O₆ →(enzyme) 2C₂H₅OH + 2CO₂",
+                "C₆H₁₂O₆ →(enzyme) 2CH₃CH(OH)COOH",
+                "CH₂OH-[CHOH]₄-CHO + Br₂ + H₂O →(t°) CH₂OH-[CHOH]₄-COOH + 2HBr"
+              ],
+              "answer": 1
+            },
+            {
+              "id": "chemistry-2-H-03",
+              "type": "single",
+              "tag": "Hiểu",
+              "question": "Glucose và fructose hòa tan Cu(OH)₂ ở nhiệt độ thường tạo dung dịch xanh lam. Trong phản ứng này đã thể hiện tính chất của loại nhóm chức nào của glucose và fructose?",
+              "options": [
+                "Tính chất polyalcohol.",
+                "Tính chất aldehyde.",
+                "Tính chất ketone.",
+                "Tính chất nhóm –OH hemiacetal."
+              ],
+              "answer": 0
+            },
+            {
+              "id": "chemistry-2-B-12",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Glucose không có ứng dụng nào sau đây?",
+              "options": [
+                "Tráng gương, tráng phích.",
+                "Nguyên liệu sản xuất chất dẻo PVC.",
+                "Nguyên liệu sản xuất ethyl alcohol.",
+                "Làm thực phẩm dinh dưỡng và thuốc tăng lực."
+              ],
+              "answer": 1
+            },
+            {
+              "id": "chemistry-2-B-13",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Saccharose là một loại disaccharide có nhiều trong cây mía, hoa thốt nốt, củ cải đường. Công thức phân tử của saccharose là",
+              "options": [
+                "C₆H₁₂O₆",
+                "C₂H₄O₂",
+                "(C₆H₁₀O₅)ₙ",
+                "C₁₂H₂₂O₁₁"
+              ],
+              "answer": 3
+            },
+            {
+              "id": "chemistry-2-B-14",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Maltose là một loại disaccharide. Công thức phân tử của maltose là",
+              "options": [
+                "C₆H₁₂O₆",
+                "C₂H₄O₂",
+                "(C₆H₁₀O₅)ₙ",
+                "C₁₂H₂₂O₁₁"
+              ],
+              "answer": 3
+            },
+            {
+              "id": "chemistry-2-B-15",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Phân tử maltose được tạo bởi",
+              "options": [
+                "một gốc glucose và một gốc maltose.",
+                "hai gốc fructose.",
+                "một gốc glucose và một gốc fructose.",
+                "hai gốc glucose."
+              ],
+              "answer": 3
+            },
+            {
+              "id": "chemistry-2-B-16",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Saccharose được cấu tạo từ",
+              "options": [
+                "Hai đơn vị glucose qua liên kết α-1,4-glycoside.",
+                "Một đơn vị glucose và một đơn vị fructose qua liên kết α-1,2-glycoside.",
+                "Hai đơn vị fructose qua liên kết β-1,4-glycoside.",
+                "Một đơn vị glucose và một đơn vị galactose qua liên kết α-1,4-glycoside."
+              ],
+              "answer": 1
+            },
+            {
+              "id": "chemistry-2-B-17",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Dãy các chất có độ ngọt tăng dần là",
+              "options": [
+                "glucose < saccharose < fructose.",
+                "fructose < glucose < saccharose.",
+                "glucose < fructose < saccharose.",
+                "saccharose < fructose < glucose."
+              ],
+              "answer": 0
+            },
+            {
+              "id": "chemistry-2-B-18",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Khi thuỷ phân saccharose, sản phẩm thu được là",
+              "options": [
+                "glucose và fructose.",
+                "glucose.",
+                "fructose.",
+                "tinh bột."
+              ],
+              "answer": 0
+            },
+            {
+              "id": "chemistry-2-H-04",
+              "type": "single",
+              "tag": "Hiểu",
+              "question": "Chất X là chất dinh dưỡng, được dùng làm thuốc tăng lực cho người già, trẻ nhỏ và người ốm. Trong công nghiệp, X được điều chế bằng cách thủy phân chất Y. Chất Y là nguyên liệu để làm bánh kẹo, nước giải khát. Tên gọi của X, Y lần lượt là",
+              "options": [
+                "glucose và cellulose.",
+                "saccharose và tinh bột.",
+                "fructose và glucose.",
+                "glucose và saccharose."
+              ],
+              "answer": 3
+            },
+            {
+              "id": "chemistry-2-V-01",
+              "type": "single",
+              "tag": "Vận dụng",
+              "question": "Cho dãy các dung dịch: glucose, saccharose, ethanol, glycerol. Số dung dịch trong dãy phản ứng được với Cu(OH)₂ ở nhiệt độ thường tạo thành dung dịch có màu xanh lam là",
+              "options": [
+                "4.",
+                "1.",
+                "2.",
+                "3."
+              ],
+              "answer": 3
+            },
+            {
+              "id": "chemistry-2-H-05",
+              "type": "single",
+              "tag": "Hiểu",
+              "question": "Khi cho dung dịch saccharose vào ống nghiệm chứa Cu(OH)₂/NaOH, lắc nhẹ ống nghiệm thì thấy có hiện tượng nào sau đây?",
+              "options": [
+                "Kim loại màu vàng sáng bám trên bề mặt ống nghiệm.",
+                "Kết tủa màu đỏ gạch xuất hiện trong ống nghiệm.",
+                "Dung dịch trở nên đồng nhất và có màu xanh lam.",
+                "Chất lỏng trong ống nghiệm tách thành hai lớp và xuất hiện kết tủa màu xanh nhạt lắng xuống đáy ống nghiệm."
+              ],
+              "answer": 2
+            },
+            {
+              "id": "chemistry-2-V-02",
+              "type": "single",
+              "tag": "Vận dụng",
+              "question": "Cho các tính chất sau: (1) có vị ngọt, (2) dễ tan trong nước, (3) có phản ứng tráng bạc, (4) bị thủy phân trong môi trường acid, (5) hoà tan Cu(OH)₂ thành dung dịch màu xanh lam. Số tính chất đúng với saccharose là",
+              "options": [
+                "4.",
+                "3.",
+                "5.",
+                "2."
+              ],
+              "answer": 0
+            },
+            {
+              "id": "chemistry-2-B-19",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Tinh bột và cellulose có công thức chung là",
+              "options": [
+                "C₆H₁₂O₆",
+                "C₂H₄O₂",
+                "(C₆H₁₀O₅)ₙ",
+                "C₁₂H₂₂O₁₁"
+              ],
+              "answer": 2
+            },
+            {
+              "id": "chemistry-2-B-20",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Khi nhỏ dung dịch iodine vào mặt cắt của củ khoai lang tươi, thấy xuất hiện màu xanh tím. Hiện tượng này chứng tỏ trong củ khoai lang có chứa chất nào sau đây?",
+              "options": [
+                "Cellulose.",
+                "Fructose.",
+                "Glucose.",
+                "Tinh bột."
+              ],
+              "answer": 3
+            },
+            {
+              "id": "chemistry-2-B-21",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Cellulose có cấu tạo mạch không phân nhánh, mỗi gốc C₆H₁₀O₅ có 3 nhóm OH, nên có thể viết là",
+              "options": [
+                "[C₆H₅O₂(OH)₃]ₙ.",
+                "[C₆H₈O₂(OH)₃]ₙ.",
+                "[C₆H₇O₂(OH)₃]ₙ.",
+                "[C₆H₇O₃(OH)₃]ₙ."
+              ],
+              "answer": 2
+            },
+            {
+              "id": "chemistry-2-B-22",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Ở động vật, tinh bột được dự trữ dưới dạng glycogen ở trong:",
+              "options": [
+                "Dạ dày",
+                "Máu",
+                "Gan",
+                "Ruột"
+              ],
+              "answer": 2
+            },
+            {
+              "id": "chemistry-2-B-23",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Cellulose tan được trong hoá chất nào sau đây?",
+              "options": [
+                "Nước nóng.",
+                "Nước Schweizer.",
+                "Benzene.",
+                "Ether."
+              ],
+              "answer": 1
+            },
+            {
+              "id": "chemistry-2-H-06",
+              "type": "single",
+              "tag": "Hiểu",
+              "question": "Amylopectin khác biệt cơ bản với amylose ở điểm nào sau đây?",
+              "options": [
+                "Có cấu tạo mạch phân nhánh.",
+                "Chỉ chứa liên kết α-1,4-glycoside.",
+                "Không tan trong nước.",
+                "Tạo màu xanh tím với iodine."
+              ],
+              "answer": 0
+            },
+            {
+              "id": "chemistry-2-H-07",
+              "type": "single",
+              "tag": "Hiểu",
+              "question": "Tinh bột không chỉ là chất dinh dưỡng quan trọng trong đời sống mà còn là nguyên liệu chủ yếu để sản xuất bánh, rượu, bia,... Nhận định nào sau đây về tính chất của tinh bột là không đúng?",
+              "options": [
+                "Dung dịch hồ tinh bột tạo với iodine hợp chất màu xanh tím.",
+                "Tinh bột có khả năng tham gia phản ứng tráng bạc.",
+                "Tinh bột bị thuỷ phân trong môi trường acid cho sản phẩm cuối cùng là glucose.",
+                "Tinh bột là chất rắn vô định hình, màu trắng, không tan trong nước lạnh."
+              ],
+              "answer": 1
+            },
+            {
+              "id": "chemistry-2-H-08",
+              "type": "single",
+              "tag": "Hiểu",
+              "question": "Cho sơ đồ phản ứng: X + H₂O →(ánh sáng, chất diệp lục) Y + O₂↑; Y + dung dịch I₂ → dung dịch màu xanh tím. Hai chất X, Y lần lượt là:",
+              "options": [
+                "carbon monooxide, glucose.",
+                "carbon dioxide, glucose.",
+                "carbon monooxide, tinh bột.",
+                "carbon dioxide, tinh bột."
+              ],
+              "answer": 3
+            },
+            {
+              "id": "chemistry-2-B-24",
+              "type": "single",
+              "tag": "Biết",
+              "question": "Thủy phân hoàn toàn cellulose trong môi trường acid, thu được chất nào sau đây?",
+              "options": [
+                "Glucose.",
+                "Saccharose.",
+                "Ethyl alcohol.",
+                "Fructose."
+              ],
+              "answer": 0
+            },
+            {
+              "id": "chemistry-2-H-09",
+              "type": "single",
+              "tag": "Hiểu",
+              "question": "Cho một số tính chất: có dạng sợi (1), tan trong nước (2), tan trong nước Schweizer (3), phản ứng với HNO₃ đặc (H₂SO₄ đặc) (4), tham gia phản ứng tráng bạc (5), bị thủy phân trong dung dịch acid đun nóng (6). Các tính chất của cellulose là",
+              "options": [
+                "(3, 4, 5, 6).",
+                "(1, 3, 4, 6).",
+                "(1, 2, 3, 4).",
+                "(2, 3, 4, 5)."
+              ],
+              "answer": 1
+            },
+            {
+              "id": "chemistry-2-H-10",
+              "type": "single",
+              "tag": "Hiểu",
+              "question": "Tinh bột, cellulose, saccharose, maltose đều có khả năng tham gia phản ứng",
+              "options": [
+                "hòa tan Cu(OH)₂.",
+                "trùng ngưng.",
+                "tráng gương.",
+                "thủy phân."
+              ],
+              "answer": 3
+            },
+            {
+              "id": "chemistry-2-H-11",
+              "type": "single",
+              "tag": "Hiểu",
+              "question": "Polysaccharide X là chất rắn, màu trắng, dạng sợi. Trong bông nõn có gần 98% chất X. Thủy phân X, thu được monosaccharide Y. Phát biểu nào sau đây đúng?",
+              "options": [
+                "Y có tính chất của alcohol đa chức.",
+                "Y không có phản ứng thuốc thử Tollens.",
+                "Phân tử khối của Y bằng 342.",
+                "X dễ tan trong nước."
+              ],
+              "answer": 0
+            },
+            {
+              "id": "chemistry-2-H-12",
+              "type": "single",
+              "tag": "Hiểu",
+              "question": "Cho sơ đồ chuyển hoá: Cellulose →(H₂O, H⁺, t°) X →(AgNO₃/NH₃, t°) Y →(HCl dd) Z. Các chất X, Y, Z lần lượt là",
+              "options": [
+                "glucose, ammonium gluconate, gluconic acid.",
+                "glucose, ammonium gluconate, gluconic acid.",
+                "fructose, ammonium gluconate, gluconic acid.",
+                "fructose, ammonium gluconate, gluconic acid."
+              ],
+              "answer": 0,
+              "warn": "Đề in phương án A và B giống hệt nhau (C và D cũng giống nhau). Đáp án đúng về nội dung là glucose, ammonium gluconate, gluconic acid, nên chọn A hoặc B đều đúng nội dung; nên hỏi lại thầy/cô."
+            },
+            {
+              "id": "chemistry-2-V-03",
+              "type": "single",
+              "tag": "Vận dụng",
+              "question": "Có một số nhận xét về carbohydrate như sau: (1) Saccharose, tinh bột và cellulose đều có thể bị thủy phân. (2) Glucose, fructose, saccharose đều tác dụng được với Cu(OH)₂ và có khả năng tham gia phản ứng tráng bạc. (3) Tinh bột và cellulose là đồng phân cấu tạo của nhau. (4) Phân tử cellulose được cấu tạo bởi nhiều gốc β-glucose. (5) Thủy phân tinh bột trong môi trường acid sinh ra fructose. Trong các nhận xét trên, số nhận xét đúng là",
+              "options": [
+                "2",
+                "5",
+                "4",
+                "3"
+              ],
+              "answer": 0
+            },
+            {
+              "id": "chemistry-2-V-04",
+              "type": "single",
+              "tag": "Vận dụng",
+              "question": "Có các phát biểu sau đây: (1) Amylose có cấu trúc mạch phân nhánh. (2) Glucose bị khử bởi dung dịch AgNO₃ trong NH₃. (3) Cellulose có cấu trúc mạch phân nhánh. (4) Saccharose làm mất màu nước bromine. (5) Fructose có phản ứng tráng bạc. (6) Glucose tác dụng được với dung dịch thuốc tím. (7) Trong dung dịch, glucose tồn tại chủ yếu ở dạng mạch vòng và một phần nhỏ ở dạng mạch hở. Số phát biểu đúng là:",
+              "options": [
+                "6",
+                "4",
+                "5",
+                "3"
+              ],
+              "answer": 3
+            },
+            {
               "id": "chemistry-2-T-01",
               "type": "true_false",
               "tag": "Đúng/Sai",
-              "question": "Cho các phát biểu về glucose và fructose:",
+              "question": "Cho các phát biểu sau về ứng dụng và trạng thái tự nhiên của glucose và fructose:",
               "statements": [
                 {
-                  "text": "Glucose và fructose là chất rắn, không tan trong nước.",
+                  "text": "Cả glucose và fructose đều là chất rắn, khó tan trong nước, có vị ngọt.",
                   "answer": false
                 },
                 {
-                  "text": "Glucose có nhiều trong nho chín, fructose có nhiều trong mật ong.",
+                  "text": "Glucose có nhiều trong quả chín (nhất là nho chín), fructose có nhiều trong mật ong.",
                   "answer": true
                 },
                 {
-                  "text": "Dung dịch dùng để truyền tĩnh mạch cho bệnh nhân là dung dịch glucose 5%.",
+                  "text": "Dung dịch truyền tĩnh mạch là glucose 5%.",
                   "answer": true
                 },
                 {
-                  "text": "Glucose và fructose chủ yếu cung cấp năng lượng cho tế bào.",
+                  "text": "Glucose và fructose chủ yếu đóng vai trò cung cấp năng lượng cho tế bào.",
                   "answer": true
                 }
               ]
@@ -4642,47 +5166,47 @@ const quizData = {
               "id": "chemistry-2-T-02",
               "type": "true_false",
               "tag": "Đúng/Sai",
-              "question": "Cho các phát biểu về saccharose (đường mía):",
+              "question": "Saccharose là carbohydrate, thuộc loại disaccharide.",
               "statements": [
                 {
-                  "text": "Saccharose là chất kết tinh, không màu, tan tốt trong nước, có vị ngọt.",
+                  "text": "Là chất kết tinh, không màu, tan tốt trong nước và có vị ngọt.",
                   "answer": true
                 },
                 {
-                  "text": "Thủy phân saccharose chỉ thu được glucose.",
+                  "text": "Khi thủy phân hoàn toàn tạo thành sản phẩm duy nhất là glucose.",
                   "answer": false
                 },
                 {
-                  "text": "Saccharose có phản ứng tráng gương.",
+                  "text": "Có khả năng tham gia phản ứng tráng gương.",
                   "answer": false
                 },
                 {
-                  "text": "Dung dịch saccharose hòa tan Cu(OH)₂ ở nhiệt độ thường tạo phức xanh lam.",
+                  "text": "Dung dịch glucose hoà tan Cu(OH)₂ tạo thành dung dịch có màu xanh lam.",
                   "answer": true
                 }
               ],
-              "warn": "Ý d: bản gốc có thể ghi “glucose” trong câu về saccharose (lỗi đánh máy). Cả hai cách đọc đều Đúng; có thể hỏi lại thầy/cô."
+              "warn": "Ý d: đề ghi “dung dịch glucose” trong câu nói về saccharose (có thể là lỗi đánh máy). Glucose hay saccharose đều hòa tan Cu(OH)₂ tạo phức xanh lam nên đáp án vẫn là Đúng; có thể hỏi lại thầy/cô."
             },
             {
               "id": "chemistry-2-T-03",
               "type": "true_false",
               "tag": "Đúng/Sai",
-              "question": "X và Y là hai monosaccharide phổ biến: X là glucose, Y là fructose. Xét các phát biểu:",
+              "question": "Thủy phân saccharose, thu được hai monosaccharide X và Y. Chất X có trong máu người với nồng độ khoảng (4,4 – 7,2 mmol/L).",
               "statements": [
                 {
-                  "text": "Nồng độ X trong máu người khoảng 4,4 – 7,2 mmol/L.",
+                  "text": "X là glucose, Y là fructose.",
                   "answer": true
                 },
                 {
-                  "text": "Nước bromine bị X làm mất màu, còn Y thì không.",
+                  "text": "Có thể phân biệt X, Y bằng dung dịch nước bromine.",
                   "answer": true
                 },
                 {
-                  "text": "Phân tử khối của X và Y đều bằng 180.",
+                  "text": "X có phân tử khối bằng 180.",
                   "answer": true
                 },
                 {
-                  "text": "Dạng mạch hở của X và Y đều có 6 nhóm –OH.",
+                  "text": "Ở dạng mạch hở, X và Y đều có 6 nhóm –OH.",
                   "answer": false
                 }
               ]
@@ -4691,46 +5215,47 @@ const quizData = {
               "id": "chemistry-2-T-04",
               "type": "true_false",
               "tag": "Đúng/Sai",
-              "question": "Cho các phát biểu về tinh bột và cellulose:",
+              "question": "Tinh bột và cellulose là carbohydrate, thuộc loại polysaccharide.",
               "statements": [
                 {
-                  "text": "Nhỏ dung dịch iodine lên lát khoai lang thấy xuất hiện màu xanh tím.",
+                  "text": "Nhỏ dung dịch cồn I₂ vào lát cắt củ khoai lang, thấy xuất hiện màu tím.",
                   "answer": true
                 },
                 {
-                  "text": "Tinh bột không tan trong nước lạnh, trong nước nóng tạo thành hồ tinh bột.",
+                  "text": "Tinh bột không tan trong nước lạnh, trong nước nóng tạo dung dịch keo nhớt.",
                   "answer": true
                 },
                 {
-                  "text": "Cellulose là thành phần chính của màng tế bào thực vật.",
+                  "text": "Cellulose là thành phần chính tạo nên lớp màng thực vật và là bộ khung của cây cối.",
                   "answer": true
                 },
                 {
-                  "text": "Phân tử amylopectin chỉ chứa liên kết α-1,4-glycoside.",
+                  "text": "Trong phân tử amylopectin, các gốc α-glucose liên kết với nhau bằng liên kết α-1,4-glycoside.",
                   "answer": false
                 }
-              ]
+              ],
+              "warn": "Ý a: đề ghi “màu tím” (thực tế là xanh tím), đáp án theo file là Đúng. Ý d: amylopectin còn có liên kết α-1,6-glycoside tạo nhánh nên chỉ nói α-1,4 là chưa đủ, đáp án theo file là Sai."
             },
             {
               "id": "chemistry-2-T-05",
               "type": "true_false",
               "tag": "Đúng/Sai",
-              "question": "Cho các phát biểu về carbohydrate:",
+              "question": "Carbohydrate được chia làm 3 loại: monosaccharide (glucose, fructose), disaccharide (saccharose, maltose), polysaccharide (tinh bột, cellulose).",
               "statements": [
                 {
-                  "text": "Glucose và fructose đều tạo kết tủa Ag khi tác dụng với AgNO₃ trong dung dịch NH₃.",
+                  "text": "Glucose, fructose đều tác dụng với dung dịch AgNO₃/NH₃ tạo thành kết tủa màu trắng bạc.",
                   "answer": true
                 },
                 {
-                  "text": "Thủy phân hoàn toàn tinh bột hoặc cellulose đều thu được glucose.",
+                  "text": "Thủy phân hoàn toàn tinh bột hoặc cellulose, thu được glucose.",
                   "answer": true
                 },
                 {
-                  "text": "Trong công nghiệp dược phẩm, saccharose được dùng để pha chế thuốc.",
+                  "text": "Trong công nghiệp thực phẩm, saccharose dùng để pha chế thuốc.",
                   "answer": false
                 },
                 {
-                  "text": "Cellulose tan trong nước Schweizer và bị thủy phân trong dung dịch H₂SO₄ 70%.",
+                  "text": "Cho một nhúm bông vào dung dịch H₂SO₄ 70% hoặc nước Schweizer, thì nhúm bông sẽ bị tan.",
                   "answer": true
                 }
               ]
@@ -4739,72 +5264,70 @@ const quizData = {
               "id": "chemistry-2-T-06",
               "type": "true_false",
               "tag": "Đúng/Sai",
-              "question": "Cho các phát biểu về ứng dụng của carbohydrate:",
+              "question": "Hợp chất carbohydrate có nhiều ứng dụng trong đời sống, sản xuất, y tế,…",
               "statements": [
                 {
-                  "text": "Fructose có nhiều trong mật ong và ngọt hơn saccharose.",
+                  "text": "Fructose được dùng để sản xuất siro, kẹo, mứt, nước trái cây đóng hộp,…",
                   "answer": true
                 },
                 {
-                  "text": "Maltose (có trong mạch nha) được dùng trong sản xuất kẹo, bia.",
+                  "text": "Maltose dùng để sản xuất bia và chất tạo ngọt cho một số loại bánh kẹo.",
                   "answer": true
                 },
                 {
-                  "text": "Cellulose được dùng sản xuất giấy, tơ nhân tạo, thuốc súng không khói.",
+                  "text": "Cellulose dùng làm vật liệu xây dựng gia đình; làm thành tơ, sợi, giấy viết,…",
                   "answer": true
                 },
                 {
-                  "text": "Saccharose được dùng trong công nghiệp thực phẩm để làm bánh kẹo, nước giải khát.",
+                  "text": "Saccharose được dùng để sản xuất thực phẩm như bánh, kẹo, nước giải khát và đồ uống có gas,...",
                   "answer": true
                 }
-              ],
-              "warn": "Ý a–d được dựng lại từ lời giải (cả bốn ý đều Đúng), chưa có bản đề gốc."
+              ]
             },
             {
               "id": "chemistry-2-T-07",
               "type": "true_false",
               "tag": "Đúng/Sai",
-              "question": "Thủy phân hoàn toàn chất X (thành phần chính của bông) trong môi trường acid thu được chất Y. Xét các phát biểu:",
+              "question": "Chất X là thành phần chính tạo nên màng tế bào thực vật, tạo nên bộ khung của cây cối. Thủy phân hoàn toàn X, thu được chất Y. Trong mật ong Y chiếm khoảng 30%. Trong máu người có một lượng nhỏ Y không đổi là 0,1%.",
               "statements": [
                 {
-                  "text": "Phản ứng thủy phân X xảy ra trong môi trường acid.",
+                  "text": "Phản ứng thuỷ phân X xảy ra trong môi trường acid.",
                   "answer": true
                 },
                 {
-                  "text": "X là cellulose, Y là glucose.",
+                  "text": "X, Y lần lượt là cellulose và glucose.",
                   "answer": true
                 },
                 {
-                  "text": "Cho Y tác dụng với H₂ (Ni, t°) thu được ethanol.",
+                  "text": "Y không tác dụng được với H₂ (t°, xt).",
                   "answer": false
                 },
                 {
-                  "text": "Y ngọt hơn đường mía (saccharose).",
+                  "text": "Y có độ ngọt lớn hơn đường mía.",
                   "answer": false
                 }
-              ],
-              "warn": "Ý c được dựng lại: đáp án đúng là Y + H₂ (Ni, t°) → sorbitol. Đáp án Sai không đổi."
+              ]
             },
             {
               "id": "chemistry-2-T-08",
               "type": "true_false",
               "tag": "Đúng/Sai",
-              "question": "Cho các phát biểu về cellulose và tinh bột:",
+              "question": "(TN 2026) Cellulose và tinh bột đều có công thức chung là (C₆H₁₀O₅)ₙ. Tinh bột gồm hai thành phần là amylose và amylopectin. Thủy phân hoàn toàn cellulose và tinh bột trong môi trường acid đun nóng, thu được glucose theo phương trình: (C₆H₁₀O₅)ₙ + nH₂O →(H⁺, t°) nC₆H₁₂O₆ (1)",
               "statements": [
                 {
-                  "text": "Cellulose và tinh bột đều là polymer thiên nhiên.",
+                  "text": "Cellulose và tinh bột đều là polymer tự nhiên (polymer thiên nhiên).",
                   "answer": true
                 },
                 {
-                  "text": "Phản ứng thủy phân cellulose và tinh bột là phản ứng tăng mạch polymer.",
+                  "text": "Phản ứng thủy phân cellulose và tinh bột theo phương trình (1) là phản ứng tăng mạch polymer.",
                   "answer": false
                 },
                 {
-                  "text": "Cellulose và tinh bột đều có công thức (C₆H₁₀O₅)ₙ nên là đồng phân của nhau.",
+                  "text": "Vì cellulose và tinh bột đều có công thức chung là (C₆H₁₀O₅)ₙ nên phân tử khối của cellulose và tinh bột đều bằng nhau.",
                   "answer": false
                 },
                 {
-                  "text": "Cellulose và amylopectin đều có cấu trúc phân nhánh.",
+                  "text": "Cellulose và amylopectin đều cấu tạo từ các đơn vị glucose liên kết với nhau bằng các liên kết glycoside nên chúng đều có cấu tạo mạch polymer phân nhánh.",
                   "answer": false
                 }
               ]
@@ -4813,56 +5336,56 @@ const quizData = {
               "id": "chemistry-2-T-09",
               "type": "true_false",
               "tag": "Đúng/Sai",
-              "question": "Cho các phát biểu về cellulose và tinh bột:",
+              "question": "(TN 2026) Cellulose và tinh bột đều có công thức chung là (C₆H₁₀O₅)ₙ. Tinh bột gồm hai thành phần là amylose và amylopectin. Thủy phân hoàn toàn cellulose và tinh bột trong môi trường acid đun nóng, thu được glucose theo phương trình: (C₆H₁₀O₅)ₙ + nH₂O →(H⁺, t°) nC₆H₁₂O₆ (1)",
               "statements": [
                 {
-                  "text": "Thủy phân hoàn toàn cellulose hoặc tinh bột đều thu được glucose.",
+                  "text": "Cellulose và tinh bột đều là polymer tự nhiên (polymer thiên nhiên).",
                   "answer": true
                 },
                 {
-                  "text": "Thủy phân cellulose và tinh bột là phản ứng cắt mạch polymer.",
+                  "text": "Phản ứng thủy phân cellulose và tinh bột theo phương trình (1) là phản ứng cắt mạch polymer.",
                   "answer": true
                 },
                 {
-                  "text": "Cellulose và tinh bột có phân tử khối bằng nhau.",
+                  "text": "Vì cellulose và tinh bột đều có công thức chung là (C₆H₁₀O₅)ₙ nên phân tử khối của cellulose và tinh bột đều bằng nhau.",
                   "answer": false
                 },
                 {
-                  "text": "Amylopectin và cellulose đều không phân nhánh.",
+                  "text": "Cellulose và amylopectin đều cấu tạo từ các đơn vị glucose liên kết với nhau bằng các liên kết glycoside nên chúng đều có cấu tạo mạch polymer không phân nhánh.",
                   "answer": false
                 }
-              ],
-              "warn": "Câu dựng lại từ lời giải; đáp án a–d: Đ, Đ, S, S."
+              ]
             },
             {
               "id": "chemistry-2-T-10",
               "type": "true_false",
               "tag": "Đúng/Sai",
-              "question": "Cho các phát biểu về saccharose và monosaccharide:",
+              "question": "[QG.26 – Lần 2] Trong dung dịch, glucose và fructose đều tồn tại cả dạng mạch hở và mạch vòng. Quá trình chuyển từ mạch vòng sang mạch hở là do trong phân tử hai chất này có nhóm –OH hemiacetal hoặc –OH hemiketal. Hình vẽ trong đề mô tả cấu tạo của α-glucose, β-fructose và saccharose, trong đó các nhóm –OH được khoanh tròn là nhóm –OH hemiacetal của α-glucose và nhóm –OH hemiketal của β-fructose.",
               "statements": [
                 {
-                  "text": "Liên kết giữa α-glucose và β-fructose trong saccharose là liên kết α-1,4-glycoside.",
+                  "text": "Đơn vị α-glucose và đơn vị β-fructose trong saccharose liên kết với nhau qua liên kết α-1,4-glycoside.",
                   "answer": false
                 },
                 {
-                  "text": "Monosaccharide là carbohydrate không bị thủy phân.",
+                  "text": "Do cả glucose và fructose đều không bị thuỷ phân nên chúng thuộc loại monosaccharide.",
                   "answer": true
                 },
                 {
-                  "text": "Saccharose không còn nhóm –OH hemiacetal/hemiketal tự do nên không mở vòng được.",
+                  "text": "Khác với glucose và fructose, saccharose không có dạng mở vòng vì trong phân tử saccharose không chứa nhóm –OH hemiacetal và –OH hemiketal.",
                   "answer": true
                 },
                 {
-                  "text": "Saccharose hòa tan Cu(OH)₂ ở nhiệt độ thường tạo phức xanh lam.",
+                  "text": "Dung dịch saccharose hoà tan được Cu(OH)₂ trong môi trường kiềm tạo dung dịch màu xanh lam là do trong phân tử có chứa nhiều nhóm –OH liền kề.",
                   "answer": true
                 }
-              ]
+              ],
+              "warn": "Đề gốc có hình vẽ cấu tạo α-glucose, β-fructose, saccharose; trong app chưa có hình."
             },
             {
               "id": "chemistry-2-S-01",
               "type": "short",
               "tag": "Trả lời ngắn",
-              "question": "Cho các chất: saccharose, maltose, tinh bột, cellulose, fructose. Có bao nhiêu chất bị thủy phân khi đun nóng với dung dịch acid?",
+              "question": "Cho các carbohydrate: saccharose, fructose, maltose, tinh bột, cellulose. Số carbohydrate khi thuỷ phân trong môi trường acid tạo ra glucose là bao nhiêu?",
               "answers": [
                 "4"
               ],
@@ -4870,14 +5393,13 @@ const quizData = {
                 "2",
                 "3",
                 "5"
-              ],
-              "warn": "Đề được dựng lại từ lời giải trong file đáp án (chưa có bản đề gốc); đáp án khớp file đáp án."
+              ]
             },
             {
               "id": "chemistry-2-S-02",
               "type": "short",
               "tag": "Trả lời ngắn",
-              "question": "Tinh bột có công thức (C₆H₁₀O₅)ₙ. Mỗi mắt xích của tinh bột chứa bao nhiêu nguyên tử oxygen?",
+              "question": "Polymer thiên nhiên X được sinh ra trong quá trình quang hợp của cây xanh. Ở nhiệt độ thường, X tạo với dung dịch iodine hợp chất có màu xanh tím. Số nguyên tử O trong mỗi đơn vị cấu tạo nên polymer X là bao nhiêu?",
               "answers": [
                 "5"
               ],
@@ -4891,7 +5413,7 @@ const quizData = {
               "id": "chemistry-2-S-03",
               "type": "short",
               "tag": "Trả lời ngắn",
-              "question": "Cho các cặp chất: glucose – fructose; saccharose – maltose; tinh bột – cellulose; glucose – saccharose. Có bao nhiêu cặp là đồng phân của nhau?",
+              "question": "Cho các chất sau: glucose, fructose, saccharose, maltose, tinh bột, cellulose. Có bao nhiêu cặp chất là đồng phân của nhau?",
               "answers": [
                 "2"
               ],
@@ -4899,30 +5421,29 @@ const quizData = {
                 "1",
                 "3",
                 "4"
-              ],
-              "warn": "Đề được dựng lại từ lời giải trong file đáp án (chưa có bản đề gốc); đáp án khớp file đáp án."
+              ]
             },
             {
               "id": "chemistry-2-S-04",
               "type": "short",
               "tag": "Trả lời ngắn",
-              "question": "Cellulose trinitrate có công thức [C₆H₇O₂(ONO₂)₃]ₙ. Khối lượng mol của một mắt xích là bao nhiêu (g/mol)?",
+              "question": "Cellulose trinitrate được sử dụng làm thuốc súng không khói. Phân tử khối của cellulose nitrate bằng bao nhiêu?",
               "answers": [
-                "297",
-                "297n"
+                "297n",
+                "297"
               ],
               "distractors": [
-                "162",
-                "189",
-                "351"
+                "162n",
+                "189n",
+                "351n"
               ],
-              "warn": "Nếu đề hỏi “phân tử khối” cả phân tử thì đáp án là 297n; ở đây hỏi một mắt xích nên là 297. Nên hỏi lại thầy/cô."
+              "warn": "Đề hỏi “phân tử khối” cả phân tử nên đáp án là 297n. Nếu thầy/cô hỏi khối lượng mol mắt xích thì là 297 (app chấp nhận cả hai)."
             },
             {
               "id": "chemistry-2-S-05",
               "type": "short",
               "tag": "Trả lời ngắn",
-              "question": "Cho các chất: glucose, fructose, saccharose, glycerol, tinh bột, cellulose, ethyl acetate. Có bao nhiêu chất hòa tan được Cu(OH)₂ ở nhiệt độ thường?",
+              "question": "Cho các chất sau: glucose, fructose, tinh bột, cellulose, ethyl acetate, saccharose, glycerol. Có bao nhiêu chất hòa tan được Cu(OH)₂ ở nhiệt độ thường tạo thành phức chất màu xanh lam?",
               "answers": [
                 "4"
               ],
@@ -4930,14 +5451,13 @@ const quizData = {
                 "2",
                 "3",
                 "5"
-              ],
-              "warn": "Đề được dựng lại từ lời giải trong file đáp án (chưa có bản đề gốc); đáp án khớp file đáp án."
+              ]
             },
             {
               "id": "chemistry-2-S-06",
               "type": "short",
               "tag": "Trả lời ngắn",
-              "question": "Thí nghiệm: cho bông (cellulose) vào hỗn hợp HNO₃ đặc và H₂SO₄ đặc, đun nhẹ để điều chế cellulose trinitrate. Cho các phát biểu: (1) Sản phẩm là chất rắn màu trắng hơi ngả vàng. (2) Có thể thay bông bằng hồ tinh bột để thu sản phẩm tương tự. (3) Thí nghiệm chứng minh cellulose có các mắt xích glucose. (4) Trong phản ứng, cellulose thể hiện tính oxi hóa. Số phát biểu đúng là bao nhiêu?",
+              "question": "Cellulose trinitrate dùng làm thuốc súng không khói được tạo nên từ phản ứng của cellulose với dung dịch nitric acid đặc khi có mặt dung dịch sulfuric acid đặc. Bước 1: Cho lần lượt 4 mL HNO₃, 8 mL H₂SO₄ đặc vào cốc thủy tinh, lắc đều và làm lạnh. Bước 2: Thêm tiếp vào cốc một ít bông, đặt cốc chứa hỗn hợp vào nồi nước nóng khoảng 60 – 70 °C, khuấy nhẹ. Bước 3: Lọc lấy chất rắn rửa sạch bằng nước, ép khô bằng giấy lọc sau đó sấy khô (tránh lửa). Cho các phát biểu: (1) Sau bước 3, sản phẩm thu được có màu vàng. (2) Có thể thay thế bông bằng hồ tinh bột. (3) Thí nghiệm trên chứng minh trong phân tử cellulose được cấu tạo từ các mắt xích glucose. (4) Trong phản ứng ở bước 3, cellulose thể hiện tính oxi hóa. Số phát biểu đúng là bao nhiêu?",
               "answers": [
                 "1"
               ],
@@ -4952,7 +5472,7 @@ const quizData = {
               "id": "chemistry-2-S-07",
               "type": "short",
               "tag": "Trả lời ngắn",
-              "question": "Đun nóng dung dịch chứa m gam glucose với lượng dư dung dịch AgNO₃ trong NH₃, thu được 32,4 gam Ag. Giá trị của m là bao nhiêu? (Ag = 108)",
+              "question": "Cho m gam glucose phản ứng hoàn toàn với lượng dư dung dịch AgNO₃ trong NH₃ (đun nóng), thu được 32,4 gam Ag. Tính giá trị của m.",
               "answers": [
                 "27"
               ],
@@ -4960,14 +5480,13 @@ const quizData = {
                 "18",
                 "36",
                 "54"
-              ],
-              "warn": "Đề được dựng lại từ lời giải trong file đáp án (chưa có bản đề gốc); đáp án khớp file đáp án."
+              ]
             },
             {
               "id": "chemistry-2-S-08",
               "type": "short",
               "tag": "Trả lời ngắn",
-              "question": "Cho 200 mL dung dịch glucose phản ứng tráng bạc hoàn toàn, thu được 4,32 gam Ag. Nồng độ mol của dung dịch glucose là bao nhiêu (M)?",
+              "question": "Cho 200 mL dung dịch glucose chưa rõ nồng độ tác dụng với một lượng dư AgNO₃ trong dung dịch NH₃, thu được 4,32 gam silver kết tủa. Tính nồng độ mol của dung dịch glucose đã dùng.",
               "answers": [
                 "0,1",
                 "0.1"
@@ -4976,14 +5495,13 @@ const quizData = {
                 "0,2",
                 "0,01",
                 "0,05"
-              ],
-              "warn": "Đề được dựng lại từ lời giải trong file đáp án (chưa có bản đề gốc); đáp án khớp file đáp án."
+              ]
             },
             {
               "id": "chemistry-2-S-09",
               "type": "short",
               "tag": "Trả lời ngắn",
-              "question": "Điều chế 4,455 tấn cellulose trinitrate từ cellulose và HNO₃ với hiệu suất 70%. Khối lượng cellulose cần dùng là bao nhiêu tấn? (làm tròn đến hàng phần trăm)",
+              "question": "Tính khối lượng cellulose cần dùng để điều chế 4,455 tấn cellulose trinitrate từ phản ứng giữa nitric acid với cellulose (hiệu suất tính theo cellulose là 70%, làm tròn kết quả đến hàng phần trăm).",
               "answers": [
                 "3,47",
                 "3.47"
@@ -4992,14 +5510,13 @@ const quizData = {
                 "2,43",
                 "3,12",
                 "4,86"
-              ],
-              "warn": "Đề được dựng lại từ lời giải trong file đáp án (chưa có bản đề gốc); đáp án khớp file đáp án."
+              ]
             },
             {
               "id": "chemistry-2-S-10",
               "type": "short",
               "tag": "Trả lời ngắn",
-              "question": "Mỗi tạ mía ép được 63 lít nước mía (khối lượng riêng 1,103 g/mL), trong đó saccharose chiếm 7,5% khối lượng. Từ 30 tấn mía thu được bao nhiêu kg saccharose? (làm tròn đến hàng đơn vị)",
+              "question": "Một nhà máy đường mỗi ngày ép 30 tấn mía. Biết 1 tạ mía cho 63 lít nước mía với nồng độ đường 7,5% và khối lượng riêng 1,103 g/mL. Giả sử hiệu suất của quá trình tinh chế là 100%. Khối lượng đường thu được là bao nhiêu kg? (Làm tròn thành số nguyên)",
               "answers": [
                 "1564",
                 "1563,5",
@@ -5009,14 +5526,13 @@ const quizData = {
                 "1478",
                 "1503",
                 "1650"
-              ],
-              "warn": "Đề được dựng lại từ lời giải trong file đáp án (chưa có bản đề gốc); đáp án khớp file đáp án. Chú ý đơn vị: 1 tạ = 100 kg, 1 L = 1000 mL."
+              ]
             },
             {
               "id": "chemistry-2-S-11",
               "type": "short",
               "tag": "Trả lời ngắn",
-              "question": "Đường ẩm chứa 1,4% nước theo khối lượng, được sấy bằng không khí nóng có khối lượng gấp 3 lần khối lượng đường ẩm; không khí nóng đưa vào chứa 0,8% nước theo khối lượng. Ở đầu ra, lượng không khí khô chiếm 98,75% khối lượng không khí ra. Coi toàn bộ nước bay hơi chuyển vào không khí. Phần trăm nước còn lại trong đường sau sấy là a × 10⁻² %. Giá trị của a là bao nhiêu? (làm tròn đến hàng phần trăm)",
+              "question": "(TN 2026) Trong một nhà máy sản xuất đường saccharose, sau một số giai đoạn xử lí thu được đường ẩm (chỉ gồm saccharose và 1,40% nước theo khối lượng). Đường ẩm được đưa vào thiết bị sấy cho tiếp xúc với dòng không khí nóng (chứa 0,80% nước theo khối lượng). Tỉ lệ khối lượng không khí nóng : đường ẩm là 3 : 1. Trong quá trình sấy, chỉ xảy ra sự bay hơi của nước từ đường ẩm vào dòng không khí nóng. Sau khi sấy, dòng không khí nóng thoát ra khỏi thiết bị chứa 1,25% nước theo khối lượng và thu được đường chứa a × 10⁻² % nước theo khối lượng. Xác định giá trị của a (không làm tròn kết quả các phép tính trung gian, chỉ làm tròn kết quả cuối cùng tới hàng phần trăm).",
               "answers": [
                 "3,34",
                 "3.34"
@@ -5025,14 +5541,13 @@ const quizData = {
                 "2,93",
                 "3,01",
                 "3,47"
-              ],
-              "warn": "Dữ kiện được dựng lại từ lời giải (đề TN 2026). Ý chính: khối lượng không khí khô không đổi. Nên so lại với đề gốc."
+              ]
             },
             {
               "id": "chemistry-2-S-12",
               "type": "short",
               "tag": "Trả lời ngắn",
-              "question": "Cellulose nitrate có công thức [C₆H₇O₂(OH)₃₋ₙ(ONO₂)ₙ]ₘ và chứa 13,95% nitrogen về khối lượng. Giá trị trung bình của n là bao nhiêu? (làm tròn đến hàng phần trăm)",
+              "question": "[QG.26 – Lần 2] Cellulose nitrate là sản phẩm của phản ứng giữa cellulose với nitric acid đặc (xúc tác H₂SO₄ đặc). Tùy thuộc vào số gốc nitrate trung bình (n_tb) trên mỗi mắt xích cellulose mà cellulose nitrate có những ứng dụng khác nhau: sản xuất sơn, mực in, màng phim, chất dẻo (n_tb < 2,2); sản xuất thuốc súng đen, pháo (2,2 ≤ n_tb ≤ 2,5); sản xuất thuốc nổ, thuốc súng không khói (n_tb > 2,5). Trong một loại cellulose nitrate được sử dụng làm thuốc nổ có phần trăm khối lượng nitrogen là 13,95%. Xác định giá trị n_tb của loại cellulose nitrate này (không làm tròn kết quả các phép tính trung gian, chỉ làm tròn kết quả phép tính cuối cùng đến hàng phần trăm).",
               "answers": [
                 "2,93",
                 "2.93"
@@ -5041,8 +5556,7 @@ const quizData = {
                 "2,50",
                 "2,75",
                 "3,00"
-              ],
-              "warn": "Đề được dựng lại từ lời giải trong file đáp án (chưa có bản đề gốc); đáp án khớp file đáp án."
+              ]
             }
           ]
         }
@@ -5243,7 +5757,9 @@ let keepOrder = false; try { keepOrder = localStorage.getItem("quiz.order") === 
 const shuffle = a => { a = a.slice(); if (keepOrder) return a; for (let i = a.length; i > 1;) { const j = Math.random() * i-- | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const rich = s => esc(s).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>");
 const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+const warnIcon = q => q.warn ? `<span class="wico" role="img" aria-label="Cảnh báo">⚠</span>` : "";
 const warnHTML = q => q.warn ? `<div class="warnq">⚠ ${esc(q.warn)}</div>` : "";
+const flaggedList = () => { const out = []; quizData.subjects.forEach(sub => sub.chapters.forEach(ch => { const cnt = {}; ch.questions.forEach(q => { cnt[q.tag] = (cnt[q.tag] || 0) + 1; if (q.warn) out.push({ sub, ch, q, n: cnt[q.tag] }); }); })); return out; };
 const qimg = q => q.img ? `<img class="qimg" src="${q.img}" alt="Hình minh họa">` : "";
 const LETTERS = "ABCDEFGH";
 const getSubject = id => quizData.subjects.find(s => s.id === id);
@@ -5521,7 +6037,7 @@ function cmark(known) {
 }
 const VIEWS = {
   home: () => `<div class="top"><button class="icon-btn" data-act="menu" aria-label="Menu">${IC.menu}</button></div>${resumeHTML()}${titleHTML()}<div class="sec">Môn học</div><div class="grid two stagger">` +
-    quizData.subjects.filter(s => s.chapters.length).map((s, i) => { const n = s.chapters.length; return `<button class="tile ${n ? "" : "off"}" style="--i:${i}" ${n ? `data-act="subject" data-id="${s.id}"` : "disabled"}><span class="tt"><b>${esc(s.name)}</b><span class="mut">${n ? `${n} bài học${s.description ? " · " + esc(s.description) : ""}` : "Chưa có dữ liệu"}</span></span>${n ? '<span class="go">›</span>' : ""}</button>`; }).join("") + `</div>` + statsHTML() + `<button class="gear" data-act="themes"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Màu giao diện</button>`,
+    quizData.subjects.filter(s => s.chapters.length).map((s, i) => { const n = s.chapters.length; return `<button class="tile ${n ? "" : "off"}" style="--i:${i}" ${n ? `data-act="subject" data-id="${s.id}"` : "disabled"}><span class="tt"><b>${esc(s.name)}</b><span class="mut">${n ? `${n} bài học${s.description ? " · " + esc(s.description) : ""}` : "Chưa có dữ liệu"}</span></span>${n ? '<span class="go">›</span>' : ""}</button>`; }).join("") + `</div>` + statsHTML() + `<div class="gears"><button class="gear" data-act="themes"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Màu giao diện</button>${flaggedList().length ? `<button class="gear" data-act="flagged"><span class="wico" style="margin:0">⚠</span>Câu chưa chắc (${flaggedList().length})</button>` : ""}</div>`,
 
   subject: () => { const s = getSubject(S.subjectId); return topbar(`${esc(s.name)}`, "Chọn bài học") + `<div class="grid stagger">` +
     s.chapters.map((c, i) => `<button class="tile chap" style="--i:${i}" data-act="chapter" data-id="${c.id}"><span class="eyebrow">${esc(c.title)}</span><b>${esc(c.subtitle)}</b>${c.description ? `<span class="mut">${esc(c.description)}</span>` : ""}<span class="chips">${c.questions.length ? `<span class="chip">${c.questions.length} câu</span>` : ""}${c.cards && c.cards.length ? `<span class="chip">${c.cards.length} thẻ</span>` : ""}${chapterTags(c).map(([t]) => `<span class="chip">${esc(t)}</span>`).join("")}</span></button>`).join("") + `</div>`; },
@@ -5536,7 +6052,7 @@ const VIEWS = {
 
   quiz: () => { const r = cur(), n = S.list.length;
     return `<div class="qhead"><button class="icon-btn" data-act="back" aria-label="Thoát">${IC.back}</button><div class="bar"><i id="bar" style="transform:scaleX(${S.idx / n})"></i></div><span class="count">${S.idx + 1}/${n}</span><button class="icon-btn snd" data-act="sound" aria-label="Bật/tắt âm thanh">${sfx.on ? IC.volOn : IC.volOff}</button></div>` +
-    `<div class="card"><div class="tag">${S.retry ? "LÀM LẠI · " : ""}${esc(chap().title)} · ${r.src.hot ? "Trọng tâm · " : ""}${esc(r.src.tag)}</div><p class="q">${esc(r.src.question)}</p>${qimg(r.src)}${warnHTML(r.src)}<div id="opts">${TYPES[r.type].render(r)}</div><div id="res"></div></div>` +
+    `<div class="card"><div class="tag">${S.retry ? "LÀM LẠI · " : ""}${esc(chap().title)} · ${r.src.hot ? "Trọng tâm · " : ""}${esc(r.src.tag)}</div><p class="q">${warnIcon(r.src)}${esc(r.src.question)}</p>${qimg(r.src)}<div id="opts">${TYPES[r.type].render(r)}</div><div id="res"></div></div>` +
     `<div class="dock${r.type === "true_false" ? " two" : ""}">${r.type === "true_false" ? '<button class="btn alt" id="skip" data-act="skip">Bỏ qua</button>' : ""}<button class="btn" id="go" data-act="next" disabled>Xác nhận</button></div>`; },
 
   result: () => { const n = S.list.length, w = n - S.correct, sc = fmtScore(S.correct / n * 10), c = chap(), sb = getSubject(S.subjectId);
@@ -5564,9 +6080,13 @@ const VIEWS = {
   answers: () => { const c = chap(), cnt = {};
     const rows = c.questions.map(q => { cnt[q.tag] = (cnt[q.tag] || 0) + 1; return { q, n: cnt[q.tag] }; }).filter(x => S.tag === "all" || (S.tag === "hot" ? x.q.hot : x.q.tag === S.tag));
     const rv = q => q.type === "single" ? { options: q.options, answer: q.answer, picked: null } : q.type === "short" || q.type === "short_mc" ? { answers: q.answers } : { statements: q.statements.map(t => ({ text: t.text, answer: t.answer, picked: t.answer })) };
-    return topbar(`${esc(c.title)} · Đáp án`, `${rows.length} câu · đúng thứ tự đề`) + rows.map(({ q, n }) => `<div class="card"><div class="tag">${q.hot ? "Trọng tâm · " : ""}${esc(q.tag)} · Câu ${n}</div><p class="q">${esc(q.question)}</p>${qimg(q)}${warnHTML(q)}${TYPES[q.type].review(rv(q))}</div>`).join(""); },
+    return topbar(`${esc(c.title)} · Đáp án`, `${rows.length} câu · đúng thứ tự đề`) + rows.map(({ q, n }) => `<div class="card"><div class="tag">${q.hot ? "Trọng tâm · " : ""}${esc(q.tag)} · Câu ${n}</div><p class="q">${warnIcon(q)}${esc(q.question)}</p>${qimg(q)}${TYPES[q.type].review(rv(q))}</div>`).join(""); },
 
-  review: () => topbar("Xem lại", `${S.wrong.length} câu sai`) + S.wrong.map(r => `<div class="card"><div class="tag">${esc(r.src.tag)}</div><p class="q">${esc(r.src.question)}</p>${qimg(r.src)}${warnHTML(r.src)}${TYPES[r.type].review(r)}</div>`).join("")
+  flagged: () => { const list = flaggedList(); let last = "";
+    const rv = q => q.type === "single" ? { options: q.options, answer: q.answer, picked: null } : q.type === "short" || q.type === "short_mc" ? { answers: q.answers } : { statements: q.statements.map(t => ({ text: t.text, answer: t.answer, picked: t.answer })) };
+    return topbar("Câu chưa chắc", `${list.length} câu · nên hỏi lại thầy/cô`) + list.map(({ sub, ch, q, n }) => { const key = sub.id + ch.id, head = key !== last ? `<div class="sec">${esc(sub.name)} · ${esc(ch.title)}</div>` : ""; last = key; return head + `<div class="card"><div class="tag">${esc(q.tag)} · Câu ${n}</div><p class="q">${warnIcon(q)}${esc(q.question)}</p>${qimg(q)}${TYPES[q.type].review(rv(q))}</div>`; }).join(""); },
+
+  review: () => topbar("Xem lại", `${S.wrong.length} câu sai`) + S.wrong.map(r => `<div class="card"><div class="tag">${esc(r.src.tag)}</div><p class="q">${warnIcon(r.src)}${esc(r.src.question)}</p>${qimg(r.src)}${TYPES[r.type].review(r)}</div>`).join("")
 };
 
 /* hiệu ứng sau khi render */
@@ -5598,7 +6118,7 @@ function go(view) { S.view = view; render(); }
    ============================================================ */
 function back() {
   if ($modal.innerHTML) return closeModal();
-  const to = { subject: "home", intro: "subject", result: "subject", review: "result", answers: "intro", cards: "intro", cardsend: "intro" }[S.view];
+  const to = { subject: "home", intro: "subject", result: "subject", review: "result", flagged: "home", answers: "intro", cards: "intro", cardsend: "intro" }[S.view];
   if (S.view === "quiz") return S.idx === 0 && !S.locked ? go("intro") : openModal();
   if (to) go(to);
 }
@@ -5765,6 +6285,7 @@ const ACTIONS = {
     playSound("tick");
   },
   answers: () => go("answers"),
+  flagged: () => go("flagged"),
   hop: () => { ttlHop(); playSound("tick"); },
   mode: () => {
     const toLight = !isLight(theme), b = document.getElementById("tgl"), r = b ? b.getBoundingClientRect() : null;
