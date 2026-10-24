@@ -492,6 +492,41 @@ body[data-view=home] main{padding-top:calc(14px + env(safe-area-inset-top,0px))}
 .fback{position:fixed;z-index:30;left:max(14px,calc((100vw - 640px)/2 + 16px));top:calc(12px + env(safe-area-inset-top,0px));opacity:0;pointer-events:none;transform:translateY(-8px) scale(.92);transition:opacity .2s ease,transform .2s ease}
 .fback.show{opacity:1;pointer-events:auto;transform:none}
 .rp{position:fixed;inset:0;z-index:25;pointer-events:none;opacity:0}
+
+/* ===== Máy tính: to hơn một chút (điện thoại giữ nguyên) + gợi ý phím 1-4 ===== */
+.dock[hidden]{display:none!important}
+.setrow{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin-top:10px;padding:13px 14px;border-radius:14px;background:var(--card2);border:1px solid transparent;font-weight:600;color:var(--tx);text-align:left}
+.setrow.on{border-color:var(--ac);background:var(--acd)}
+.setrow::after{content:"Tắt";font-size:12px;font-weight:700;padding:2px 10px;border-radius:99px;background:var(--bd);color:var(--mut)}
+.setrow.on::after{content:"Bật";background:var(--ac);color:var(--onac)}
+.setnum{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px;padding:10px 14px;border-radius:14px;background:var(--card2);font-weight:600}
+.setnum input{width:84px;padding:8px 10px;border-radius:10px;border:1px solid var(--bd2);background:var(--card);color:var(--tx);font:inherit;text-align:center;outline:none}
+.setnum input:focus{border-color:var(--ac)}
+@media (min-width:900px) and (hover:hover) and (pointer:fine){
+main{max-width:880px;padding-left:24px;padding-right:24px}
+.tgl{right:max(14px,calc((100vw - 880px)/2 + 24px))}
+.fback{left:max(14px,calc((100vw - 880px)/2 + 24px))}
+.tile b{font-size:20px}.big{font-size:24px}.count{font-size:15px}
+.fct{font-size:26px}.fcb{font-size:21px}
+body[data-view=quiz] main{padding-top:calc(16px + env(safe-area-inset-top,0px));padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}
+body[data-view=quiz] .qhead{margin-bottom:18px}
+body[data-view=quiz] .qhead .icon-btn{width:48px;height:48px}
+body[data-view=quiz] .card{padding:28px 30px;margin-bottom:12px}
+body[data-view=quiz] .tag{font-size:14px;margin-bottom:8px}
+body[data-view=quiz] .q{font-size:24px;line-height:1.5;margin-bottom:14px}
+body[data-view=quiz] .opt{font-size:21px;line-height:1.45;margin:12px 0}
+body[data-view=quiz] .opt:has(>b:first-child){padding:10px 20px 10px 10px;gap:18px;min-height:72px}
+body[data-view=quiz] .opt>b:first-child{width:52px;height:52px;border-radius:14px;font-size:22px}
+body[data-view=quiz] .row{padding:12px 0}
+body[data-view=quiz] .row .st{font-size:20px;line-height:1.5}
+body[data-view=quiz] .tf .opt{min-height:60px;font-size:20px}
+body[data-view=quiz] .hint{font-size:17px}
+body[data-view=quiz] .msg{font-size:18px;padding:11px 20px}
+body[data-view=quiz] .warnq{font-size:15px}
+body[data-view=quiz] .dock{max-width:880px;padding:16px 24px calc(14px + env(safe-area-inset-bottom,0px))}
+body[data-view=quiz] .dock .btn{min-height:58px;font-size:19px}
+body[data-view=quiz] .opt[data-n]::after{content:attr(data-n);margin-left:auto;flex:none;min-width:30px;height:30px;display:grid;place-items:center;border-radius:8px;border:1px solid var(--bd2);color:var(--mut);font-size:14px;font-weight:700}
+}
 </style>
 <script>try{var _t=localStorage.getItem("quiz.theme");if(_t)document.documentElement.dataset.theme=_t}catch(e){}</script>
 <link rel="manifest" href="manifest.json">
@@ -7087,7 +7122,7 @@ const TYPES = {
   single: {
     rule: null,
     prepare: q => { const p = shuffle(q.options.map((_, i) => i)); return { options: p.map(k => q.options[k]), answer: p.indexOf(q.answer), picked: null }; },
-    render: r => r.options.map((o, k) => `<button class="opt" data-act="ans" data-k="${k}"><b>${LETTERS[k]}</b><span>${esc(o)}</span></button>`).join(""),
+    render: r => r.options.map((o, k) => `<button class="opt" data-act="ans" data-k="${k}" data-n="${k + 1}"><b>${LETTERS[k]}</b><span>${esc(o)}</span></button>`).join(""),
     select: (r, d, root) => { r.picked = +d.k; root.querySelectorAll("[data-act=ans]").forEach((el, k) => el.classList.toggle("sel", k === r.picked)); },
     ready: r => r.picked !== null,
     check: r => r.picked === r.answer,
@@ -7370,7 +7405,7 @@ function cmark(known) {
 }
 const VIEWS = {
   home: () => `<div class="top"><button class="icon-btn" data-act="menu" aria-label="Menu">${IC.menu}</button></div>${resumeHTML()}${titleHTML()}<div class="sec">Môn học</div><div class="grid two stagger">` +
-    homeSubjects().map((s, i) => { const n = s.chapters.length; return `<button class="tile ${n ? "" : "off"}" style="--i:${i}" ${n ? `data-act="subject" data-id="${s.id}"` : "disabled"}><span class="tt"><b>${esc(s.name)}</b><span class="mut">${n ? `${n} bài học` : "Chưa có dữ liệu"}</span></span>${n ? '<span class="go">›</span>' : ""}</button>`; }).join("") + `</div>` + statsHTML() + `<div class="gears"><button class="gear" data-act="themes"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Màu giao diện</button>${flaggedList().length ? `<button class="gear" data-act="flagged"><span class="wico" style="margin:0">⚠</span>Câu chưa chắc (${flaggedList().length})</button>` : ""}</div>`,
+    homeSubjects().map((s, i) => { const n = s.chapters.length; return `<button class="tile ${n ? "" : "off"}" style="--i:${i}" ${n ? `data-act="subject" data-id="${s.id}"` : "disabled"}><span class="tt"><b>${esc(s.name)}</b><span class="mut">${n ? `${n} bài học` : "Chưa có dữ liệu"}</span></span>${n ? '<span class="go">›</span>' : ""}</button>`; }).join("") + `</div>` + statsHTML() + `<div class="gears"><button class="gear" data-act="themes"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Màu giao diện</button><button class="gear" data-act="custom"><svg viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h2M10 12h10M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>Tùy chỉnh</button>${flaggedList().length ? `<button class="gear" data-act="flagged"><span class="wico" style="margin:0">⚠</span>Câu chưa chắc (${flaggedList().length})</button>` : ""}</div>`,
 
   subject: () => { const s = getSubject(S.subjectId); return topbar(`${esc(s.name)}`, "Chọn bài học") + `<div class="grid stagger">` +
     sortedChapters(s).map(({ c }, i) => { return `<button class="tile chap" style="--i:${i}" data-act="chapter" data-id="${c.id}"><span class="eyebrow">${esc(c.title)}</span><b>${esc(c.subtitle)}</b>${c.description ? `<span class="mut">${esc(c.description)}</span>` : ""}<span class="chips">${c.questions.length ? `<span class="chip">${c.questions.length} câu</span>` : ""}${c.cards && c.cards.length ? `<span class="chip">${c.cards.length} thẻ</span>` : ""}${chapterTags(c).map(([t]) => `<span class="chip">${esc(t)}</span>`).join("")}</span></button>`; }).join("") + `</div>`; },
@@ -7386,7 +7421,7 @@ const VIEWS = {
   quiz: () => { const r = cur(), n = S.list.length;
     return `<div class="qhead"><button class="icon-btn" data-act="back" aria-label="Thoát">${IC.back}</button><div class="bar"><i id="bar" style="transform:scaleX(${S.idx / n})"></i></div><span class="count">${S.idx + 1}/${n}</span><button class="icon-btn snd" data-act="sound" aria-label="Bật/tắt âm thanh">${sfx.on ? IC.volOn : IC.volOff}</button></div>` +
     `<div class="card"><div class="tag">${S.retry ? "LÀM LẠI · " : ""}${esc(chap().title)} · ${r.src.hot ? "Trọng tâm · " : ""}${esc(r.src.tag)}</div><p class="q">${warnIcon(r.src)}${esc(r.src.question)}</p>${qimg(r.src)}<div id="opts">${TYPES[r.type].render(r)}</div><div id="res"></div></div>` +
-    `<div class="dock${r.type === "true_false" ? " two" : ""}">${r.type === "true_false" ? '<button class="btn alt" id="skip" data-act="skip">Bỏ qua</button>' : ""}<button class="btn" id="go" data-act="next" disabled>Xác nhận</button></div>`; },
+    `<div class="dock${r.type === "true_false" ? " two" : ""}"${instantFor(r) ? " hidden" : ""}>${r.type === "true_false" ? '<button class="btn alt" id="skip" data-act="skip">Bỏ qua</button>' : ""}<button class="btn" id="go" data-act="next" disabled>Xác nhận</button></div>`; },
 
   result: () => { const n = S.list.length, w = n - S.correct, sc = fmtScore(S.correct / n * 10), c = chap(), sb = getSubject(S.subjectId);
     const ico = { clock: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>', ok: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.8"/></svg>' };
@@ -7439,6 +7474,7 @@ const AFTER = {
 };
 
 function render(anim = true) {
+  if (autoT) { clearTimeout(autoT); autoT = null; }
   document.body.dataset.view = S.view;
   $app.innerHTML = `<div class="screen${anim ? " enter" : ""}">${VIEWS[S.view]()}</div>`;
   window.scrollTo(0, 0);
@@ -7691,6 +7727,13 @@ const ACTIONS = {
     else { pref[lt ? "light" : "dark"] = t; try { localStorage.setItem(lt ? "quiz.lt" : "quiz.dk", t); } catch (e) {} }
     syncTheme(); playSound("tick");
   },
+  custom: () => { $modal.innerHTML = customHTML(); playSound("tick"); },
+  inst: () => {
+    instantMode = !instantMode;
+    try { localStorage.setItem("quiz.instant", instantMode ? "1" : "0"); } catch (e) {}
+    const b = document.getElementById("instbtn"); if (b) b.classList.toggle("on", instantMode);
+    playSound("tick");
+  },
   themes: () => { $modal.innerHTML = `<div class="scrim"><div class="dialog wide"><h2>Màu giao diện</h2><p class="mut">Chọn màu cho chế độ sáng và chế độ tối. Màu của chế độ còn lại chỉ được lưu lại; bấm công tắc ☀/🌙 phía trên để chuyển sang đó.</p><div class="tpick">${themeCols()}</div><button class="btn" data-act="stay">Xong</button></div></div>`; },
   kpmode: () => {
     shortChoice = !shortChoice;
@@ -7714,7 +7757,7 @@ const ACTIONS = {
     document.getElementById("start").textContent = `Bắt đầu kiểm tra (${countFor(chap(), S.tag)} câu)`;
   },
   start: () => startQuiz(S.subjectId, S.chapterId, S.tag),
-  ans: d => { if (S.locked) return; const r = cur(); TYPES[r.type].select(r, d, $app); document.getElementById("go").disabled = !TYPES[r.type].ready(r); },
+  ans: d => { if (S.locked || autoT) return; const r = cur(); if (instantFor(r)) return instantPick(d); TYPES[r.type].select(r, d, $app); document.getElementById("go").disabled = !TYPES[r.type].ready(r); },
   next,
   key: d => keySA(d.k),
   back,
@@ -7731,6 +7774,73 @@ const ACTIONS = {
   },
   chapters: () => go("subject")
 };
+
+/* ---------- Tùy chỉnh: chế độ "ấn 1 cái là ra đáp án" + phím 1-4 ----------
+   Mặc định: BẬT trên máy có chuột (laptop/PC), TẮT trên cảm ứng (điện thoại vẫn ấn đáp án rồi bấm Xác nhận).
+   Chỉ áp dụng cho câu trắc nghiệm A-D (single, short_mc). Đúng/Sai và nhập số vẫn bấm Xác nhận. */
+let instantMode; try { const v = localStorage.getItem("quiz.instant"); instantMode = v === null ? matchMedia("(hover:hover) and (pointer:fine)").matches : v === "1"; } catch (e) { instantMode = false; }
+const delayGet = (k, d) => { try { const v = parseFloat(localStorage.getItem(k)); return v >= .2 && v <= 5 ? v : d; } catch (e) { return d; } };
+let autoT = null;
+const instantFor = r => instantMode && r && (r.type === "single" || r.type === "short_mc");
+function instantPick(d) {
+  const r = cur(); if (S.locked || autoT || !r) return;
+  const k = +d.k, els = $app.querySelectorAll("[data-act=ans]"); if (!els[k] || els[k].disabled) return;
+  TYPES[r.type].select(r, d, $app);
+  const good = r.picked === r.answer, n = S.list.length, last = S.idx === n - 1, res = document.getElementById("res");
+  S.locked = true;
+  document.getElementById("opts").classList.add("locked");
+  els.forEach(el => el.classList.remove("sel"));
+  els[r.answer].classList.add("ok");
+  document.getElementById("bar").style.transform = `scaleX(${(S.idx + 1) / n})`;
+  if (good) {
+    if (!r.missed) S.correct++;
+    playSound("ok");
+    res.innerHTML = `<div class="msg ok">✓ Chính xác!</div>`;
+  } else {
+    if (!r.missed) { r.missed = true; S.wrong.push(r); }
+    els[k].classList.add("bad");
+    playSound("wrong");
+    const ob = document.getElementById("opts");
+    if (ob) { ob.classList.remove("shaking"); void ob.offsetWidth; ob.classList.add("shaking"); setTimeout(() => ob.classList.remove("shaking"), 750); }
+    try { navigator.vibrate && navigator.vibrate([40, 30, 40]); } catch (e) {}
+    res.innerHTML = `<div class="msg bad">✗ Chưa đúng. Đáp án đúng: ${LETTERS[r.answer]}</div>` + showKeys(r);
+  }
+  const wait = good ? delayGet("quiz.okd", .8) : delayGet("quiz.nod", 1.5);
+  const fire = () => { if ($modal.innerHTML) { autoT = setTimeout(fire, 300); return; } autoT = null; next(); };
+  autoT = setTimeout(fire, wait * 1000);
+}
+function customHTML() {
+  return `<div class="scrim"><div class="dialog wide"><h2>Tùy chỉnh</h2>
+<p class="mut">Cài đặt này lưu riêng trên từng thiết bị.</p>
+<button class="setrow${instantMode ? " on" : ""}" id="instbtn" data-act="inst"><span>Ấn 1 cái là ra đáp án<br><span class="mut" style="font-weight:400">Không cần bấm Xác nhận. Phím 1 2 3 4 = A B C D.</span></span></button>
+<label class="setnum"><span>Chờ khi trả lời đúng (giây)</span><input type="number" inputmode="decimal" min="0.2" max="5" step="0.1" value="${delayGet("quiz.okd", .8)}" data-pref="quiz.okd"></label>
+<label class="setnum"><span>Chờ khi trả lời sai (giây)</span><input type="number" inputmode="decimal" min="0.2" max="5" step="0.1" value="${delayGet("quiz.nod", 1.5)}" data-pref="quiz.nod"></label>
+<p class="mut" style="margin-top:10px">Chỉ áp dụng cho câu chọn A-D. Câu Đúng/Sai và câu nhập số vẫn bấm Xác nhận. Trả lời sai sẽ hiện đáp án đúng rồi tự sang câu mới.</p>
+<button class="btn" data-act="stay">Xong</button></div></div>`;
+}
+document.addEventListener("change", e => {
+  const el = e.target; if (!el.dataset || !el.dataset.pref) return;
+  let v = parseFloat(el.value); if (!(v >= .2)) v = el.dataset.pref === "quiz.okd" ? .8 : 1.5; v = Math.min(5, v); el.value = v;
+  try { localStorage.setItem(el.dataset.pref, String(v)); } catch (err) {}
+});
+/* phím 1-4 chọn A-D · Enter = Xác nhận / sang câu tiếp (hoặc bỏ qua thời gian chờ) */
+document.addEventListener("keydown", e => {
+  if (S.view !== "quiz" || e.ctrlKey || e.metaKey || e.altKey || $modal.innerHTML) return;
+  const r = cur(); if (!r) return;
+  if (/^[1-8]$/.test(e.key) && r.options && !e.repeat) {
+    if (S.locked || autoT) return;
+    const k = +e.key - 1, el = $app.querySelectorAll("[data-act=ans]")[k];
+    if (!el || el.disabled) return;
+    e.preventDefault();
+    return instantFor(r) ? instantPick({ k: String(k) }) : ACTIONS.ans({ k: String(k) });
+  }
+  if (e.key === "Enter" && !e.repeat) {
+    if (autoT) { e.preventDefault(); clearTimeout(autoT); autoT = null; return next(); }
+    if (r.type === "short" && !S.locked) return;   /* câu nhập số đã có xử lý Enter riêng */
+    const b = document.getElementById("go");
+    if (b && !b.disabled && !b.closest(".dock").hidden) { e.preventDefault(); b.click(); }
+  }
+});
 function setSA(v) { const r = cur(), el = document.getElementById("sa"); r.picked = v; el.value = v; el.classList.remove("bad"); const m = document.getElementById("res"); if (m) m.innerHTML = ""; document.getElementById("go").disabled = !v; }
 function keySA(k) {
   if (S.view !== "quiz" || S.locked) return; const r = cur(); if (r.type !== "short") return;
