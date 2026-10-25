@@ -32,501 +32,1183 @@ GHI CHÚ CHO CLAUDE (ẩn, không hiển thị trong app). Bảo tự yêu cầu
 <meta name="theme-color" content="#000000"><meta name="color-scheme" content="dark">
 <title>Ôn tập</title>
 <style>
-:root{--bg:#000;--bgr:0,0,0;--s1:rgba(5,5,5,.55);--card:rgba(12,12,14,.62);--card2:rgba(28,28,32,.7);--pop:#111;--bd:rgba(255,255,255,.09);--bd2:rgba(255,255,255,.2);--tx:#f2f2f3;--tx2:#d6d6db;--mut:#8b8b94;--ac:#8ab4ff;--ac2:#a78bfa;--ac3:#4ade80;--acd:rgba(138,180,255,.14);--onac:#000;--ok:#4ade80;--okb:rgba(6,33,15,.85);--no:#ff6b6b;--nob:rgba(38,12,12,.85);--g1:rgba(138,180,255,.30);--g2:rgba(167,139,250,.22);--g3:rgba(74,222,128,.12);--r:16px}
-/* Theme 1: Rừng xuân (Aquadulce · Aroma Green · Winter Mist · Tarragon · Antique Moss · Chalet Green) */
-/* Theme 2: Đêm xanh (Icy Blue · Cornflower · Persian · Dusk · Deep Navy) */
-
-/* Theme sáng */
-html[data-theme=light]{--bg:#f3f5fb;--bgr:243,245,251;--s1:rgba(255,255,255,.7);--card:rgba(255,255,255,.82);--card2:rgba(232,237,248,.9);--pop:#fff;--bd:rgba(20,30,70,.12);--bd2:rgba(20,30,70,.26);--tx:#161a2e;--tx2:#3a4262;--mut:#667090;--ac:#3b6df0;--ac2:#7c5cf0;--ac3:#16a34a;--acd:rgba(59,109,240,.12);--onac:#fff;--ok:#15803d;--okb:rgba(220,252,231,.95);--no:#dc2626;--nob:rgba(254,226,226,.95);--g1:rgba(59,109,240,.22);--g2:rgba(124,92,240,.16);--g3:rgba(22,163,74,.10)}
-html[data-theme=light] .scrim,html[data-theme=light] .dscrim{background:rgba(20,26,50,.35)}
-html[data-theme=light] .card,html[data-theme=light] .tile,html[data-theme=light] .kpi,html[data-theme=light] .stat,html[data-theme=light] .sum{box-shadow:0 6px 22px -12px rgba(30,45,100,.28)}
-/* Công tắc sáng/tối */
-.tgl{position:absolute;z-index:30;top:calc(12px + env(safe-area-inset-top,0px));right:max(14px,calc((100vw - 640px)/2 + 16px));width:58px;height:32px;padding:0;border-radius:99px;border:1px solid var(--bd2);background:linear-gradient(135deg,#1b2350,#0b1030);box-shadow:inset 0 1px 4px rgba(0,0,0,.5);transition:background .5s ease,border-color .4s ease;-webkit-tap-highlight-color:transparent;overflow:hidden}
-.tgl::before,.tgl::after{content:"";position:absolute;border-radius:50%;background:#fff;opacity:.85;transition:opacity .4s ease,transform .5s ease}
-.tgl::before{width:3px;height:3px;left:12px;top:9px;box-shadow:8px 8px 0 -.5px #fff,2px 14px 0 -1px #fff}
-.tgl::after{width:12px;height:5px;right:9px;bottom:6px;border-radius:99px;background:#fff;opacity:0;transform:translateX(10px)}
-.tgl i{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:#e8ecff;color:#2a3470;box-shadow:0 2px 8px rgba(0,0,0,.45);transform:translateX(26px);transition:transform .55s cubic-bezier(.3,1.5,.5,1),background .4s ease,color .4s ease}
-.tgl svg{position:absolute;width:15px;height:15px;transition:transform .55s cubic-bezier(.3,1.5,.5,1),opacity .3s ease}
-.tgl .sun{opacity:0;transform:rotate(-90deg) scale(.3)}.tgl .moon{opacity:1}
-.tgl:active i{width:28px}.tgl.light:active i{transform:translateX(0)}
-.tgl.light{background:linear-gradient(135deg,#8fd0ff,#cfeaff);border-color:rgba(20,30,70,.18);box-shadow:inset 0 1px 4px rgba(20,60,120,.25)}
-.tgl.light::before{opacity:0;transform:translateY(-6px)}.tgl.light::after{opacity:.9;transform:none}
-.tgl.light i{transform:translateX(0);background:#ffd24a;color:#b45309;box-shadow:0 2px 8px rgba(180,110,0,.45)}
-.tgl.light .sun{opacity:1;transform:none}.tgl.light .moon{opacity:0;transform:rotate(90deg) scale(.3)}
-
-/* chừa chỗ cho công tắc ở góc phải */
-.top,.qhead{padding-right:72px}
-body[data-view=home] main,body[data-view=result] main{padding-top:calc(58px + env(safe-area-inset-top,0px))}
-/* nền ánh sáng chuyển động chậm */
-.bg{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;background:var(--bg)}
-.bg i{position:absolute;width:80vmax;height:80vmax;border-radius:50%;will-change:transform}
-.bg i:nth-child(1){left:-25vmax;top:-30vmax;background:radial-gradient(closest-side,var(--g1),transparent);animation:d1 26s ease-in-out infinite alternate}
-.bg i:nth-child(2){right:-30vmax;top:25%;background:radial-gradient(closest-side,var(--g2),transparent);animation:d2 34s ease-in-out infinite alternate}
-.bg i:nth-child(3){left:5%;bottom:-40vmax;background:radial-gradient(closest-side,var(--g3),transparent);animation:d3 42s ease-in-out infinite alternate}
-.bg::after{content:"";position:absolute;inset:-20%;background:linear-gradient(115deg,transparent 38%,var(--g2) 50%,transparent 62%);opacity:.55;transform:translateX(-30%);animation:sweep 18s ease-in-out infinite alternate}
-@keyframes d1{to{transform:translate3d(22vmax,16vmax,0) scale(1.15)}}
-@keyframes d2{to{transform:translate3d(-24vmax,-14vmax,0) scale(.9)}}
-@keyframes d3{to{transform:translate3d(18vmax,-20vmax,0) scale(1.2)}}
-@keyframes sweep{to{transform:translateX(30%)}}
-.card,.tile,.kpi,.stat,.sum,.icon-btn,.tchip{-webkit-backdrop-filter:blur(14px) saturate(1.15);backdrop-filter:blur(14px) saturate(1.15)}
-/* menu ☰ */
-.top+.hero{padding-top:6px}
-.dwrap{position:fixed;inset:0;z-index:9}
-.dscrim{position:absolute;inset:0;background:rgba(0,0,0,.6);animation:fade .2s ease}
-.drawer{position:absolute;left:0;top:0;bottom:0;width:min(320px,86vw);background:var(--pop);border-right:1px solid var(--bd);padding:calc(16px + env(safe-area-inset-top,0px)) 16px 16px;overflow-y:auto;animation:slidein .25s ease backwards}
-@keyframes slidein{from{transform:translateX(-100%)}}
-.drawer .dh{display:flex;align-items:center;justify-content:space-between;margin-bottom:4px}
-.drawer .sec{margin-top:18px}
-.trow{display:flex;align-items:center;gap:12px;width:100%;padding:12px;min-height:52px;margin-bottom:8px;border-radius:12px;border:1.5px solid var(--bd);background:var(--card2)}
-.trow i{flex:none;width:26px;height:26px;border-radius:50%;background:var(--sw);box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
-.trow .ck{margin-left:auto;opacity:0}
-.trow.on{border-color:var(--ac);background:var(--acd);color:var(--ac);font-weight:600}.trow.on .ck{opacity:1}
-/* (cũ) */
-.themes{display:flex;justify-content:center;flex-wrap:wrap;gap:8px;margin-top:16px}
-.tchip{display:flex;align-items:center;gap:8px;padding:6px 14px 6px 7px;min-height:38px;border-radius:99px;border:1.5px solid var(--bd);background:var(--card);font-size:13px}
-.tchip i{width:22px;height:22px;border-radius:50%;background:var(--sw);box-shadow:inset 0 0 0 1px rgba(255,255,255,.25)}
-.tchip.on{border-color:var(--ac);background:var(--acd);color:var(--ac);font-weight:600}
-*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{background:var(--bg)}
-body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.55 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;overflow-x:hidden}
-main{position:relative;z-index:1;max-width:640px;margin:0 auto;padding:calc(16px + env(safe-area-inset-top,0px)) 16px calc(24px + env(safe-area-inset-bottom,0px))}
-button{font:inherit;color:inherit;cursor:pointer;border:0;background:none;text-align:left;transition:transform .12s ease,background .2s ease,border-color .2s ease,opacity .2s ease}
-button:active:not(:disabled){transform:scale(.97)}
-h1{font-size:24px;line-height:1.25;margin:0 0 6px}h2{margin:0 0 6px;font-size:19px}
-p{margin:0}.mut{color:var(--mut);font-size:14px}
-.screen.enter{animation:in .26s ease backwards}
-@keyframes in{from{opacity:0;transform:translateY(10px)}}
-.stagger>*{animation:in .32s ease backwards;animation-delay:calc(var(--i,0)*45ms)}
-/* home */
-.hero{text-align:center;padding:28px 0 22px}.hero .logo{font-size:44px}.hero h1{letter-spacing:.14em;font-size:22px;margin-top:8px}
-.grid{display:grid;gap:12px}@media(min-width:560px){.grid.two{grid-template-columns:1fr 1fr}}
-.tile{display:flex;align-items:center;gap:14px;width:100%;background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:16px;min-height:76px}
-.tile .ico{flex:none;width:48px;height:48px;border-radius:14px;background:var(--card2);display:grid;place-items:center;font-size:26px}
-.tile .tt{flex:1;min-width:0}.tile b{display:block;font-size:17px;overflow-wrap:anywhere}
-.tile .go{color:var(--mut);font-size:20px}
-.tile.off{opacity:.45;cursor:default}.tile.off:active{transform:none}
-@media(hover:hover){.tile:not(.off):hover{border-color:var(--bd2);background:var(--card2)}}
-.tile.chap{align-items:flex-start;flex-direction:column;gap:4px}
-.eyebrow{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ac)}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
-.chip{font-size:12px;color:var(--mut);border:1px solid var(--bd);border-radius:99px;padding:2px 10px}
-/* top bars */
-.top{display:flex;align-items:center;gap:10px;margin-bottom:16px}
-/* ẩn nút menu ☰ (code menu/giao diện vẫn còn, muốn hiện lại chỉ cần xóa 2 dòng này) */
-.top:has(>[data-act=menu]:only-child){display:none}
-.top:has(>[data-act=menu]:only-child)+.hero{padding-top:28px}
-.icon-btn{flex:none;width:44px;height:44px;border-radius:12px;background:var(--card);border:1px solid var(--bd);display:grid;place-items:center;font-size:20px;text-align:center}
-.top .ttl{font-weight:700;font-size:18px;overflow-wrap:anywhere}
-.card{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:18px;margin-bottom:12px}
-/* intro */
-.big{font-size:22px;font-weight:700;line-height:1.3;margin:4px 0 8px;overflow-wrap:anywhere}
-.pick{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 4px}
-.pick button{border:1.5px solid var(--bd);border-radius:12px;padding:10px 14px;min-height:44px;background:var(--s1)}
-.pick button.on{border-color:var(--ac);background:var(--acd);color:var(--ac);font-weight:600}
-.rules{margin-top:14px;display:grid;gap:4px}
-/* summary */
-.sum{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);margin-bottom:12px;overflow:hidden}
-.sum summary{list-style:none;cursor:pointer;padding:15px 18px;min-height:52px;display:flex;align-items:center;justify-content:space-between;font-weight:700;-webkit-user-select:none;user-select:none}
-.sum summary::-webkit-details-marker{display:none}
-.sum .chev{color:var(--mut);font-size:22px;transition:transform .25s ease}.sum[open] .chev{transform:rotate(90deg)}
-.sumbody{padding:0 18px 16px;animation:in .25s ease backwards}
-.sh{display:flex;gap:10px;align-items:center;font-weight:700;color:var(--ac);margin-top:16px}
-.sn{flex:none;width:24px;height:24px;border-radius:8px;background:var(--acd);display:grid;place-items:center;font-size:13px}
-.sumbody ul{margin:6px 0 0;padding-left:20px}.sumbody li{margin:5px 0;color:var(--tx2);overflow-wrap:anywhere;font-size:15px}.sumbody li b{color:var(--tx)}
-/* buttons */
-.btn{display:block;width:100%;background:var(--ac);color:var(--onac);font-weight:700;text-align:center;border-radius:14px;padding:15px 18px;min-height:52px;margin-top:10px}
-.btn:disabled{opacity:.35}.btn.alt{background:var(--card);color:var(--tx);border:1.5px solid var(--bd);font-weight:600}
-.dock{position:sticky;bottom:0;margin:0 -16px;padding:18px 16px calc(6px + env(safe-area-inset-bottom,0px));background:none}
-.dock .btn{margin-top:0}
-/* quiz */
-.qhead{display:flex;align-items:center;gap:12px;margin-bottom:14px}
-.bar{flex:1;height:6px;background:var(--card2);border-radius:4px;overflow:hidden}
-.bar i{display:block;height:100%;width:100%;background:var(--ac);border-radius:4px;transform-origin:left;transition:transform .45s cubic-bezier(.3,.7,.2,1)}
-.count{font-size:13px;color:var(--mut);font-variant-numeric:tabular-nums;min-width:44px;text-align:right}
-.tag{font-size:12px;font-weight:700;color:var(--ac);margin-bottom:6px}
-.q{font-weight:700;font-size:17px;white-space:pre-line;overflow-wrap:anywhere;margin-bottom:6px}
-.qimg{display:block;max-width:100%;height:auto;margin:8px 0 12px;border-radius:12px;background:#fff}
-.opt{display:flex;gap:10px;width:100%;background:var(--s1);border:1.5px solid var(--bd);border-radius:12px;padding:13px 14px;margin:8px 0;min-height:50px;overflow-wrap:anywhere}
-.opt b{flex:none}.opt span{min-width:0}
-.opt.sel{border-color:var(--ac);background:var(--acd)}
-.opt.ok{border-color:var(--ok);background:var(--okb);animation:pop .3s ease}
-.opt.bad{border-color:var(--no);background:var(--nob)}
-.locked .opt.bad{animation:shake .5s cubic-bezier(.36,.07,.19,.97)}
-@keyframes shake{10%,90%{transform:translateX(-2px)}20%,80%{transform:translateX(4px)}30%,50%,70%{transform:translateX(-8px)}40%,60%{transform:translateX(8px)}}
-.confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:8}
-.snd{width:40px;height:40px;font-size:18px;border-radius:12px}
-@keyframes pop{50%{transform:scale(1.015)}}
-.locked .opt{pointer-events:none}
-.row{border-top:1px solid var(--bd);padding:10px 0}.row:first-child{border:0}
-.row .st{overflow-wrap:anywhere}.row .st b{color:var(--mut)}
-.tf{display:flex;gap:8px;margin-top:6px}.tf .opt{margin:0;justify-content:center;text-align:center;flex:1;white-space:nowrap}
-
-/* Từ khóa gợi ý khi chọn sai */
-.kw{font-weight:800;color:var(--ac);border-radius:5px;padding:0 2px;background:linear-gradient(var(--acd),var(--acd)) no-repeat left center/0% 100%;animation:kwSweep .6s ease forwards,kwGlow 1.8s ease-in-out .6s 2;animation-delay:calc(var(--d,0)*.18s),calc(var(--d,0)*.18s + .6s)}
-@keyframes kwSweep{to{background-size:100% 100%}}
-@keyframes kwGlow{0%,100%{text-shadow:0 0 0 transparent}50%{text-shadow:0 0 14px var(--ac)}}
-.hint{margin-top:8px;font-size:14px;line-height:1.5;color:var(--mut);animation:in .35s ease backwards}.hint b{color:var(--ac)}
-.msg{font-weight:700;margin-top:12px;animation:in .25s ease backwards}.msg.ok{color:var(--ok)}.msg.bad{color:var(--no)}
-/* result */
-.result{text-align:center;padding-top:14px}
-.result .emoji{font-size:52px;display:inline-block;animation:bounce .7s cubic-bezier(.3,1.6,.5,1) backwards}
-@keyframes bounce{from{transform:scale(.2);opacity:0}}
-.ring{position:relative;width:170px;height:170px;margin:14px auto}
-.ring svg{width:100%;height:100%}.ring circle{fill:none;stroke-width:8;stroke-linecap:round}
-.ring .rt{stroke:var(--card2)}.ring .rf{stroke:var(--ac);transition:stroke-dashoffset 1s cubic-bezier(.3,.7,.2,1)}
-.ring .rc{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
-.ring .rc b{font-size:30px;line-height:1.1}.ring .rc span{color:var(--mut);font-size:15px;font-variant-numeric:tabular-nums}
-.stats{display:flex;gap:10px;margin:6px 0 14px}.stat{flex:1;background:var(--card);border:1px solid var(--bd);border-radius:14px;padding:12px;color:var(--mut);font-size:14px}
-.stat b{display:block;font-size:24px}.stat.ok b{color:var(--ok)}.stat.no b{color:var(--no)}
-/* review + modal */
-.opt.static{pointer-events:none}
-.pill{font-size:12px;font-weight:700;border-radius:99px;padding:1px 9px;margin-left:6px}.pill.ok{background:var(--okb);color:var(--ok)}.pill.no{background:var(--nob);color:var(--no)}
-.scrim{position:fixed;inset:0;background:rgba(0,0,0,.72);display:grid;place-items:center;padding:20px;z-index:9;animation:fade .2s ease}
-.dialog{width:100%;max-width:360px;background:var(--pop);border:1px solid var(--bd);border-radius:20px;padding:20px;animation:in .25s ease backwards}
-@keyframes fade{from{opacity:0}}
-@media(prefers-reduced-motion:reduce){.bg i,.bg::after{animation:none!important}*,*::before,*::after{animation-duration:.01ms!important;animation-delay:0s!important;transition-duration:.01ms!important}}
-
-.sec{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);margin:26px 2px 10px}
-.kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(min-width:560px){.kpis{grid-template-columns:repeat(4,1fr)}}
-.kpi{background:var(--card);border:1px solid var(--bd);border-radius:var(--r);padding:14px}.kpi b{display:block;font-size:26px;line-height:1.15}.kpi span{color:var(--mut);font-size:13px}.kpi.a b{color:var(--ac)}
-.chart{display:flex;align-items:flex-end;gap:8px;height:104px;margin-top:10px}.chart div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:6px}.chart i{display:block;width:100%;max-width:30px;border-radius:6px 6px 3px 3px;background:var(--ac)}.chart .z i{background:var(--bd)}.chart em{font-style:normal;font-size:11px;color:var(--mut)}
-.hrow{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;border-top:1px solid var(--bd);font-size:14px}.hrow:first-child{border-top:0;padding-top:0}.hrow:last-child{padding-bottom:0}.hrow b{font-size:16px}
-.lnk{display:block;margin:18px auto 0;color:var(--mut);font-size:13px;text-align:center;padding:8px}
-
-/* ===== hiệu ứng thêm ===== */
-.btn{position:relative;overflow:hidden;transition:transform .15s ease,box-shadow .25s ease,opacity .25s ease,filter .2s ease}
-.btn:not(.alt){background:linear-gradient(135deg,var(--ac),var(--ac2));box-shadow:0 8px 24px -8px var(--ac),0 0 0 1px rgba(255,255,255,.12) inset}
-.btn:not(.alt):disabled{box-shadow:none;filter:saturate(.6)}
-.btn:not(.alt):not(:disabled)::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-20deg);animation:btnshine 2.8s ease-in-out infinite}
-.btn:not(.alt):not(:disabled){animation:btnready .5s cubic-bezier(.3,1.5,.5,1),btnpulse 2.4s ease-in-out .5s infinite}
-.btn:not(:disabled):active{transform:scale(.97);filter:brightness(.92)}
-@media(hover:hover){.btn:not(:disabled):hover{transform:translateY(-2px);box-shadow:0 12px 28px -8px var(--ac)}}
-@keyframes btnshine{0%{left:-60%}55%,100%{left:130%}}
-@keyframes btnready{from{transform:scale(.94)}}
-@keyframes btnpulse{0%,100%{box-shadow:0 8px 24px -8px var(--ac),0 0 0 0 rgba(var(--acr,138,180,255),.45)}50%{box-shadow:0 8px 24px -8px var(--ac),0 0 0 8px rgba(var(--acr,138,180,255),0)}}
-.opt{transition:transform .15s ease,border-color .2s ease,background .2s ease,box-shadow .25s ease}
-.opt:active{transform:scale(.98)}
-.opt.sel{box-shadow:0 0 0 3px var(--acd),0 6px 18px -8px var(--ac);animation:pop .3s ease}
-.opt.ok{box-shadow:0 0 0 3px rgba(74,222,128,.15),0 6px 18px -8px var(--ok)}
-.opt.bad{box-shadow:0 0 0 3px rgba(255,107,107,.12)}
-.dock{backdrop-filter:none}
-@media(prefers-reduced-motion:reduce){.btn::after{display:none}.btn{animation:none!important}}
-
-/* ===== hiệu ứng xuất hiện: chọn môn / chọn bài ===== */
-.stagger{perspective:900px}
-@keyframes tileIn{0%{opacity:0;transform:translateY(34px) scale(.9) rotateX(-14deg);filter:blur(9px)}55%{opacity:1;filter:blur(0)}78%{transform:translateY(-4px) scale(1.012) rotateX(0)}100%{transform:none}}
-.stagger>*{animation:tileIn .7s cubic-bezier(.22,.9,.3,1) backwards;animation-delay:calc(var(--i,0)*90ms + 60ms);transform-origin:50% 100%}
-.stagger>.tile{position:relative;overflow:hidden}
-.stagger .ico{animation:icoPop .6s cubic-bezier(.3,1.6,.5,1) calc(var(--i,0)*90ms + 250ms) backwards}
-@keyframes icoPop{from{transform:scale(0) rotate(-40deg);opacity:0}}
-.stagger .go{animation:goIn .5s ease calc(var(--i,0)*90ms + 350ms) backwards}
-@keyframes goIn{from{transform:translateX(-14px);opacity:0}}
-.stagger .eyebrow{animation:eyeIn .7s ease calc(var(--i,0)*90ms + 200ms) backwards}
-@keyframes eyeIn{from{letter-spacing:.32em;opacity:0}}
-.stagger .chip{animation:chipPop .45s cubic-bezier(.3,1.7,.5,1) backwards}
-.stagger .chip:nth-child(1){animation-delay:calc(var(--i,0)*90ms + 420ms)}
-.stagger .chip:nth-child(2){animation-delay:calc(var(--i,0)*90ms + 490ms)}
-.stagger .chip:nth-child(3){animation-delay:calc(var(--i,0)*90ms + 560ms)}
-.stagger .chip:nth-child(n+4){animation-delay:calc(var(--i,0)*90ms + 630ms)}
-@keyframes chipPop{from{transform:scale(.4);opacity:0}}
-.screen.enter .sec,.screen.enter .top{animation:secIn .5s cubic-bezier(.2,.9,.3,1) backwards}
-@keyframes secIn{from{opacity:0;transform:translateX(-18px)}}
-@media(hover:hover){.stagger>.tile:not(.off):hover{transform:translateY(-3px);box-shadow:0 14px 30px -14px var(--ac),0 0 0 1px var(--bd2)}}
-.stagger>.tile{transition:transform .2s ease,box-shadow .25s ease,background .2s ease,border-color .2s ease}
-
-/* ===== màn kết quả ===== */
-.result.card{padding:0;text-align:left;overflow:hidden;animation:in .4s ease backwards}
-.rscore{display:flex;align-items:baseline;justify-content:center;gap:12px;padding:26px 16px 22px;border-bottom:1px solid var(--bd)}
-.rscore span{font-size:15px;font-weight:600;color:var(--tx2)}
-.rscore b{font-size:40px;line-height:1;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
-.rscore b.of{margin-left:-10px}
-.rbody{padding:20px 18px 18px}
-.rname{text-align:center;font-weight:600;font-size:16px;margin-bottom:16px;overflow-wrap:anywhere}
-.rrow{display:flex;align-items:center;gap:12px;padding:11px 2px;font-size:16px}
-.rrow .ri{flex:none;width:26px;height:26px;color:var(--tx2);display:grid;place-items:center}
-.rrow .ri svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-.rrow .rl{flex:1;min-width:0}
-.rrow b{font-variant-numeric:tabular-nums;white-space:nowrap}
-.result .btn{margin-top:12px}
-.btn.alt.or{color:#fb923c;border-color:#fb923c;background:transparent}
-.btn.alt.bl{color:var(--ac);border-color:var(--ac);background:transparent}
-
-/* ===== hiệu ứng xuất hiện: thống kê học tập (đồng bộ với danh sách) ===== */
-.kpis{perspective:900px}
-.kpis>.kpi{animation:tileIn .7s cubic-bezier(.22,.9,.3,1) backwards;transform-origin:50% 100%}
-.kpis>.kpi:nth-child(1){animation-delay:.35s}.kpis>.kpi:nth-child(2){animation-delay:.44s}.kpis>.kpi:nth-child(3){animation-delay:.53s}.kpis>.kpi:nth-child(4){animation-delay:.62s}
-.screen.enter .sec.st1{animation-delay:.25s}
-.st-chart{animation:tileIn .7s cubic-bezier(.22,.9,.3,1) .75s backwards;transform-origin:50% 100%}
-.chart>div:nth-child(1){--b:1}.chart>div:nth-child(2){--b:2}.chart>div:nth-child(3){--b:3}.chart>div:nth-child(4){--b:4}.chart>div:nth-child(5){--b:5}.chart>div:nth-child(6){--b:6}.chart>div:nth-child(7){--b:7}
-.chart i{transform-origin:bottom;animation:barGrow .8s cubic-bezier(.3,1.35,.5,1) calc(.95s + var(--b,0)*70ms) backwards}
-.chart span{animation:fadeUp .4s ease calc(1.3s + var(--b,0)*70ms) backwards}
-.chart em{animation:fadeUp .4s ease calc(1s + var(--b,0)*50ms) backwards}
-@keyframes barGrow{from{transform:scaleY(0);opacity:0}}
-@keyframes fadeUp{from{opacity:0;transform:translateY(6px)}}
-.screen.enter .sec.st2{animation-delay:1.1s}
-.st-rows{animation:tileIn .7s cubic-bezier(.22,.9,.3,1) 1.15s backwards;transform-origin:50% 100%}
-.st-rows .hrow{animation:secIn .5s cubic-bezier(.2,.9,.3,1) backwards}
-.st-rows .hrow:nth-child(1){animation-delay:1.45s}.st-rows .hrow:nth-child(2){animation-delay:1.55s}.st-rows .hrow:nth-child(3){animation-delay:1.65s}.st-rows .hrow:nth-child(4){animation-delay:1.75s}
-.st-rows .hrow>b{animation:chipPop .45s cubic-bezier(.3,1.7,.5,1) backwards}
-.st-rows .hrow:nth-child(1)>b{animation-delay:1.65s}.st-rows .hrow:nth-child(2)>b{animation-delay:1.75s}.st-rows .hrow:nth-child(3)>b{animation-delay:1.85s}.st-rows .hrow:nth-child(4)>b{animation-delay:1.95s}
-.st-lnk{animation:fadeUp .5s ease 1.9s backwards}
-.sa{width:100%;box-sizing:border-box;padding:14px 16px;border-radius:14px;border:1px solid var(--bd2);background:var(--card2);color:var(--tx);font:inherit;font-size:18px;outline:none}.sa:focus{border-color:var(--ac)}.sa.ok{border-color:var(--ok);background:var(--okb)}.sa.bad{border-color:var(--no);background:var(--nob)}.opt:disabled{cursor:default}.opt.bad:disabled{opacity:1}
-.kp{margin-bottom:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}.kp button{display:flex;align-items:center;justify-content:center;text-align:center;padding:12px 0;line-height:1;font:inherit;font-size:22px;font-weight:600;border-radius:14px;border:1px solid var(--bd2);background:var(--card2);color:var(--tx);cursor:pointer}.kp button:active{background:var(--acd)}.kp button:disabled{opacity:.4}.sa{text-align:center;font-size:24px;letter-spacing:1px}
-.sum .rc summary{display:block;padding:4px 0;min-height:0;font-weight:600;cursor:pointer}.sum .rc div{margin-top:4px;color:var(--ac);font-weight:700}
-/* ===== Thang chữ thống nhất: 12 nhãn · 14 phụ · 16 nội dung · 20 tiêu đề · 24 số liệu ===== */
-.tag,.eyebrow,.chip,.sec,.pill,.count,.sn,.chart em{font-size:12px}
-.mut,.hint,.stat,.hrow,.lnk,.tchip,.kpi span,.rscore span,.ring .rc span{font-size:14px}
-.q,.opt,.row .st,.sumbody li,.tile b,.rname,.rrow,.hrow b,.btn,.pick button{font-size:16px}
-.q{font-weight:600;line-height:1.5}
-.opt,.row .st{line-height:1.5}
-.big,h2,.top .ttl{font-size:20px;line-height:1.3}
-h1,.stat b,.kpi b{font-size:24px}
-.icon-btn{font-size:16px;color:var(--tx)}.icon-btn svg{display:block}
-.snd{width:44px;height:44px}
-.opt,.btn,.pick button,.tile,.card{border-radius:14px}
-.btn,.pick button{min-height:48px;font-weight:600}
-.sh{font-size:15px;font-weight:700}
-.sum .rc summary{font-size:16px}.sum .rc div{font-size:15px}
-.tag{text-transform:uppercase;letter-spacing:.06em;font-weight:700}
-/* ===== Bộ lọc dạng câu: lưới đều 2 cột, không thừa khoảng trống ===== */
-#pick{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-#pick::before{content:"Lọc theo dạng câu";grid-column:1/-1;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
-#pick button{margin:0;width:100%;text-align:center;justify-content:center}
-#pick button:last-child:nth-child(even){grid-column:1/-1}
-/* ===== Khu tùy chọn: tách riêng, dạng hàng công tắc ===== */
-.pick:not(#pick){display:grid;grid-template-columns:1fr;gap:8px;margin-top:20px;padding-top:16px;border-top:1px solid var(--bd2)}
-.pick:not(#pick)::before{content:"Tùy chọn";font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--mut)}
-.pick:not(#pick) button{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin:0;text-align:left;padding:12px 14px;border-radius:12px;background:var(--card2);border:1px solid transparent;font-weight:600;color:var(--tx)}
-.pick:not(#pick) button.on{border-color:var(--ac);background:var(--acd);color:var(--tx)}
-#ordbtn::after,#kpbtn::after,#rvbtn::after{content:"Tắt";font-size:12px;font-weight:700;padding:2px 10px;border-radius:99px;background:var(--bd);color:var(--mut)}
-#ordbtn.on::after,#kpbtn.on::after,#rvbtn.on::after{content:"Bật";background:var(--ac);color:var(--onac)}
-.pick:not(#pick) [data-act=answers]::after{content:"›";font-size:22px;line-height:1;color:var(--mut)}
-.dock.two{display:flex;gap:10px}.dock.two .btn{width:auto;margin-top:0}.dock.two #skip{flex:0 0 34%}.dock.two #go{flex:1}#skip[hidden]{display:none}
-/* ===== Làm bài: nút cố định dưới cùng + chữ nhỏ gọn hơn ===== */
-body[data-view=quiz] main{padding-top:calc(8px + env(safe-area-inset-top,0px));padding-bottom:calc(88px + env(safe-area-inset-bottom,0px))}
-body[data-view=quiz] .dock{position:fixed;left:0;right:0;bottom:0;margin:0 auto;max-width:640px;box-sizing:border-box;padding:14px 16px calc(10px + env(safe-area-inset-bottom,0px));z-index:5;background:linear-gradient(to top,rgba(var(--bgr),.97) 62%,rgba(var(--bgr),0))}
-body[data-view=quiz] .dock .btn{min-height:48px;padding:12px 16px}
-body[data-view=quiz] .card{padding:14px;margin-bottom:8px}
-body[data-view=quiz] .q{font-size:14.5px;line-height:1.45;font-weight:600;margin-bottom:4px}
-body[data-view=quiz] .tag{font-size:11px;margin-bottom:4px}
-body[data-view=quiz] .opt{font-size:14px;line-height:1.4;padding:9px 12px;min-height:40px;margin:6px 0}
-body[data-view=quiz] .row{padding:7px 0}
-body[data-view=quiz] .row .st{font-size:14px;line-height:1.4}
-body[data-view=quiz] .tf{margin-top:5px}
-body[data-view=quiz] .tf .opt{margin:0}
-body[data-view=quiz] .hint{font-size:13px}
-body[data-view=quiz] .qhead .icon-btn{width:38px;height:38px}
-/* ===== Hiệu ứng mở đầu nhanh hơn ===== */
-.screen.enter{animation-duration:.14s}
-.screen.enter .sec,.screen.enter .top{animation-duration:.2s}
-.stagger>*{animation-duration:.28s;animation-delay:calc(var(--i,0)*22ms)}
-.stagger .ico{animation-duration:.25s;animation-delay:calc(var(--i,0)*22ms + 50ms)}
-.stagger .go{animation-duration:.2s;animation-delay:calc(var(--i,0)*22ms + 70ms)}
-.stagger .eyebrow{animation-duration:.25s;animation-delay:calc(var(--i,0)*22ms + 40ms)}
-.stagger .chip{animation-duration:.2s}
-.stagger .chip:nth-child(n){animation-delay:calc(var(--i,0)*22ms + 90ms)}
-.kpis>.kpi{animation-duration:.28s}
-.kpis>.kpi:nth-child(1){animation-delay:.03s}.kpis>.kpi:nth-child(2){animation-delay:.07s}.kpis>.kpi:nth-child(3){animation-delay:.11s}.kpis>.kpi:nth-child(4){animation-delay:.15s}
-.screen.enter .sec.st1{animation-delay:.03s}.screen.enter .sec.st2{animation-delay:.25s}
-.st-chart{animation-duration:.28s;animation-delay:.18s}
-.chart i{animation-duration:.35s;animation-delay:calc(.22s + var(--b,0)*25ms)}
-.chart span{animation-duration:.25s;animation-delay:calc(.4s + var(--b,0)*25ms)}
-.chart em{animation-duration:.25s;animation-delay:calc(.25s + var(--b,0)*20ms)}
-.st-rows{animation-duration:.28s;animation-delay:.28s}
-.st-rows .hrow{animation-duration:.22s}
-.st-rows .hrow:nth-child(1){animation-delay:.33s}.st-rows .hrow:nth-child(2){animation-delay:.37s}.st-rows .hrow:nth-child(3){animation-delay:.41s}.st-rows .hrow:nth-child(4){animation-delay:.45s}
-.st-rows .hrow>b{animation-duration:.25s}
-.st-rows .hrow:nth-child(1)>b{animation-delay:.4s}.st-rows .hrow:nth-child(2)>b{animation-delay:.44s}.st-rows .hrow:nth-child(3)>b{animation-delay:.48s}.st-rows .hrow:nth-child(4)>b{animation-delay:.52s}
-.st-lnk{animation-duration:.25s;animation-delay:.5s}
-.result.card{animation-duration:.2s}
-.btn:not(.alt):not(:disabled){animation:btnready .2s ease,btnpulse 2.4s ease-in-out .3s infinite}
-/* Đổi giao diện: mọi thứ đổi màu cùng lúc, không trễ, không kẹt màu cũ */
-.card,.tile,.kpi,.stat,.sum,.icon-btn,.tchip{-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
-html.nt .bg,html.nt .bg *,html.nt main,html.nt main *,html.nt main *::before,html.nt main *::after,html.nt #modal,html.nt #modal *,html.nt #modal *::before,html.nt #modal *::after{transition:none!important}
-/* ===== Giao diện mới: Thác nước (tối) + Sương mai (sáng) · bảng chọn màu sáng/tối ===== */
-html[data-theme=mist]{--bg:#e4ecec;--bgr:228,236,236;--s1:rgba(255,255,255,.6);--card:rgba(255,255,255,.72);--card2:rgba(201,216,217,.8);--pop:#f6fafa;--bd:rgba(13,23,25,.12);--bd2:rgba(13,23,25,.26);--tx:#0d1719;--tx2:#203133;--mut:#577377;--ac:#3a5255;--ac2:#577377;--ac3:#16a34a;--acd:rgba(58,82,85,.12);--onac:#fff;--ok:#15803d;--okb:rgba(220,252,231,.95);--no:#dc2626;--nob:rgba(254,226,226,.95);--g1:rgba(121,149,155,.35);--g2:rgba(169,187,189,.4);--g3:rgba(87,115,119,.18)}
-html[data-theme=mist] .scrim,html[data-theme=mist] .dscrim{background:rgba(13,23,25,.35)}
-html[data-theme=mist] .card,html[data-theme=mist] .tile,html[data-theme=mist] .kpi,html[data-theme=mist] .stat,html[data-theme=mist] .sum{box-shadow:0 6px 22px -12px rgba(13,23,25,.3)}
-.tpick{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px;align-items:start}
-.tpick .sec{margin:0 2px 8px}
-.tpick .trow{padding:10px;min-height:46px;margin-bottom:8px;gap:9px;font-size:14px;text-align:left}
-.tpick .trow i{width:22px;height:22px}
-.drawer .tpick{margin-top:0}
-.dialog.wide{max-width:440px}
-.dialog.wide .btn{margin-top:10px}
-.gears{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:28px auto 8px}
-.gears .gear{margin:0}
-.gear{display:flex;align-items:center;justify-content:center;gap:8px;margin:28px auto 8px;padding:11px 18px;border:1px solid var(--bd);border-radius:99px;background:var(--card);color:var(--tx2);font-size:14px}
-.gear svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
-/* ===== Obsidian (tối sâu · xanh đen + ngọc lam) & Sóng biển (sáng) ===== */
-html[data-theme=obsidian]{--bg:#030a0c;--bgr:3,10,12;--s1:rgba(2,7,9,.6);--card:rgba(8,20,23,.93);--card2:#0f2226;--pop:#081518;--bd:rgba(160,205,205,.10);--bd2:rgba(160,205,205,.22);--tx:#e6efec;--tx2:#bccfcd;--mut:#7f9a9d;--ac:#62c9dc;--ac2:#3fa9b8;--ac3:#8fe0ec;--acr:98,201,220;--acd:rgba(98,201,220,.13);--onac:#031318;--g1:rgba(30,110,125,.11);--g2:rgba(40,120,110,.07);--g3:rgba(20,80,90,.09)}
-html[data-theme=noir]{--bg:#050506;--bgr:5,5,6;--s1:rgba(0,0,0,.55);--card:rgba(15,15,16,.96);--card2:#19191b;--pop:#0d0d0e;--bd:rgba(255,255,255,.07);--bd2:rgba(255,255,255,.17);--tx:#ece9e4;--tx2:#c2beb7;--mut:#8a867f;--ac:#d4b483;--ac2:#b8925a;--ac3:#ead8b4;--acr:212,180,131;--acd:rgba(212,180,131,.12);--onac:#1a1305;--g1:rgba(120,90,50,.07);--g2:rgba(90,70,70,.05);--g3:rgba(70,70,80,.06)}
-html[data-theme=wave]{--bg:#edf4f3;--bgr:237,244,243;--s1:rgba(255,255,255,.7);--card:rgba(255,255,255,.88);--card2:#dceaea;--pop:#ffffff;--bd:rgba(13,40,45,.12);--bd2:rgba(13,40,45,.26);--tx:#0d2326;--tx2:#2c4a4e;--mut:#4c6d71;--ac:#0b7285;--ac2:#3da5b5;--ac3:#16a34a;--acr:11,114,133;--acd:rgba(11,114,133,.11);--onac:#fff;--ok:#15803d;--okb:rgba(220,252,231,.95);--no:#dc2626;--nob:rgba(254,226,226,.95);--g1:rgba(61,165,181,.20);--g2:rgba(160,212,205,.35);--g3:rgba(208,228,225,.5)}
-html[data-theme=wave] .scrim,html[data-theme=wave] .dscrim{background:rgba(13,35,38,.35)}
-html[data-theme=wave] .card,html[data-theme=wave] .tile,html[data-theme=wave] .kpi,html[data-theme=wave] .stat,html[data-theme=wave] .sum{box-shadow:0 6px 22px -14px rgba(13,60,70,.35)}
-/* ===== Giao diện v3: tĩnh, gọn, dễ đọc (chỉ dùng biến màu sẵn có nên mọi theme đều hợp) ===== */
-:root{--r:18px}
-body{font-family:"Be Vietnam Pro",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;letter-spacing:-.003em}
-::selection{background:var(--acd)}
-button:focus-visible,summary:focus-visible,.sa:focus-visible{outline:2px solid var(--ac);outline-offset:2px}
-/* nền: bỏ vệt sáng chạy ngang, các quầng sáng đứng yên cho mắt nghỉ */
-.bg i{animation:none;opacity:.75}.bg::after{display:none}
-/* nút chính: màu đặc, không nhấp nháy liên tục */
-.btn:not(.alt){background:var(--ac);box-shadow:0 1px 0 rgba(255,255,255,.2) inset,0 12px 24px -16px var(--ac);animation:none!important}
-.btn:not(.alt):not(:disabled)::after{display:none}
-.btn.alt{background:transparent}
-@media(hover:hover){.btn:not(:disabled):hover{transform:none;filter:brightness(1.06)}}
-/* nhãn: chữ thường, đậm vừa, không rải chữ hoa */
-.sec,.tag,.eyebrow,#pick::before,.pick:not(#pick)::before{text-transform:none;letter-spacing:0;font-size:13px;font-weight:600}
-.sec{margin:28px 2px 10px;color:var(--tx2)}
-.tag{color:var(--ac)}
-.hero h1{font-size:26px;font-weight:800;letter-spacing:.01em}
-.hero{padding:24px 0 20px}
-/* thẻ & ô môn học */
-.tile,.card,.sum,.kpi,.stat{border-radius:var(--r)}
-.tile{padding:16px 18px}
-.tile .ico{border-radius:14px;background:var(--acd)}
-.tile b{font-weight:700;font-size:17px}
-.chip{background:var(--acd);border-color:transparent;color:var(--tx2)}
-@media(hover:hover){.stagger>.tile:not(.off):hover{transform:none;box-shadow:0 0 0 1px var(--ac)}}
-@keyframes tileIn{from{opacity:0;transform:translateY(10px)}}
-.stagger{perspective:none}.stagger>*{transform-origin:50% 50%}
-/* đáp án: ô chữ cái A B C D rõ ràng */
-.opt{border-radius:14px}
-.opt:has(>b:first-child){padding:8px 14px 8px 8px;gap:12px;align-items:center;min-height:58px}
-.opt>b:first-child{flex:none;display:grid;place-items:center;width:42px;height:42px;border-radius:12px;background:var(--card2);color:var(--tx2);font-size:18px;font-weight:700;box-shadow:inset 0 0 0 1px var(--bd)}
-.opt:has(>b:first-child)>span{padding:2px 0}
-.opt.sel>b:first-child{background:var(--ac);color:var(--onac);box-shadow:none}
-.opt.ok>b:first-child{background:var(--ok);color:var(--okb);box-shadow:none}
-.opt.bad>b:first-child{background:var(--no);color:var(--nob);box-shadow:none}
-.tf .opt{align-items:center}
-body[data-view=quiz] .opt:has(>b:first-child){padding:6px 12px 6px 6px;gap:11px;min-height:50px}
-body[data-view=quiz] .opt>b:first-child{width:36px;height:36px;border-radius:10px;font-size:16px}
-/* màn làm bài: chỉ mờ dần, không trượt — để nút Xác nhận (position:fixed) không bị kéo lên giữa màn hình rồi nhảy xuống */
-body[data-view=quiz] .screen.enter{animation-name:fade}
-/* thanh tiến độ & hộp thoại */
-.bar{height:8px;border-radius:99px}.bar i{border-radius:99px}
-.dialog{border-radius:22px}
-.tpick .trow{border-radius:14px}
-/* ===== Giao diện v4: nổi khối nhẹ, chuyển động có chủ đích ===== */
-:root{--hi:rgba(255,255,255,.07)}
-html[data-theme=light],html[data-theme=mist],html[data-theme=wave]{--hi:rgba(255,255,255,.9)}
-.card,.tile,.kpi,.stat,.sum{box-shadow:inset 0 1px 0 var(--hi),0 14px 32px -22px rgba(0,0,0,.55)}
-.card,.tile{border-radius:22px}
-.tile{min-height:84px;padding:18px}
-.tile .ico{width:52px;height:52px;border-radius:16px;font-size:28px;background:linear-gradient(145deg,var(--acd),transparent),var(--card2);box-shadow:inset 0 0 0 1px var(--bd)}
-.tile .go{transition:transform .25s ease,color .25s ease}
-@media(hover:hover){.tile:not(.off):hover .go{transform:translateX(4px);color:var(--ac)}}
-.tile:not(.off):active{transform:scale(.975)}
-.icon-btn{border-radius:14px;box-shadow:inset 0 1px 0 var(--hi)}
-.btn:not(.alt){border-radius:16px;min-height:52px;background:linear-gradient(180deg,color-mix(in srgb,var(--ac) 80%,#fff),var(--ac));box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 14px 26px -14px var(--ac)}
-.btn.alt{border-radius:16px}
-.bar i{background:linear-gradient(90deg,var(--ac),var(--ac2));box-shadow:0 0 14px -3px var(--ac)}
-/* đáp án: cả cụm hiện lên một lần, chạm có phản hồi */
-#opts{animation:optsIn .38s cubic-bezier(.2,.9,.3,1) .04s backwards}
-@keyframes optsIn{from{opacity:0;transform:translateY(14px)}}
-@media(hover:hover){.opt:not(.static):not(.ok):not(.bad):hover{border-color:var(--bd2);transform:translateY(-1px)}}
-.opt.sel>b:first-child{animation:badgePop .35s cubic-bezier(.3,1.6,.5,1)}
-@keyframes badgePop{from{transform:scale(.7)}}
-.opt.ok{animation:okPulse .7s ease-out}
-@keyframes okPulse{0%{transform:scale(1);box-shadow:0 0 0 0 rgba(74,222,128,.55)}35%{transform:scale(1.02)}100%{transform:scale(1);box-shadow:0 0 0 14px rgba(74,222,128,0)}}
-.opt.bad{animation:none}
-.locked .opt.bad{animation:none}
-.shaking .opt.bad{animation:shake .5s cubic-bezier(.36,.07,.19,.97),badGlow .7s ease-out}
-@keyframes badGlow{0%{box-shadow:0 0 0 0 rgba(255,107,107,.5)}100%{box-shadow:0 0 0 14px rgba(255,107,107,0)}}
-/* thông báo đúng/sai dạng viên thuốc */
-.msg{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:99px;font-size:15px}
-.msg.ok{background:var(--okb)}.msg.bad{background:var(--nob)}
-/* điểm số */
-#scoreN{background:linear-gradient(135deg,var(--ac),var(--ac2));-webkit-background-clip:text;background-clip:text;color:transparent}
-/* ===== Tiêu đề trang chủ "Ôn tập" + công tắc sáng/tối phản hồi rõ hơn ===== */
-body[data-view=home] main{padding-top:calc(14px + env(safe-area-inset-top,0px))}
-.ttlhero{padding:2px 72px 4px 2px}
-.ttlhero h1{display:block;white-space:nowrap;margin:0;font-size:46px;line-height:1.22;font-weight:800;letter-spacing:-.01em;color:var(--tx);cursor:pointer;-webkit-user-select:none;user-select:none}
-.ttlhero .tl{display:inline-block;animation:tlIn .75s cubic-bezier(.2,.9,.25,1.15) backwards,tlWave 6s ease-in-out infinite;animation-delay:calc(var(--k)*70ms),calc(1.4s + var(--k)*130ms)}
-@keyframes tlIn{from{opacity:0;transform:translateY(.5em) rotate(7deg) scale(.8);filter:blur(8px)}}
-@keyframes tlWave{0%,20%,100%{color:var(--tx);transform:none}10%{color:var(--ac);transform:translateY(-.07em)}}
-.ttlhero .ul{display:block;width:52px;height:4px;margin:6px 0 10px 4px;border-radius:99px;background:linear-gradient(90deg,var(--ac),var(--ac2));transform-origin:left;animation:ulIn .7s cubic-bezier(.3,.8,.2,1) .5s backwards}
-@keyframes ulIn{from{transform:scaleX(0)}}
-.ttlhero p{margin:0 0 0 4px;animation:fadeUp .5s ease .7s backwards}
-.ttlhero+.sec{margin-top:22px}
-/* công tắc: nhấn thì co lại, gạt có nảy, có gợn sóng */
-.tgl i{z-index:1}
-.tgl .rip{position:absolute;width:10px;height:10px;margin:-5px 0 0 -5px;border-radius:50%;pointer-events:none;z-index:0}
-/* lớp bản sao dùng cho hiệu ứng loang vòng tròn khi đổi sáng/tối (chỉ tồn tại ~0,7 giây): không chạy hoạt ảnh, không làm mờ nền để nhẹ máy */
-.rv{position:fixed;inset:0;z-index:25;pointer-events:none;contain:paint;background:var(--bg)}
-.rv,.rv *,.rv *::before,.rv *::after{animation:none!important;transition:none!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}
-.rv .bg::after{display:none}
-.tgl:active i{width:28px;transform:translateX(22px)}.tgl.light:active i{transform:translateX(0)}
-/* máy bật "Xóa hoạt ảnh": vẫn giữ chuyển động của công tắc + tiêu đề (chỉ bỏ vòng lặp) */
-@media(prefers-reduced-motion:reduce){
-.tgl{transition:background .5s ease,border-color .4s ease!important}
-.tgl i{transition:transform .55s cubic-bezier(.3,1.5,.5,1),background .4s ease,color .4s ease!important}
-.tgl svg{transition:transform .55s cubic-bezier(.3,1.5,.5,1),opacity .3s ease!important}
-.tgl::before,.tgl::after{transition:opacity .4s ease,transform .5s ease!important}
-.ttlhero .tl{animation:tlIn .6s cubic-bezier(.2,.9,.25,1.15) calc(var(--k)*70ms) backwards!important}
-.ttlhero .ul{animation:ulIn .6s ease .4s backwards!important}
-.ttlhero p{animation:fadeUp .5s ease .6s backwards!important}
+/* ===== 1. THEMES & COLOR SYSTEM ===== */
+:root {
+  --bg: #000;
+  --bgr: 0,0,0;
+  --s1: rgba(18,18,22,.65);
+  --card: rgba(16,16,20,.82);
+  --card2: rgba(28,28,34,.88);
+  --pop: #0f0f13;
+  --bd: rgba(255,255,255,.09);
+  --bd2: rgba(255,255,255,.2);
+  --tx: #f2f2f5;
+  --tx2: #d4d4db;
+  --mut: #8e8e99;
+  --ac: #8ab4ff;
+  --ac2: #a78bfa;
+  --ac3: #4ade80;
+  --acr: 138,180,255;
+  --acd: rgba(138,180,255,.14);
+  --onac: #020617;
+  --ok: #4ade80;
+  --okb: rgba(6,33,15,.9);
+  --no: #ff6b6b;
+  --nob: rgba(42,14,14,.9);
+  --g1: rgba(138,180,255,.24);
+  --g2: rgba(167,139,250,.18);
+  --g3: rgba(74,222,128,.1);
+  --r: 12px;
+  --mw: 640px;
+  --hi: rgba(255,255,255,.07);
 }
 
-.fc{perspective:1200px;cursor:pointer;margin-bottom:12px;-webkit-tap-highlight-color:transparent;outline:none}
-.fci{display:grid;transform-style:preserve-3d;transition:transform .55s cubic-bezier(.3,1.25,.5,1)}
-.fc.flip .fci{transform:rotateY(180deg)}
-.fc:focus-visible .fcf{outline:2px solid var(--ac);outline-offset:2px}
-.fcf{grid-area:1/1;-webkit-backface-visibility:hidden;backface-visibility:hidden;background:var(--pop,var(--card2));border:1px solid var(--bd);border-radius:var(--r);padding:22px 20px;min-height:min(340px,56vh);display:flex;flex-direction:column}
-.fcf.back{transform:rotateY(180deg)}
-.fcmid{flex:1;display:flex;flex-direction:column;justify-content:center;padding:10px 0}
-.fct{font-size:21px;font-weight:700;line-height:1.5;white-space:pre-line;overflow-wrap:anywhere}
-.fcb{font-size:18px;line-height:1.75;white-space:pre-line;overflow-wrap:anywhere}
-.fch{font-size:13px;text-align:center}
-.vc{position:relative;display:inline-block;padding-top:.55em;line-height:1}
-.vc::before{content:"→";position:absolute;top:0;left:50%;transform:translateX(-50%);font-size:.7em;line-height:1}
-.dock.two #cno{flex:0 0 40%}.dock.two #cyes{flex:1}
-@media (prefers-reduced-motion:reduce){.fci{transition:none}}
-.wico{display:inline-block;margin-right:6px;color:var(--no);font-weight:700}
-.warnq{font-size:13px;line-height:1.5;color:var(--mut);border-left:3px solid var(--no);padding:2px 0 2px 10px;margin:6px 0 12px}
-/* --- bài gần nhất lên đầu + trạng thái từng bài --- */
-.st-more{margin-top:10px}
-.st-rows.na .hrow,.st-rows.na .hrow>b{animation:none!important}
-/* nút Quay lại nổi: chỉ hiện khi đã cuộn xuống, không có khung nền */
-.fback{position:fixed;z-index:30;left:max(14px,calc((100vw - 640px)/2 + 16px));top:calc(12px + env(safe-area-inset-top,0px));opacity:0;pointer-events:none;transform:translateY(-8px) scale(.92);transition:opacity .2s ease,transform .2s ease}
-.fback.show{opacity:1;pointer-events:auto;transform:none}
-.rp{position:fixed;inset:0;z-index:25;pointer-events:none;opacity:0}
-
-/* ===== Máy tính: to hơn một chút (điện thoại giữ nguyên) + gợi ý phím 1-4 ===== */
-.dock[hidden]{display:none!important}
-.setrow{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin-top:10px;padding:13px 14px;border-radius:14px;background:var(--card2);border:1px solid transparent;font-weight:600;color:var(--tx);text-align:left}
-.setrow.on{border-color:var(--ac);background:var(--acd)}
-.setrow::after{content:"Tắt";font-size:12px;font-weight:700;padding:2px 10px;border-radius:99px;background:var(--bd);color:var(--mut)}
-.setrow.on::after{content:"Bật";background:var(--ac);color:var(--onac)}
-.setnum{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:10px;padding:10px 14px;border-radius:14px;background:var(--card2);font-weight:600}
-.setnum input{width:84px;padding:8px 10px;border-radius:10px;border:1px solid var(--bd2);background:var(--card);color:var(--tx);font:inherit;text-align:center;outline:none}
-.setnum input:focus{border-color:var(--ac)}
-@media (min-width:900px) and (hover:hover) and (pointer:fine){
-main{max-width:880px;padding-left:24px;padding-right:24px}
-.tgl{right:max(14px,calc((100vw - 880px)/2 + 24px))}
-.fback{left:max(14px,calc((100vw - 880px)/2 + 24px))}
-.tile b{font-size:20px}.big{font-size:24px}.count{font-size:15px}
-.fct{font-size:26px}.fcb{font-size:21px}
-body[data-view=quiz] main{padding-top:calc(16px + env(safe-area-inset-top,0px));padding-bottom:calc(120px + env(safe-area-inset-bottom,0px))}
-body[data-view=quiz] .qhead{margin-bottom:18px}
-body[data-view=quiz] .qhead .icon-btn{width:48px;height:48px}
-body[data-view=quiz] .card{padding:28px 30px;margin-bottom:12px}
-body[data-view=quiz] .tag{font-size:14px;margin-bottom:8px}
-body[data-view=quiz] .q{font-size:24px;line-height:1.5;margin-bottom:14px}
-body[data-view=quiz] .opt{font-size:21px;line-height:1.45;margin:12px 0}
-body[data-view=quiz] .opt:has(>b:first-child){padding:10px 20px 10px 10px;gap:18px;min-height:72px}
-body[data-view=quiz] .opt>b:first-child{width:52px;height:52px;border-radius:14px;font-size:22px}
-body[data-view=quiz] .row{padding:12px 0}
-body[data-view=quiz] .row .st{font-size:20px;line-height:1.5}
-body[data-view=quiz] .tf .opt{min-height:60px;font-size:20px}
-body[data-view=quiz] .hint{font-size:17px}
-body[data-view=quiz] .msg{font-size:18px;padding:11px 20px}
-body[data-view=quiz] .warnq{font-size:15px}
-body[data-view=quiz] .dock{max-width:880px;padding:16px 24px calc(14px + env(safe-area-inset-bottom,0px))}
-body[data-view=quiz] .dock .btn{min-height:58px;font-size:19px}
-body[data-view=quiz] .opt[data-n]::after{content:attr(data-n);margin-left:auto;flex:none;min-width:30px;height:30px;display:grid;place-items:center;border-radius:8px;border:1px solid var(--bd2);color:var(--mut);font-size:14px;font-weight:700}
+html[data-theme=light] {
+  --bg: #f3f5fb;
+  --bgr: 243,245,251;
+  --s1: rgba(255,255,255,.7);
+  --card: rgba(255,255,255,.88);
+  --card2: rgba(234,239,250,.92);
+  --pop: #fff;
+  --bd: rgba(20,30,70,.12);
+  --bd2: rgba(20,30,70,.26);
+  --tx: #161a2e;
+  --tx2: #3a4262;
+  --mut: #667090;
+  --ac: #3b6df0;
+  --ac2: #7c5cf0;
+  --ac3: #16a34a;
+  --acr: 59,109,240;
+  --acd: rgba(59,109,240,.12);
+  --onac: #fff;
+  --ok: #15803d;
+  --okb: rgba(220,252,231,.95);
+  --no: #dc2626;
+  --nob: rgba(254,226,226,.95);
+  --g1: rgba(59,109,240,.22);
+  --g2: rgba(124,92,240,.16);
+  --g3: rgba(22,163,74,.10);
+  --hi: rgba(255,255,255,.9);
 }
+html[data-theme=light] .scrim, html[data-theme=light] .dscrim { background: rgba(20,26,50,.35); }
+
+html[data-theme=obsidian] {
+  --bg: #030a0c;
+  --bgr: 3,10,12;
+  --s1: rgba(2,7,9,.6);
+  --card: rgba(8,20,23,.93);
+  --card2: #0f2226;
+  --pop: #081518;
+  --bd: rgba(160,205,205,.10);
+  --bd2: rgba(160,205,205,.22);
+  --tx: #e6efec;
+  --tx2: #bccfcd;
+  --mut: #7f9a9d;
+  --ac: #62c9dc;
+  --ac2: #3fa9b8;
+  --ac3: #8fe0ec;
+  --acr: 98,201,220;
+  --acd: rgba(98,201,220,.13);
+  --onac: #031318;
+  --g1: rgba(30,110,125,.11);
+  --g2: rgba(40,120,110,.07);
+  --g3: rgba(20,80,90,.09);
+  --hi: rgba(255,255,255,.07);
+}
+
+html[data-theme=noir] {
+  --bg: #050506;
+  --bgr: 5,5,6;
+  --s1: rgba(0,0,0,.55);
+  --card: rgba(15,15,16,.96);
+  --card2: #19191b;
+  --pop: #0d0d0e;
+  --bd: rgba(255,255,255,.07);
+  --bd2: rgba(255,255,255,.17);
+  --tx: #ece9e4;
+  --tx2: #c2beb7;
+  --mut: #8a867f;
+  --ac: #d4b483;
+  --ac2: #b8925a;
+  --ac3: #ead8b4;
+  --acr: 212,180,131;
+  --acd: rgba(212,180,131,.12);
+  --onac: #1a1305;
+  --g1: rgba(120,90,50,.07);
+  --g2: rgba(90,70,70,.05);
+  --g3: rgba(70,70,80,.06);
+  --hi: rgba(255,255,255,.07);
+}
+
+html[data-theme=mist] {
+  --bg: #e4ecec;
+  --bgr: 228,236,236;
+  --s1: rgba(255,255,255,.6);
+  --card: rgba(255,255,255,.82);
+  --card2: rgba(201,216,217,.85);
+  --pop: #f6fafa;
+  --bd: rgba(13,23,25,.12);
+  --bd2: rgba(13,23,25,.26);
+  --tx: #0d1719;
+  --tx2: #203133;
+  --mut: #577377;
+  --ac: #3a5255;
+  --ac2: #577377;
+  --ac3: #16a34a;
+  --acd: rgba(58,82,85,.12);
+  --onac: #fff;
+  --ok: #15803d;
+  --okb: rgba(220,252,231,.95);
+  --no: #dc2626;
+  --nob: rgba(254,226,226,.95);
+  --g1: rgba(121,149,155,.35);
+  --g2: rgba(169,187,189,.4);
+  --g3: rgba(87,115,119,.18);
+  --hi: rgba(255,255,255,.9);
+}
+html[data-theme=mist] .scrim, html[data-theme=mist] .dscrim { background: rgba(13,23,25,.35); }
+
+html[data-theme=wave] {
+  --bg: #edf4f3;
+  --bgr: 237,244,243;
+  --s1: rgba(255,255,255,.7);
+  --card: rgba(255,255,255,.9);
+  --card2: #dceaea;
+  --pop: #ffffff;
+  --bd: rgba(13,40,45,.12);
+  --bd2: rgba(13,40,45,.26);
+  --tx: #0d2326;
+  --tx2: #2c4a4e;
+  --mut: #4c6d71;
+  --ac: #0b7285;
+  --ac2: #3da5b5;
+  --ac3: #16a34a;
+  --acr: 11,114,133;
+  --acd: rgba(11,114,133,.11);
+  --onac: #fff;
+  --ok: #15803d;
+  --okb: rgba(220,252,231,.95);
+  --no: #dc2626;
+  --nob: rgba(254,226,226,.95);
+  --g1: rgba(61,165,181,.20);
+  --g2: rgba(160,212,205,.35);
+  --g3: rgba(208,228,225,.5);
+  --hi: rgba(255,255,255,.9);
+}
+html[data-theme=wave] .scrim, html[data-theme=wave] .dscrim { background: rgba(13,35,38,.35); }
+
+/* Theme switch transitions */
+html.nt .bg, html.nt .bg *, html.nt main, html.nt main *, html.nt #modal, html.nt #modal * { transition: none !important; }
+
+/* ===== 2. BASE & LAYOUT ===== */
+* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+html { background: var(--bg); }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--tx);
+  font: 16px/1.5 "Be Vietnam Pro", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+::selection { background: var(--acd); }
+
+main {
+  position: relative;
+  z-index: 1;
+  max-width: var(--mw);
+  margin: 0 auto;
+  padding: calc(14px + env(safe-area-inset-top, 0px)) 16px calc(24px + env(safe-area-inset-bottom, 0px));
+}
+
+button { font: inherit; color: inherit; cursor: pointer; border: 0; background: none; text-align: left; }
+button:focus-visible, summary:focus-visible, .sa:focus-visible { outline: 2px solid var(--ac); outline-offset: 2px; }
+
+h1 { font-size: 26px; line-height: 1.25; margin: 0 0 6px; font-weight: 800; }
+h2 { margin: 0 0 6px; font-size: 20px; font-weight: 700; }
+p { margin: 0; }
+.mut { color: var(--mut); font-size: 14px; }
+.sec { font-size: 14px; font-weight: 600; color: var(--mut); margin: 28px 2px 10px; }
+.big { font-size: 22px; font-weight: 700; line-height: 1.3; margin: 2px 0 4px; overflow-wrap: anywhere; }
+.eyebrow { font-size: 13px; font-weight: 600; color: var(--ac); }
+
+/* Nền phẳng (giữ thẻ .bg để hiệu ứng đổi giao diện dùng lại) */
+.bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; background: var(--bg); }
+.bg i { display: none; }
+
+/* Thanh trên */
+.top, .qhead { padding-right: 72px; }
+.top { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.top:has(>[data-act=menu]:only-child) { display: none; }
+.top .ttl { font-weight: 700; font-size: 18px; overflow-wrap: anywhere; }
+
+.icon-btn {
+  flex: none;
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--card);
+  border: 1px solid var(--bd);
+  display: grid;
+  place-items: center;
+  color: var(--tx);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+.icon-btn svg { display: block; width: 20px; height: 20px; }
+@media (hover: hover) and (pointer: fine) { .icon-btn:hover { background: var(--card2); border-color: var(--bd2); } }
+.icon-btn:active { background: var(--card2); }
+
+/* Theme toggle */
+.tgl {
+  position: absolute;
+  z-index: 70;
+  top: calc(19px + env(safe-area-inset-top, 0px));
+  right: max(14px, calc((100vw - var(--mw)) / 2 + 16px));
+  width: 58px;
+  height: 32px;
+  padding: 0;
+  border-radius: 99px;
+  border: 1px solid var(--bd2);
+  background: linear-gradient(135deg, #1b2350, #0b1030);
+  box-shadow: inset 0 1px 4px rgba(0,0,0,.5);
+  transition: background 0.4s ease, border-color 0.3s ease;
+  overflow: hidden;
+  cursor: pointer;
+}
+.tgl::before, .tgl::after { content: ""; position: absolute; border-radius: 50%; background: #fff; opacity: 0.85; transition: opacity 0.35s ease, transform 0.45s ease; }
+.tgl::before { width: 3px; height: 3px; left: 12px; top: 9px; box-shadow: 8px 8px 0 -0.5px #fff, 2px 14px 0 -1px #fff; }
+.tgl::after { width: 12px; height: 5px; right: 9px; bottom: 6px; border-radius: 99px; background: #fff; opacity: 0; transform: translateX(10px); }
+.tgl i {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: #e8ecff;
+  color: #2a3470;
+  box-shadow: 0 2px 8px rgba(0,0,0,.45);
+  transform: translateX(26px);
+  transition: transform 0.45s cubic-bezier(0.3, 1.4, 0.5, 1), background 0.3s ease, color 0.3s ease;
+}
+.tgl svg { position: absolute; width: 15px; height: 15px; transition: transform 0.45s cubic-bezier(0.3, 1.4, 0.5, 1), opacity 0.25s ease; }
+.tgl .sun { opacity: 0; transform: rotate(-90deg) scale(0.3); }
+.tgl .moon { opacity: 1; }
+.tgl:active i { width: 28px; }
+.tgl.light {
+  background: linear-gradient(135deg, #8fd0ff, #cfeaff);
+  border-color: rgba(20,30,70,.18);
+  box-shadow: inset 0 1px 4px rgba(20,60,120,.25);
+}
+.tgl.light::before { opacity: 0; transform: translateY(-6px); }
+.tgl.light::after { opacity: 0.9; transform: none; }
+.tgl.light i { transform: translateX(0); background: #ffd24a; color: #b45309; box-shadow: 0 2px 8px rgba(180,110,0,.45); }
+.tgl.light .sun { opacity: 1; transform: none; }
+.tgl.light .moon { opacity: 0; transform: rotate(90deg) scale(0.3); }
+
+.tgl .rip { position: absolute; width: 12px; height: 12px; margin: -6px 0 0 -6px; border-radius: 50%; pointer-events: none; }
+
+.fback {
+  position: fixed;
+  z-index: 30;
+  left: max(14px, calc((100vw - var(--mw)) / 2 + 16px));
+  top: calc(14px + env(safe-area-inset-top, 0px));
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s ease;
+}
+.fback.show { opacity: 1; pointer-events: auto; }
+
+/* Tiêu đề trang chủ */
+.ttlhero {
+  padding: 6px 72px 6px 2px;
+  position: relative;
+}
+.ttlhero h1 {
+  display: block;
+  margin: 0;
+  font-size: 34px;
+  line-height: 1.15;
+  font-weight: 800;
+  letter-spacing: -0.025em;
+  color: var(--tx);
+}
+.ttlhero p {
+  margin: 6px 0 0 2px;
+  font-size: 14.5px;
+  color: var(--mut);
+  line-height: 1.4;
+}
+
+/* ===== 3. THẺ & NÚT ===== */
+.card {
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: var(--r);
+  padding: 16px 18px;
+  margin-bottom: 12px;
+}
+
+/* Thẻ "ôn tiếp" */
+.resume-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: var(--r);
+  margin: 16px 0 4px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+@media (hover: hover) and (pointer: fine) { .resume-card:hover { border-color: var(--bd2); background: var(--card2); } }
+.resume-card:active { background: var(--card2); }
+.r-info { flex: 1; min-width: 0; }
+.r-info b { display: block; font-size: 15.5px; font-weight: 700; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.r-info .mut { font-size: 13px; }
+.r-act { flex: none; display: inline-flex; align-items: center; gap: 2px; color: var(--ac); font-weight: 600; font-size: 14px; white-space: nowrap; }
+.r-act svg { width: 16px; height: 16px; }
+
+/* Ô môn học / bài học */
+.grid { display: grid; gap: 10px; }
+@media (min-width: 560px) { .grid.two { grid-template-columns: 1fr 1fr; gap: 12px; } }
+
+.tile {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: var(--r);
+  padding: 14px 16px;
+  min-height: 72px;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+.tile .ico { flex: none; width: 28px; height: 28px; display: grid; place-items: center; color: var(--tx2); }
+.tile .ico svg { width: 26px; height: 26px; stroke-width: 1.6; }
+.tile .tt { flex: 1; min-width: 0; }
+.tile b { display: block; font-size: 17px; font-weight: 700; line-height: 1.3; overflow-wrap: anywhere; }
+.tile .mut { font-size: 13px; margin-top: 2px; display: block; }
+.tile .go { flex: none; display: grid; color: var(--mut); }
+.tile .go svg { width: 18px; height: 18px; }
+@media (hover: hover) and (pointer: fine) {
+  .tile:not(.off):hover { border-color: var(--bd2); background: var(--card2); }
+  .tile:not(.off):hover .ico { color: var(--ac); }
+}
+.tile:not(.off):active { background: var(--card2); }
+.tile.off { opacity: 0.5; cursor: not-allowed; }
+.chip.lock { font-size: 12px; color: var(--mut); border: 1px solid var(--bd); padding: 2px 8px; border-radius: 6px; }
+
+.tile.chap { align-items: flex-start; flex-direction: column; gap: 3px; padding: 14px 16px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 6px; }
+.chip { font-size: 12px; color: var(--tx2); background: var(--card2); border-radius: 6px; padding: 2px 8px; }
+
+/* Đáp án trắc nghiệm */
+.opt {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  background: transparent;
+  border: 1.5px solid var(--bd);
+  border-radius: 12px;
+  padding: 10px 14px 10px 10px;
+  margin: 8px 0;
+  min-height: 52px;
+  font-size: 15.5px;
+  line-height: 1.45;
+  transition: border-color 0.12s ease, background 0.12s ease;
+  overflow-wrap: anywhere;
+}
+.opt>b:first-child {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 8px;
+  background: var(--card2);
+  color: var(--tx2);
+  font-size: 14px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  transition: background 0.12s ease, color 0.12s ease;
+}
+.opt>span { flex: 1; min-width: 0; padding: 2px 0; }
+@media (hover: hover) and (pointer: fine) {
+  .opt:not(.static):not(.sel):not(.ok):not(.bad):not(:disabled):hover { border-color: var(--bd2); background: var(--card2); }
+}
+.opt.sel { border-color: var(--ac); background: var(--acd); }
+.opt.sel>b:first-child { background: var(--ac); color: var(--onac); }
+.opt.ok { border-color: var(--ok); background: var(--okb); }
+.opt.ok>b:first-child { background: var(--ok); color: #fff; }
+.opt.bad { border-color: var(--no); background: var(--nob); }
+.opt.bad>b:first-child { background: var(--no); color: #fff; }
+#opts.locked .opt { pointer-events: none; }
+.opt.static { cursor: default; }
+
+.shaking .opt.bad { animation: optShake 0.35s cubic-bezier(0.36, 0.07, 0.19, 0.97); }
+@keyframes optShake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+
+.row { border-top: 1px solid var(--bd); padding: 10px 0; }
+.row:first-child { border: 0; padding-top: 0; }
+.row .st { overflow-wrap: anywhere; font-size: 15px; line-height: 1.45; }
+.row .st b { color: var(--mut); }
+.tf { display: flex; gap: 8px; margin-top: 8px; }
+.tf .opt { margin: 0; justify-content: center; text-align: center; flex: 1; padding: 10px; min-height: 44px; }
+.pill { display: inline-block; margin-left: 8px; padding: 0 8px; border-radius: 6px; font-size: 12px; font-weight: 700; line-height: 20px; vertical-align: 1px; }
+.pill.ok { background: var(--okb); color: var(--ok); }
+.pill.no { background: var(--nob); color: var(--no); }
+
+/* Nút lớn */
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  font-weight: 600;
+  text-align: center;
+  border-radius: 12px;
+  padding: 12px 18px;
+  min-height: 48px;
+  font-size: 16px;
+  margin-top: 10px;
+  transition: background 0.15s ease, border-color 0.15s ease, opacity 0.15s ease;
+}
+.btn:not(.alt) { background: var(--ac); color: var(--onac); }
+.btn.alt { background: transparent; color: var(--tx); border: 1px solid var(--bd2); }
+.btn.alt.or { color: #fb923c; border-color: #fb923c; }
+.btn.alt.bl { color: var(--ac); border-color: var(--ac); }
+.btn.alt svg, .btn svg { width: 16px; height: 16px; margin-left: 2px; }
+@media (hover: hover) and (pointer: fine) {
+  .btn:not(.alt):not(:disabled):hover { opacity: 0.9; }
+  .btn.alt:not(:disabled):hover { background: var(--card2); }
+}
+.btn:not(:disabled):active { opacity: 0.8; }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* Bộ lọc & tùy chọn */
+.pick { display: flex; flex-wrap: wrap; gap: 8px; margin: 14px 0 4px; }
+.pick button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--bd);
+  border-radius: 10px;
+  padding: 9px 14px;
+  min-height: 40px;
+  background: transparent;
+  font-weight: 500;
+  font-size: 14.5px;
+  transition: border-color 0.12s ease, background 0.12s ease;
+}
+@media (hover: hover) and (pointer: fine) { .pick button:hover { border-color: var(--bd2); } }
+.pick button.on { border-color: var(--ac); background: var(--acd); color: var(--ac); font-weight: 600; }
+
+#pick { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+#pick button { width: 100%; text-align: center; }
+#pick button:last-child:nth-child(odd) { grid-column: 1/-1; }
+
+/* Hàng tùy chọn có công tắc Bật/Tắt */
+.pick.opts { display: flex; flex-direction: column; flex-wrap: nowrap; gap: 0; margin: 14px 0 0; border-top: 1px solid var(--bd); }
+.pick.opts button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+  padding: 12px 2px;
+  min-height: 48px;
+  border: 0;
+  border-bottom: 1px solid var(--bd);
+  border-radius: 0;
+  background: none;
+  font-size: 15px;
+  color: var(--tx);
+}
+.pick.opts button:last-child { border-bottom: 0; }
+.pick.opts button.on { background: none; color: var(--tx); font-weight: 500; }
+.pick.opts button svg { width: 18px; height: 18px; color: var(--mut); }
+#ordbtn::after, #kpbtn::after, #rvbtn::after, #cordbtn::after { content: "Tắt"; font-size: 13px; font-weight: 600; color: var(--mut); }
+#ordbtn.on::after, #kpbtn.on::after, #rvbtn.on::after, #cordbtn.on::after { content: "Bật"; color: var(--ac); }
+
+/* Danh sách lối tắt cuối trang chủ */
+.gears { display: flex; flex-direction: column; margin: 28px 0 8px; background: var(--card); border: 1px solid var(--bd); border-radius: var(--r); overflow: hidden; }
+.gear {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 13px 16px;
+  min-height: 50px;
+  border-top: 1px solid var(--bd);
+  font-size: 15px;
+  color: var(--tx);
+  transition: background 0.15s ease;
+}
+.gear:first-child { border-top: 0; }
+.gear>svg { flex: none; width: 20px; height: 20px; color: var(--mut); }
+.gear>span:not(.go) { flex: 1; }
+.gear .go { flex: none; display: grid; color: var(--mut); }
+.gear .go svg { width: 18px; height: 18px; }
+@media (hover: hover) and (pointer: fine) { .gear:hover { background: var(--card2); } }
+.gear:active { background: var(--card2); }
+
+/* Thanh tiến độ */
+.qhead { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
+.bar { flex: 1; height: 6px; background: var(--bd2); border-radius: 99px; overflow: hidden; }
+.bar i { display: block; height: 100%; width: 100%; background: var(--ac); border-radius: 99px; transform-origin: left; transition: transform 0.35s ease; }
+.count { font-size: 13.5px; color: var(--mut); font-variant-numeric: tabular-nums; min-width: 44px; text-align: right; font-weight: 600; }
+.tag { font-size: 13px; font-weight: 600; color: var(--ac); margin-bottom: 6px; }
+.q { font-weight: 700; font-size: 17.5px; white-space: pre-line; overflow-wrap: anywhere; margin-bottom: 8px; line-height: 1.45; }
+.qimg { display: block; max-width: 100%; height: auto; margin: 8px 0 12px; border-radius: 10px; background: #fff; }
+.msg { display: flex; align-items: center; gap: 8px; padding: 10px 14px; border-radius: 10px; font-size: 14.5px; font-weight: 600; margin-top: 12px; }
+.msg svg { flex: none; width: 18px; height: 18px; }
+.msg.ok { background: var(--okb); color: var(--ok); }
+.msg.bad { background: var(--nob); color: var(--no); }
+.hint { margin-top: 8px; font-size: 13.5px; line-height: 1.5; color: var(--mut); }
+.hint b { color: var(--ac); }
+.kw { font-weight: 700; color: var(--ac); }
+
+/* Thanh nút cố định phía dưới */
+.dock { position: sticky; bottom: 0; margin: 0 -16px; padding: 12px 16px calc(6px + env(safe-area-inset-bottom, 0px)); }
+.dock .btn { margin-top: 0; }
+.dock.two { display: flex; gap: 10px; }
+.dock.two .btn { width: auto; }
+.dock.two #skip { flex: 0 0 34%; }
+.dock.two #go { flex: 1; }
+#skip[hidden], .dock[hidden] { display: none !important; }
+
+body[data-view=quiz] main, body[data-view=cards] main, body[data-view=exam] main {
+  padding-top: calc(14px + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(88px + env(safe-area-inset-bottom, 0px));
+}
+body[data-view=quiz] .dock, body[data-view=cards] .dock, body[data-view=exam] .dock {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  margin: 0 auto;
+  max-width: var(--mw);
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom, 0px));
+  z-index: 5;
+  background: rgb(var(--bgr));
+  border-top: 1px solid var(--bd);
+}
+
+/* Màn kết quả không có thanh trên: chừa chỗ cho nút sáng/tối */
+body[data-view=result] main, body[data-view=examresult] main { padding-top: calc(68px + env(safe-area-inset-top, 0px)); }
+
+/* Flashcard */
+.fc { perspective: 1200px; cursor: pointer; margin-bottom: 12px; outline: none; }
+.fci { display: grid; transform-style: preserve-3d; transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1); }
+.fc.flip .fci { transform: rotateY(180deg); }
+.fc:focus-visible .fcf { outline: 2px solid var(--ac); outline-offset: 2px; }
+.fcf {
+  grid-area: 1/1;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  background: var(--pop);
+  border: 1px solid var(--bd);
+  border-radius: var(--r);
+  padding: 22px 20px;
+  min-height: min(340px, 56vh);
+  display: flex;
+  flex-direction: column;
+}
+.fcf.back { transform: rotateY(180deg); }
+.fcmid { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: 10px 0; }
+.fct { font-size: 21px; font-weight: 700; line-height: 1.5; white-space: pre-line; overflow-wrap: anywhere; }
+.fcb { font-size: 18px; line-height: 1.7; white-space: pre-line; overflow-wrap: anywhere; }
+.fch { font-size: 13px; text-align: center; }
+.dock.two #cno { flex: 0 0 40%; }
+.dock.two #cyes { flex: 1; }
+/* vectơ: [[AB]] → AB có mũi tên phía trên */
+.vc { position: relative; display: inline-block; padding-top: 0.3em; line-height: 1.1; }
+.vc::before { content: ""; position: absolute; left: 0.05em; right: 0.05em; top: 0.12em; border-top: 1.5px solid currentColor; }
+.vc::after { content: ""; position: absolute; right: 0.05em; top: 0.12em; width: 0.32em; height: 0.32em; margin-top: -0.16em; border-top: 1.5px solid currentColor; border-right: 1.5px solid currentColor; transform: rotate(45deg); transform-origin: center; }
+
+/* Thống kê */
+.kpis { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (min-width: 560px) { .kpis { grid-template-columns: repeat(4, 1fr); } }
+.kpi { background: var(--card); border: 1px solid var(--bd); border-radius: var(--r); padding: 12px 14px; }
+.kpi b { display: block; font-size: 24px; line-height: 1.2; font-weight: 700; font-variant-numeric: tabular-nums; }
+.kpi span { color: var(--mut); font-size: 13px; }
+.kpi.a b { color: var(--ac); }
+
+.chart { display: flex; align-items: flex-end; gap: 8px; height: 104px; margin-top: 12px; }
+.chart div { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: flex-end; gap: 6px; }
+.chart i { display: block; width: 100%; max-width: 26px; border-radius: 4px 4px 2px 2px; background: var(--ac); transition: height 0.35s ease; }
+.chart .z i { background: var(--bd); }
+.chart em { font-style: normal; font-size: 11px; color: var(--mut); }
+.hrow { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 11px 0; border-top: 1px solid var(--bd); font-size: 14px; }
+.hrow:first-child { border-top: 0; padding-top: 0; }
+.hrow:last-child { padding-bottom: 0; }
+.hrow b { font-size: 16px; }
+.lnk { display: block; margin: 14px auto 0; color: var(--mut); font-size: 13.5px; text-align: center; padding: 8px; cursor: pointer; }
+@media (hover: hover) and (pointer: fine) { .lnk:hover { color: var(--ac); } }
+.na, .na * { animation: none !important; }
+
+/* Tóm tắt (accordion) */
+.sum { background: var(--card); border: 1px solid var(--bd); border-radius: var(--r); margin-bottom: 12px; overflow: hidden; }
+.sum summary { list-style: none; cursor: pointer; padding: 14px 16px; min-height: 52px; display: flex; align-items: center; justify-content: space-between; font-weight: 700; user-select: none; }
+.sum summary::-webkit-details-marker { display: none; }
+.sum .chev { display: grid; color: var(--mut); transition: transform 0.2s ease; }
+.sum .chev svg { width: 18px; height: 18px; }
+.sum[open] .chev { transform: rotate(90deg); }
+.sumbody { padding: 0 16px 14px; animation: enterUp 0.2s ease backwards; }
+.sh { display: flex; gap: 8px; align-items: baseline; font-weight: 700; color: var(--ac); margin-top: 14px; font-size: 15px; }
+.sn { flex: none; min-width: 16px; color: var(--mut); font-size: 14px; font-variant-numeric: tabular-nums; }
+.sumbody ul { margin: 6px 0 0; padding-left: 20px; }
+.sumbody li { margin: 5px 0; color: var(--tx2); overflow-wrap: anywhere; font-size: 14.5px; }
+.sumbody li b { color: var(--tx); }
+.rc summary { cursor: pointer; color: var(--tx); font-weight: 500; }
+.rc>div { margin: 4px 0 6px; padding-left: 12px; border-left: 2px solid var(--bd); color: var(--tx2); }
+
+/* Màn kết quả */
+.result.card { padding: 0; text-align: left; overflow: hidden; }
+.rscore { display: flex; align-items: baseline; justify-content: center; gap: 10px; padding: 24px 16px 18px; border-bottom: 1px solid var(--bd); }
+.rscore span { font-size: 15px; font-weight: 600; color: var(--tx2); }
+.rscore b { font-size: 42px; line-height: 1; font-variant-numeric: tabular-nums; letter-spacing: -0.02em; }
+.rscore b.of { margin-left: -8px; font-size: 24px; color: var(--mut); }
+.rbody { padding: 18px 18px 16px; }
+.rname { text-align: center; font-weight: 700; font-size: 16.5px; margin-bottom: 14px; overflow-wrap: anywhere; }
+.rrow { display: flex; align-items: center; gap: 12px; padding: 10px 2px; font-size: 15.5px; }
+.rrow .ri { flex: none; width: 24px; height: 24px; color: var(--mut); display: grid; place-items: center; }
+.rrow .ri svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.rrow .rl { flex: 1; min-width: 0; }
+.rrow b { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* Hộp thoại & menu */
+.scrim { position: fixed; inset: 0; background: rgba(0,0,0,0.6); display: grid; place-items: center; padding: 20px; z-index: 50; animation: fade 0.2s ease; }
+.dialog { width: 100%; max-width: 380px; background: var(--pop); border: 1px solid var(--bd); border-radius: 16px; padding: 20px; animation: enterUp 0.2s ease backwards; }
+.dialog.wide { max-width: 460px; }
+.dwrap { position: fixed; inset: 0; z-index: 50; }
+.dscrim { position: absolute; inset: 0; background: rgba(0,0,0,0.55); animation: fade 0.2s ease; }
+.drawer { position: absolute; left: 0; top: 0; bottom: 0; width: min(320px, 86vw); background: var(--pop); border-right: 1px solid var(--bd); padding: calc(16px + env(safe-area-inset-top, 0px)) 16px 16px; overflow-y: auto; animation: slidein 0.22s ease backwards; }
+@keyframes slidein { from { transform: translateX(-100%); } }
+@keyframes fade { from { opacity: 0; } }
+.drawer .dh { display: flex; align-items: center; justify-content: space-between; margin-bottom: 4px; }
+.tpick { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; align-items: start; }
+.tpick .sec { margin: 0 2px 8px; }
+.trow { display: flex; align-items: center; gap: 10px; width: 100%; padding: 10px 12px; min-height: 46px; margin-bottom: 8px; border-radius: 10px; border: 1px solid var(--bd); background: transparent; font-size: 14px; text-align: left; }
+.trow i { flex: none; width: 20px; height: 20px; border-radius: 50%; background: var(--sw); box-shadow: inset 0 0 0 1px rgba(128,128,128,0.35); }
+.trow .ck { margin-left: auto; opacity: 0; display: grid; }
+.trow .ck svg { width: 16px; height: 16px; }
+.trow.on { border-color: var(--ac); background: var(--acd); color: var(--ac); font-weight: 600; }
+.trow.on .ck { opacity: 1; }
+.setrow { display: flex; align-items: center; justify-content: space-between; gap: 12px; width: 100%; margin-top: 10px; padding: 12px 14px; border-radius: 12px; background: transparent; border: 1px solid var(--bd); font-weight: 500; color: var(--tx); }
+.setrow.on { border-color: var(--ac); background: var(--acd); }
+.setrow::after { content: "Tắt"; font-size: 13px; font-weight: 600; color: var(--mut); }
+.setrow.on::after { content: "Bật"; color: var(--ac); }
+.setnum { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-top: 10px; padding: 10px 14px; border-radius: 12px; border: 1px solid var(--bd); font-weight: 500; }
+.setnum input { width: 84px; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--bd2); background: var(--card); color: var(--tx); font: inherit; text-align: center; outline: none; }
+.setnum input:focus { border-color: var(--ac); }
+
+/* Lớp phủ khi đổi giao diện sáng / tối */
+.rv, .rp { position: fixed; inset: 0; z-index: 60; pointer-events: none; overflow: hidden; }
+.rv { background: var(--bg); }
+.rp { opacity: 0; }
+.rv, .rv *, .rv *::before, .rv *::after { animation: none !important; }
+
+/* Pháo giấy, cảnh báo */
+.confetti { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 40; }
+.wico { display: inline-flex; vertical-align: -2px; margin-right: 6px; color: var(--no); }
+.wico svg { width: 16px; height: 16px; }
+.warnq { display: flex; gap: 6px; align-items: flex-start; font-size: 13px; line-height: 1.5; color: var(--mut); border-left: 3px solid var(--no); padding: 2px 0 2px 10px; margin: 6px 0 12px; }
+.warnq svg { flex: none; width: 15px; height: 15px; margin-top: 3px; color: var(--no); }
+
+/* Câu trả lời ngắn */
+.sa { width: 100%; padding: 14px 16px; border-radius: 12px; border: 1.5px solid var(--bd2); background: transparent; color: var(--tx); font: inherit; font-size: 24px; text-align: center; letter-spacing: 1px; outline: none; }
+.sa:focus { border-color: var(--ac); }
+.sa.ok { border-color: var(--ok); background: var(--okb); }
+.sa.bad { border-color: var(--no); background: var(--nob); }
+.kp { margin-bottom: 14px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-top: 12px; }
+.kp button { display: flex; align-items: center; justify-content: center; padding: 12px 0; font-size: 22px; font-weight: 600; border-radius: 10px; border: 1px solid var(--bd2); background: var(--card2); color: var(--tx); transition: background 0.12s ease; }
+.kp button svg { width: 22px; height: 22px; }
+.kp button:active { background: var(--acd); }
+.kp button:disabled { opacity: 0.4; }
+
+/* ===== 4. CHUYỂN CẢNH (UNIFIED SCREEN TRANSITION) ===== */
+/* Theo SKILL.md: Một hiệu ứng chuyển cảnh duy nhất, đồng bộ, dứt khoát cho toàn màn hình.
+   Loại bỏ stagger delay để đảm bảo tải tức thì, không giật trễ, không AI slop khi làm bài */
+.screen.enter { animation: screenFadeIn 0.16s cubic-bezier(0.16, 1, 0.3, 1) backwards; }
+@keyframes screenFadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-delay: 0s !important; transition-duration: 0.01ms !important; }
+}
+
+/* ===== 5. MÀN HÌNH RỘNG (PC / LAPTOP BENTO ARCHITECTURE) ===== */
+@media (min-width: 860px) {
+  :root { --mw: 760px; }
+  body[data-view=home] { --mw: 980px; }
+  body[data-view=result] main, body[data-view=examresult] main { padding-top: calc(76px + env(safe-area-inset-top, 0px)); }
+  main, body[data-view=quiz] main, body[data-view=cards] main, body[data-view=exam] main { padding-top: calc(26px + env(safe-area-inset-top, 0px)); }
+  body[data-view=quiz] main, body[data-view=cards] main, body[data-view=exam] main { padding-bottom: calc(108px + env(safe-area-inset-bottom, 0px)); }
+
+  /* Nút đổi màu trên Desktop: Định vị chính xác, góc trên bên phải, không cản trở nội dung */
+  .tgl { top: calc(28px + env(safe-area-inset-top, 0px)); right: max(20px, calc((100vw - var(--mw)) / 2 + 16px)); }
+  .fback { left: max(20px, calc((100vw - var(--mw)) / 2 + 16px)); }
+
+  /* Tiêu đề trang chủ: Điềm đạm, bản lĩnh học thuật */
+  .ttlhero { padding: 10px 80px 18px 2px; }
+  .ttlhero h1 { font-size: 38px; font-weight: 800; letter-spacing: -0.025em; line-height: 1.15; color: var(--tx); }
+  .ttlhero p { font-size: 15px; margin-top: 6px; color: var(--mut); }
+
+  /* BỐ CỤC BENTO GRID CÂN ĐỐI (Home): 2 Cột chuẩn desktop */
+  body[data-view=home] .grid.two {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  /* Thẻ Công thức trải dài nối liền 2 cột (Bento Feature Card) */
+  body[data-view=home] .tile[data-act="formulas"] {
+    grid-column: 1 / -1;
+    background: linear-gradient(90deg, rgba(var(--acr), 0.08) 0%, var(--card) 60%);
+    border-color: color-mix(in srgb, var(--ac) 24%, var(--bd));
+  }
+
+  /* Thẻ môn học / mục chính: Chiều sâu trang trọng, sắc nét */
+  .tile {
+    min-height: 82px;
+    padding: 16px 20px;
+    border-radius: 14px;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+  }
+  .tile .ico {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    background: var(--card2);
+    border: 1px solid var(--bd);
+    display: grid;
+    place-items: center;
+    color: var(--tx);
+    transition: transform 0.2s ease, background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+  }
+  .tile .ico svg {
+    width: 22px;
+    height: 22px;
+  }
+  .tile b {
+    font-size: 17.5px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+  .tile .mut {
+    font-size: 13.5px;
+    margin-top: 3px;
+  }
+
+  /* Khối tiện ích lối tắt cuối trang chủ (.gears): Dàn ngang 3 cột hài hòa */
+  body[data-view=home] .gears {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    max-width: 100%;
+    gap: 14px;
+    margin: 32px 0 16px;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    overflow: visible;
+  }
+  body[data-view=home] .gear {
+    border: 1px solid var(--bd);
+    border-radius: var(--r);
+    background: var(--card);
+    padding: 15px 18px;
+    min-height: 56px;
+    border-top: 1px solid var(--bd) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: transform 0.18s ease, border-color 0.15s ease, background 0.15s ease, box-shadow 0.18s ease;
+  }
+
+  /* Màn chọn bài học (subject): 2 cột thoáng đãng */
+  body[data-view=subject] .grid.two {
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+  }
+  body[data-view=subject] .tile.chap {
+    padding: 16px 20px;
+  }
+  body[data-view=subject] .tile.chap b {
+    font-size: 17.5px;
+    margin-top: 2px;
+  }
+
+  /* Màn chi tiết bài học (intro): Khối thông tin trung tâm đĩnh đạc, rõ nét, không mờ nhạt */
+  body[data-view=intro] .card:first-of-type {
+    border-top: 3px solid var(--ac);
+    background: linear-gradient(180deg, rgba(var(--acr), 0.08) 0%, transparent 90px), var(--card);
+    box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+    padding: 22px 24px;
+  }
+  body[data-view=intro] .card:first-of-type .eyebrow {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 6px;
+    background: var(--acd);
+    color: var(--ac);
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    margin-bottom: 6px;
+  }
+  body[data-view=intro] .card:first-of-type .big {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.015em;
+    line-height: 1.25;
+    margin-bottom: 6px;
+  }
+  body[data-view=intro] #pick {
+    gap: 10px;
+    margin: 16px 0 6px;
+  }
+  body[data-view=intro] #pick button {
+    min-height: 44px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 10px;
+  }
+  body[data-view=intro] #start {
+    min-height: 52px;
+    font-size: 16.5px;
+    font-weight: 700;
+    border-radius: 12px;
+  }
+
+  /* Màn làm bài (quiz) & thi thử (exam): Rõ ràng, tối ưu tốc độ đọc */
+  body[data-view=quiz] .card, body[data-view=exam] .card { padding: 24px 28px; border-radius: 16px; }
+  body[data-view=quiz] .q, body[data-view=exam] .q { font-size: 20px; line-height: 1.5; margin-bottom: 14px; }
+  body[data-view=quiz] .opt, body[data-view=exam] .opt { font-size: 16.5px; min-height: 54px; padding: 12px 16px 12px 12px; margin: 10px 0; border-radius: 12px; }
+  body[data-view=quiz] .dock .btn, body[data-view=cards] .dock .btn, body[data-view=exam] .dock .btn { min-height: 52px; font-size: 16.5px; }
+
+  /* Flashcard & kết quả */
+  .fct { font-size: 24px; line-height: 1.5; }
+  .fcb { font-size: 20px; line-height: 1.7; }
+  body[data-view=result] .rscore b { font-size: 48px; }
+}
+
+/* ===== 6. HIỆU ỨNG TƯƠNG TÁC DESKTOP (TACTILE HOVER & FEEDBACK) ===== */
+/* Áp dụng trên thiết bị dùng chuột: Phản hồi tức thì, xúc giác sắc nét, không trễ, không rung lắc thừa */
+@media (hover: hover) and (pointer: fine) {
+  /* -- Thẻ môn học / mục chính: Nhấc nhẹ 2px, nổi bật viền và chiều sâu -- */
+  .tile:not(.off) {
+    transition: transform 0.16s ease, border-color 0.15s ease, background 0.15s ease, box-shadow 0.18s ease;
+  }
+  .tile:not(.off):hover {
+    transform: translateY(-2px);
+    border-color: var(--bd2);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+    background: var(--card2);
+  }
+  .tile:not(.off):hover .ico {
+    color: var(--ac);
+    transform: scale(1.06);
+    border-color: var(--bd2);
+  }
+  .tile:not(.off):active {
+    transform: translateY(0);
+    box-shadow: none;
+  }
+
+  /* -- Thẻ bài học (chap): Nhấn mạnh tiêu đề, viền phản hồi nhạy bén -- */
+  body[data-view=subject] .tile.chap:hover {
+    transform: translateY(-2px);
+    border-color: var(--bd2);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.18);
+    background: var(--card2);
+  }
+  body[data-view=subject] .tile.chap:hover .eyebrow {
+    color: var(--ac);
+  }
+
+  /* -- Nút chọn phân loại câu hỏi (#pick button) -- */
+  body[data-view=intro] #pick button {
+    transition: transform 0.14s ease, border-color 0.14s ease, background 0.14s ease;
+  }
+  body[data-view=intro] #pick button:hover {
+    transform: translateY(-1px);
+    border-color: var(--bd2);
+    background: var(--card2);
+  }
+  body[data-view=intro] #pick button.on:hover {
+    border-color: var(--ac);
+    box-shadow: 0 4px 14px rgba(var(--acr), 0.25);
+  }
+  body[data-view=intro] #pick button:active {
+    transform: translateY(0);
+  }
+
+  /* -- Tùy chọn Bật/Tắt trong màn intro -- */
+  body[data-view=intro] .pick.opts button {
+    transition: background 0.15s ease, padding 0.15s ease;
+  }
+  body[data-view=intro] .pick.opts button:hover {
+    background: var(--acd);
+    padding-left: 8px;
+    padding-right: 8px;
+    border-radius: 8px;
+  }
+
+  /* -- Nút Bắt đầu kiểm tra (#start) -- */
+  body[data-view=intro] #start:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(var(--acr), 0.35);
+  }
+  body[data-view=intro] #start:active {
+    transform: translateY(1px);
+    box-shadow: none;
+  }
+
+  /* -- Lựa chọn đáp án (Quiz option): Nhích nhẹ sang phải 4px, phản hồi lập tức không trễ -- */
+  .opt:not(.static):not(.sel):not(.ok):not(.bad):not(:disabled) {
+    transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+  }
+  .opt:not(.static):not(.sel):not(.ok):not(.bad):not(:disabled):hover {
+    transform: translateX(4px);
+    border-color: var(--bd2);
+    background: var(--card2);
+  }
+  .opt:not(.static):not(.sel):not(.ok):not(.bad):not(:disabled):hover > b:first-child {
+    background: var(--ac);
+    color: var(--onac);
+  }
+  .opt:not(.static):not(.sel):not(.ok):not(.bad):not(:disabled):active {
+    transform: translateX(2px);
+  }
+
+  /* -- Nút bấm lớn (.btn): Độ nảy xúc giác tinh tế -- */
+  .btn:not(:disabled) {
+    transition: transform 0.14s ease, background 0.14s ease, border-color 0.14s ease, box-shadow 0.18s ease;
+  }
+  .btn:not(.alt):not(:disabled):hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(var(--acr), 0.22);
+  }
+  .btn.alt:not(:disabled):hover {
+    transform: translateY(-1px);
+    background: var(--card2);
+    border-color: var(--bd2);
+  }
+  .btn:not(:disabled):active {
+    transform: translateY(1px);
+    box-shadow: none;
+  }
+
+  /* -- Nút tròn icon (Quay lại, Âm thanh, Menu, v.v.) -- */
+  .icon-btn {
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.16s ease;
+  }
+  .icon-btn:hover {
+    transform: scale(1.06);
+    background: var(--card2);
+    border-color: var(--bd2);
+  }
+  .icon-btn:active {
+    transform: scale(0.96);
+  }
+
+  /* -- Lối tắt (.gear) -- */
+  .gear {
+    transition: background 0.15s ease, transform 0.15s ease, border-color 0.15s ease, box-shadow 0.18s ease;
+  }
+  .gear:hover {
+    transform: translateY(-2px);
+    border-color: var(--bd2);
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.2);
+    background: var(--card2);
+  }
+  .gear:hover > svg {
+    color: var(--ac);
+    transform: scale(1.08);
+    transition: color 0.18s ease, transform 0.18s ease;
+  }
+  .gear:hover .go {
+    transform: translateX(3px);
+    transition: transform 0.18s ease;
+  }
+
+  /* -- Thẻ "Ôn tiếp" (Resume card) -- */
+  .resume-card {
+    transition: border-color 0.15s ease, background 0.15s ease, transform 0.16s ease, box-shadow 0.18s ease;
+  }
+  .resume-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--bd2);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+    background: var(--card2);
+  }
+  .resume-card:hover .r-act {
+    transform: translateX(3px);
+    transition: transform 0.18s ease;
+  }
+
+  /* -- Thẻ KPI thống kê -- */
+  .kpi {
+    transition: transform 0.16s ease, border-color 0.15s ease, box-shadow 0.18s ease;
+  }
+  .kpi:hover {
+    transform: translateY(-2px);
+    border-color: var(--bd2);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.14);
+  }
+
+  /* -- Cột biểu đồ tuần -- */
+  .chart div {
+    transition: transform 0.14s ease;
+  }
+  .chart div:hover {
+    transform: translateY(-2px);
+  }
+  .chart div:hover i {
+    filter: brightness(1.15);
+  }
+
+  /* -- Thẻ tóm tắt accordion (.sum) -- */
+  .sum {
+    transition: border-color 0.16s ease, box-shadow 0.18s ease;
+  }
+  .sum:hover {
+    border-color: var(--bd2);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+  }
+
+  /* -- Flashcard -- */
+  .fc {
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .fc:hover {
+    transform: translateY(-2px);
+  }
+  .fc:hover .fcf {
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+    border-color: var(--bd2);
+  }
+
+  /* -- Hàng bài thi thử (.mrow) & ô ma trận câu (.mcell) -- */
+  .mrow {
+    transition: border-color 0.14s ease, background 0.14s ease, transform 0.16s ease, box-shadow 0.16s ease;
+  }
+  .mrow:not(.on):hover {
+    transform: translateY(-2px);
+    border-color: var(--bd2);
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  }
+  .mcell {
+    transition: transform 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+  }
+  .mcell:hover {
+    transform: scale(1.06);
+    border-color: var(--bd2);
+  }
+
+  /* -- Thẻ công thức (.fitem) -- */
+  .fitem[data-k] {
+    transition: transform 0.16s ease, box-shadow 0.16s ease, border-color 0.16s ease;
+  }
+  .fitem[data-k]:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.14);
+    border-color: var(--bd2);
+  }
+
+  /* -- Hộp thoại (Dialog): Mở ra nhẹ nhàng, nhanh và không nảy quá đà -- */
+  .dialog {
+    animation: dlgIn 0.18s cubic-bezier(0.16, 1, 0.3, 1) backwards;
+  }
+  @keyframes dlgIn {
+    from { opacity: 0; transform: translateY(8px) scale(0.98); }
+    to { opacity: 1; transform: none; }
+  }
+
+  /* -- Menu hàng cài đặt & chủ đề -- */
+  .trow {
+    transition: border-color 0.14s ease, background 0.14s ease, transform 0.14s ease;
+  }
+  .trow:hover {
+    transform: translateX(3px);
+    border-color: var(--bd2);
+  }
+  .hrow {
+    transition: background 0.14s ease;
+  }
+  .hrow:hover {
+    background: var(--card2);
+    border-radius: 8px;
+  }
+  .setrow, .setnum {
+    transition: border-color 0.14s ease, transform 0.14s ease;
+  }
+  .setrow:hover, .setnum:hover {
+    transform: translateY(-1px);
+    border-color: var(--bd2);
+  }
+}
+
+/* ===== Thi thử ===== */
+.tile.mock { margin-bottom: 12px; }
+.mrow { display: flex; align-items: center; gap: 14px; width: 100%; padding: 12px 14px; margin: 8px 0; border: 1px solid var(--bd); border-radius: var(--r); background: var(--card); transition: border-color 0.12s ease, background 0.12s ease; }
+.mrow .tt { flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px; }
+.mrow b { font-size: 16px; font-weight: 700; overflow-wrap: anywhere; }
+.mrow .mut { font-size: 13px; }
+.mrow .cb { flex: none; width: 24px; height: 24px; border-radius: 7px; border: 1.5px solid var(--bd2); display: grid; place-items: center; color: transparent; }
+.mrow .cb svg { width: 15px; height: 15px; stroke-width: 3; }
+.mrow.on { border-color: var(--ac); background: var(--acd); }
+.mrow.on .cb { background: var(--ac); border-color: var(--ac); color: var(--onac); }
+@media (hover: hover) and (pointer: fine) { .mrow:not(.on):hover { border-color: var(--bd2); background: var(--card2); } }
+.mxdlg { max-height: 88vh; overflow-y: auto; }
+.mgrid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 8px; }
+.mcell { height: 42px; display: grid; place-items: center; text-align: center; border: 1px solid var(--bd); border-radius: 10px; font-weight: 600; font-size: 14px; font-variant-numeric: tabular-nums; }
+.mcell.on { background: var(--acd); border-color: var(--ac); color: var(--ac); }
+.mcell.cur { outline: 2px solid var(--tx); outline-offset: 1px; }
+.dock.two #mxprev { flex: 0 0 34%; }
+.dock.two #mxnext { flex: 1; }
+.tag .pill { margin-left: 6px; }
+
+/* ===== Mục Công thức ===== */
+.tabs { display: flex; gap: 22px; border-bottom: 1px solid var(--bd); margin: 4px 0 14px; }
+.tab { padding: 10px 2px; font-weight: 600; font-size: 15px; color: var(--mut); border-bottom: 2px solid transparent; margin-bottom: -1px; }
+.tab.on { color: var(--tx); border-bottom-color: var(--ac); }
+#fsub { margin-top: 0; }
+#fsub button { flex: 1; justify-content: center; }
+.fhead { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin: 22px 0 2px; }
+.fhead>div { min-width: 0; }
+.fhead .big { font-size: 19px; }
+.btn.fbtn { width: auto; flex: none; margin-top: 2px; min-height: 38px; padding: 6px 14px; font-size: 14px; border-radius: 10px; }
+.card.fgrp { padding: 4px 16px; }
+.fitem { padding: 12px 0; border-top: 1px solid var(--bd); }
+.fitem:first-child { border-top: 0; }
+.ff { font-weight: 700; font-size: 15px; line-height: 1.5; overflow-wrap: anywhere; }
+.fb { margin-top: 4px; color: var(--tx2); font-size: 15px; line-height: 1.7; white-space: pre-line; overflow-wrap: anywhere; }
+/* Lý: tiêu đề bài nổi bật + mỗi định nghĩa một thẻ màu riêng (6 màu dịu, cùng độ sáng) */
+html { --fl: 74%; --fs: 62%; }
+html[data-theme=light], html[data-theme=mist], html[data-theme=wave] { --fl: 38%; --fs: 72%; }
+.sec.phs { display: flex; align-items: center; gap: 10px; font-size: 17px; font-weight: 800; line-height: 1.35; color: var(--tx); margin: 34px 0 14px; padding: 10px 14px; border-radius: 12px; border-left: 4px solid var(--ac); background: var(--acd); background: linear-gradient(90deg, var(--acd), transparent 90%); }
+.sec.phs .bdg { flex: none; padding: 3px 11px; border-radius: 999px; background: var(--ac); color: var(--onac); font-size: 13px; font-weight: 800; letter-spacing: .2px; }
+.card.fgrp.phy { display: grid; gap: 10px; padding: 0; background: none; border: 0; box-shadow: none; -webkit-backdrop-filter: none; backdrop-filter: none; }
+.fitem[data-k] { --fc: hsl(var(--fh) var(--fs) var(--fl)); position: relative; overflow: hidden; margin: 0; padding: 13px 15px 13px 19px; border: 1px solid var(--bd); border-radius: 14px; background: var(--card); background: linear-gradient(135deg, color-mix(in srgb, var(--fc) 10%, transparent), transparent 65%), var(--card); border-color: color-mix(in srgb, var(--fc) 24%, var(--bd)); }
+.fitem[data-k]::before { content: ""; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--fc); }
+.fitem[data-k] .ff { color: var(--fc); }
+.fitem[data-k] .fb b { color: var(--fc); font-weight: 800; }
+.fitem[data-k="0"] { --fh: 212; }
+.fitem[data-k="1"] { --fh: 266; }
+.fitem[data-k="2"] { --fh: 326; }
+.fitem[data-k="3"] { --fh: 28; }
+.fitem[data-k="4"] { --fh: 146; }
+.fitem[data-k="5"] { --fh: 186; }
 </style>
 <script>try{var _t=localStorage.getItem("quiz.theme");if(_t)document.documentElement.dataset.theme=_t}catch(e){}</script>
 <link rel="manifest" href="manifest.json">
@@ -6920,7 +7602,8 @@ const quizData = {
    Mỗi chương: { id, title, subtitle, description?, groups: [ { g: "tên nhóm", c: [ ["mặt trước", "mặt sau"], ... ] } ] }
    Ký hiệu trong thẻ:  **đậm**   [[AB]] = vectơ AB (có mũi tên phía trên)   \n = xuống dòng
    Muốn thêm thẻ: thêm một dòng ["mặt trước", "mặt sau"] vào nhóm tương ứng.
-   Muốn có thẻ cho môn khác (Sử, Địa, Sinh): thêm khóa mới vào CARD_DATA theo id môn.
+   Thẻ nằm ở mục Công thức (tab Ghi nhớ). Môn có tab: math, physics, chemistry, geography.
+   Muốn thêm công thức cho Hóa / Địa: thêm khóa chemistry: [ ... ] hoặc geography: [ ... ] vào CARD_DATA, id chương phải MỚI (vd "chemistry-f1"), không trùng id chương trắc nghiệm.
    ============================================================ */
 const CARD_DATA = {
   math: [
@@ -7032,32 +7715,32 @@ const CARD_DATA = {
         ["Nội năng của vật là gì?", "Tổng **động năng** chuyển động hỗn loạn của các phân tử và **thế năng** tương tác giữa chúng. Đơn vị: J."],
         ["Nội năng phụ thuộc vào những gì?", "Phụ thuộc **nhiệt độ** và **thể tích** của vật.\nKhí lí tưởng (bỏ qua thế năng tương tác): chỉ phụ thuộc **nhiệt độ**."],
         ["Hai cách làm thay đổi nội năng", "**Thực hiện công** và **truyền nhiệt**."],
-        ["Định luật I nhiệt động lực học", "**ΔU = A + Q**\nΔU: độ biến thiên nội năng (J) · A: công (J) · Q: nhiệt lượng (J)"],
-        ["Quy ước dấu của A và Q", "Q > 0: vật **nhận** nhiệt · Q < 0: vật **tỏa** nhiệt\nA > 0: vật **nhận** công · A < 0: vật **thực hiện** công"],
+        ["Định luật I nhiệt động lực học", "**Nội dung:** độ biến thiên nội năng của vật bằng **tổng công** và **nhiệt lượng** mà vật nhận được.\n**ΔU = A + Q**\nΔU: độ biến thiên nội năng (J) · A: công (J) · Q: nhiệt lượng (J)"],
+        ["Quy ước dấu của A và Q", "Q > 0: vật **nhận** nhiệt lượng từ vật khác\nQ < 0: vật **truyền** nhiệt lượng cho vật khác\nA > 0: vật **nhận** công từ vật khác\nA < 0: vật **thực hiện** công lên vật khác"],
         ["Các trường hợp đặc biệt của ΔU = A + Q", "Không trao đổi nhiệt (Q = 0): **ΔU = A**\nKhông thực hiện công (A = 0): **ΔU = Q**\nNhiệt độ khí lí tưởng không đổi (ΔU = 0): **A = −Q**"]
       ] },
       { g: "Bài 3 · Nhiệt độ, thang nhiệt độ", c: [
         ["Nhiệt độ đặc trưng cho điều gì?", "**Mức độ nóng, lạnh** của vật; liên quan đến động năng chuyển động nhiệt của các phân tử."],
         ["Cân bằng nhiệt", "Hai vật tiếp xúc: nhiệt truyền từ vật có nhiệt độ **cao** sang vật có nhiệt độ **thấp** cho đến khi nhiệt độ **bằng nhau** (cân bằng nhiệt)."],
         ["Hai điểm mốc của thang Celsius", "**0 °C**: nước đá đang tan · **100 °C**: nước đang sôi (áp suất khí quyển chuẩn)"],
-        ["Đổi từ °C sang K", "**T(K) = t(°C) + 273**\n(chính xác hơn: 273,15)\n0 K = −273 °C là **nhiệt độ không tuyệt đối**"],
+        ["Đổi từ °C sang K", "**T(K) = t(°C) + 273**\nT: nhiệt độ **Kelvin** · t: nhiệt độ **Celsius**\n(chính xác hơn: 273,15)\n0 K = −273 °C là **nhiệt độ không tuyệt đối**"],
         ["Đổi từ °C sang °F", "**t(°F) = 1,8·t(°C) + 32**\nNước đóng băng: 32 °F · nước sôi: 212 °F"],
         ["Độ biến thiên nhiệt độ trong thang Celsius và Kelvin", "**Δt (°C) = ΔT (K)**\n(một độ chia trong hai thang bằng nhau)"]
       ] },
       { g: "Bài 4 · Nhiệt dung riêng", c: [
         ["Nhiệt dung riêng của chất là gì?", "Nhiệt lượng cần cung cấp để **1 kg** chất tăng thêm **1 K** (1 °C).\nKí hiệu c, đơn vị **J/(kg·K)**."],
-        ["Nhiệt lượng vật thu vào hoặc tỏa ra khi nhiệt độ thay đổi", "**Q = m·c·Δt**\nm: khối lượng (kg) · c: nhiệt dung riêng · Δt = t_sau − t_đầu\nThu nhiệt: Q > 0 · Tỏa nhiệt: Q < 0 (hoặc lấy Δt = t_đầu − t_sau để Q dương)"],
+        ["Nhiệt lượng vật thu vào hoặc tỏa ra khi nhiệt độ thay đổi", "**Q = m·c·ΔT**  (ΔT = Δt = t_sau − t_đầu)\nQ: nhiệt lượng cần truyền cho vật (J)\nm: khối lượng vật (kg)\nc: **nhiệt dung riêng** của chất làm vật (J/kg·K)\nΔT: độ tăng nhiệt độ của vật (K)\nThu nhiệt: Q > 0 · Tỏa nhiệt: Q < 0 (hoặc lấy Δt = t_đầu − t_sau để Q dương)"],
         ["Nhiệt dung riêng của nước", "c ≈ **4180–4200 J/(kg·K)** (tùy sách; theo đề cho)\nNước có c lớn: **nóng lên, nguội đi chậm**."],
         ["Phương trình cân bằng nhiệt của hai vật (t₁ > t₂, nhiệt độ cân bằng t)", "**Q_tỏa = Q_thu**\n⇔ m₁c₁(t₁ − t) = m₂c₂(t − t₂)"]
       ] },
       { g: "Bài 5 · Nhiệt nóng chảy riêng", c: [
         ["Nhiệt nóng chảy riêng của chất là gì?", "Nhiệt lượng cần cung cấp để **1 kg** chất rắn nóng chảy hoàn toàn ở **nhiệt độ nóng chảy**.\nKí hiệu λ, đơn vị **J/kg**."],
-        ["Nhiệt lượng cần để vật rắn nóng chảy hoàn toàn", "**Q = λ·m**\nNước đá: λ ≈ **3,34×10⁵ J/kg**\nKhi **đông đặc**, vật tỏa ra đúng lượng nhiệt Q = λ·m."],
+        ["Nhiệt lượng cần để vật rắn nóng chảy hoàn toàn", "**Q = λ·m**\nQ: nhiệt lượng cần truyền cho vật (J) · m: khối lượng vật (kg)\nλ: **nhiệt nóng chảy riêng** của chất làm vật (J/kg)\nNước đá: λ ≈ **3,34×10⁵ J/kg**\nKhi **đông đặc**, vật tỏa ra đúng lượng nhiệt Q = λ·m."],
         ["Nhiệt độ thay đổi thế nào trong lúc chất nóng chảy?", "**Không đổi**, dù vẫn nhận nhiệt (nhiệt dùng để phá cấu trúc chuyển sang thể lỏng)."]
       ] },
       { g: "Bài 6 · Nhiệt hóa hơi riêng", c: [
         ["Nhiệt hóa hơi riêng của chất là gì?", "Nhiệt lượng cần cung cấp để **1 kg** chất lỏng hóa hơi hoàn toàn ở **nhiệt độ sôi**.\nKí hiệu L, đơn vị **J/kg**."],
-        ["Nhiệt lượng cần để vật lỏng hóa hơi hoàn toàn", "**Q = L·m**\nNước: L ≈ **2,3×10⁶ J/kg** (có sách ghi 2,26×10⁶)\nKhi **ngưng tụ**, hơi tỏa ra đúng lượng nhiệt Q = L·m."],
+        ["Nhiệt lượng cần để vật lỏng hóa hơi hoàn toàn", "**Q = L·m**\nQ: nhiệt lượng cần truyền cho vật (J) · m: khối lượng vật (kg)\nL: **nhiệt hóa hơi riêng** của chất lỏng (J/kg)\nNước: L ≈ **2,3×10⁶ J/kg** (có sách ghi 2,26×10⁶)\nKhi **ngưng tụ**, hơi tỏa ra đúng lượng nhiệt Q = L·m."],
         ["Nhiệt độ thay đổi thế nào trong lúc chất lỏng sôi?", "**Không đổi** (bằng nhiệt độ sôi), dù vẫn nhận nhiệt."]
       ] },
       { g: "Bài 7 · Bài tập vật lí nhiệt", c: [
@@ -7066,6 +7749,54 @@ const CARD_DATA = {
         ["Đổi đơn vị thường gặp", "g → kg: chia 1000 · kJ → J: nhân 1000\nΔt (°C) = ΔT (K)"],
         ["Hiệu suất", "**H = Q_có ích / Q_toàn phần × 100%**"],
         ["Quên gì dễ mất điểm?", "Dùng Δt **dương** cho Q thu và Q tỏa (nếu dùng Q_tỏa = Q_thu)\nTrong lúc nóng chảy, sôi nhiệt độ **không đổi**\nGiá trị c, λ, L: dùng theo **đề bài cho**"]
+      ] }
+    ] },
+    { id: "physics-2", title: "Chương II", subtitle: "Khí lí tưởng", groups: [
+      { g: "Định luật Boyle (đẳng nhiệt)", c: [
+        ["Định luật Boyle (quá trình đẳng nhiệt)", "Với một khối lượng khí xác định, khi **nhiệt độ không đổi** thì **áp suất tỉ lệ nghịch với thể tích** (tích p·V không đổi).\n**pV = hằng số**  hay  **p₁V₁ = p₂V₂**"]
+      ] },
+      { g: "Định luật Charles (đẳng áp)", c: [
+        ["Định luật Charles (quá trình đẳng áp)", "Với một khối lượng khí xác định, khi **áp suất không đổi** thì **thể tích tỉ lệ thuận với nhiệt độ tuyệt đối**.\n**V/T = hằng số**  hay  **V₁/T₁ = V₂/T₂**\n(T tính bằng **K**: T = t + 273)"]
+      ] },
+      { g: "Phương trình trạng thái, Clapeyron", c: [
+        ["Phương trình trạng thái của khí lí tưởng", "Với một khối lượng khí xác định:\n**p₁V₁/T₁ = p₂V₂/T₂**  ⇒  **pV/T = hằng số**"],
+        ["Phương trình Clapeyron", "**pV = nRT**\nR = 8,31 J/(mol·K): **hằng số khí lí tưởng**\nn: **số mol khí**, **n = m/M** (m: khối lượng khí, kg · M: khối lượng mol, kg/mol)\n(p: Pa · V: m³ · T: K)"]
+      ] },
+      { g: "Mô hình động học phân tử", c: [
+        ["Áp suất chất khí theo mô hình động học phân tử", "**p = ⅓·μ·m·⟨v²⟩ = ⅔·μ·E_d**\nμ: **mật độ phân tử khí** (μ = N/V)\n⟨v²⟩: trung bình của các **bình phương tốc độ** phân tử\nm: khối lượng một phân tử · E_d: động năng trung bình của phân tử"],
+        ["Liên hệ giữa động năng trung bình của phân tử và nhiệt độ", "**E_d = (3/2)·k·T**\nk = 1,38·10⁻²³ J/K: **hằng số Boltzmann**\nNhiệt độ tuyệt đối càng cao thì động năng trung bình của phân tử càng **lớn**."]
+      ] }
+    ] },
+    { id: "physics-3", title: "Chương III", subtitle: "Từ trường", groups: [
+      { g: "Lực từ và cảm ứng từ", c: [
+        ["Lực từ tác dụng lên đoạn dây dẫn mang dòng điện đặt trong từ trường đều (lực Ampe)", "**F = B·I·L·sin α**\nF: **lực từ** (N) · B: **cảm ứng từ** (T) · I: cường độ dòng điện (A)\nL: chiều dài đoạn dây mang dòng điện đặt trong từ trường (m)\nα: góc hợp bởi đoạn dây mang dòng điện và vectơ cảm ứng từ [[B]]"],
+        ["Độ lớn cảm ứng từ B", "**B = F/(I·L·sin α)**\nB: cảm ứng từ, đơn vị **tesla (T)**\n(F: lực từ · I: cường độ dòng điện · L: chiều dài đoạn dây · α: góc giữa dây và [[B]])"]
+      ] },
+      { g: "Từ thông và cảm ứng điện từ", c: [
+        ["Công thức xác định từ thông", "**Φ = B·S·cos α**\nΦ: **từ thông** qua diện tích S (**Wb**) · S: diện tích vòng dây (m²)\nB: độ lớn cảm ứng từ (T)\nα: góc hợp bởi vectơ **pháp tuyến** [[n]] của vòng dây và vectơ cảm ứng từ [[B]]"],
+        ["Định luật Faraday (biểu thức suất điện động cảm ứng)", "**e_c = −N·ΔΦ/Δt**\nN: **số vòng dây**\n|ΔΦ/Δt|: **tốc độ biến thiên từ thông** qua mạch kín"]
+      ] },
+      { g: "Dòng điện xoay chiều", c: [
+        ["Dòng điện xoay chiều có cường độ biến thiên theo công thức", "**i = I₀·cos(ωt + φ_i)**\ni: cường độ **tức thời** · I₀: cường độ **cực đại**\nω: tần số góc · φ_i: pha ban đầu"],
+        ["Mối quan hệ giữa giá trị hiệu dụng và giá trị cực đại", "**I = I₀/√2**  ;  **U = U₀/√2**\nI, U: cường độ dòng điện và điện áp **hiệu dụng**\nI₀, U₀: cường độ dòng điện và điện áp **cực đại**"],
+        ["Công thức về máy biến áp", "**U₁/U₂ = N₁/N₂**\nU₁, U₂: điện áp hiệu dụng giữa hai đầu cuộn **sơ cấp** và **thứ cấp**\nN₁, N₂: số vòng dây của cuộn sơ cấp và thứ cấp"]
+      ] },
+      { g: "Sóng điện từ", c: [
+        ["Bước sóng của sóng điện từ", "**λ = c·T = c/f**\nλ: **bước sóng** (m) · c: tốc độ ánh sáng trong chân không (≈ 3·10⁸ m/s)\nT: chu kì (s) · f: tần số (Hz)"]
+      ] }
+    ] },
+    { id: "physics-4", title: "Chương IV", subtitle: "Vật lí hạt nhân", groups: [
+      { g: "Độ hụt khối, năng lượng liên kết", c: [
+        ["Công thức độ hụt khối của hạt nhân", "**Δm = [Z·m_p + (A − Z)·m_n] − m_X**\nZ: số **proton** · A − Z: số **neutron**\nm_p, m_n: khối lượng proton, neutron · m_X: khối lượng hạt nhân\n(Độ hụt khối là hiệu giữa **tổng khối lượng các nucleon riêng lẻ** và khối lượng hạt nhân)"],
+        ["Năng lượng liên kết của hạt nhân", "**E_lk = Δm·c²**"],
+        ["Năng lượng liên kết riêng", "**E_lkr = E_lk/A**\nHạt nhân có E_lkr càng **lớn** thì càng **bền vững**."]
+      ] },
+      { g: "Năng lượng phản ứng hạt nhân", c: [
+        ["Năng lượng tỏa ra hoặc thu vào của phản ứng hạt nhân", "**ΔE = (m_trước − m_sau)·c²**\nm_trước, m_sau: tổng khối lượng các hạt **trước** và **sau** phản ứng\nΔE > 0: phản ứng **tỏa** năng lượng\nΔE < 0: phản ứng **thu** năng lượng"]
+      ] },
+      { g: "Phóng xạ", c: [
+        ["Định luật phóng xạ", "N_t = N₀·2^(−k)  (với t = k·T)\n⇒ **N_t = N₀·2^(−t/T) = N₀·e^(−λt)**, với **λ = ln2/T**\nN₀, N_t: số hạt nhân ban đầu và còn lại sau thời gian t\nT: **chu kì bán rã** · λ: **hằng số phóng xạ**"],
+        ["Độ phóng xạ", "**H_t = λ·N_t = H₀·e^(−λt)**\nĐộ phóng xạ đo **tốc độ phân rã** của chất phóng xạ; đơn vị **becquerel (Bq)**."]
       ] }
     ] }
   ]
@@ -7077,7 +7808,7 @@ Object.keys(CARD_DATA).forEach(sid => {
     const cards = []; ch.groups.forEach(gr => gr.c.forEach(([f, b]) => cards.push({ g: gr.g, f, b })));
     const old = sub.chapters.find(c => c.id === ch.id);
     if (old) old.cards = cards;
-    else sub.chapters.push({ id: ch.id, title: ch.title, subtitle: ch.subtitle, description: ch.description, questions: [], cards });
+    else sub.chapters.push({ id: ch.id, title: ch.title, subtitle: ch.subtitle, description: ch.description, questions: [], cards, formula: true });
   });
 });
 (function () { const d = { math: "Toán 12", physics: "Vật lý 12" }; quizData.subjects.forEach(s => { if (d[s.id] && !s.description) s.description = d[s.id]; }); })();
@@ -7085,7 +7816,23 @@ Object.keys(CARD_DATA).forEach(sid => {
 
 const _svg = d => `<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${d}</svg>`;
 const IC = { back: _svg('<path d="M15 5l-7 7 7 7"/>'), menu: _svg('<path d="M4 7h16M4 12h16M4 17h16"/>'), close: _svg('<path d="M6 6l12 12M18 6L6 18"/>'),
-  volOn: _svg('<path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 010 7"/>'), volOff: _svg('<path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9l4 6M21 9l-4 6"/>') };
+  volOn: _svg('<path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M16.5 8.5a5 5 0 010 7"/>'), volOff: _svg('<path d="M4 9v6h4l5 4V5L8 9H4z"/><path d="M17 9l4 6M21 9l-4 6"/>'),
+  chev: _svg('<path d="M9 6l6 6-6 6"/>'), check: _svg('<path d="M5 12.5l4.5 4.5L19 7.5"/>'), no: _svg('<path d="M6 6l12 12M18 6L6 18"/>'),
+  warn: _svg('<circle cx="12" cy="12" r="9"/><path d="M12 7.5v5.5M12 16.6h.01"/>'),
+  theme: _svg('<circle cx="12" cy="12" r="9"/><path d="M12 3a9 9 0 0 1 0 18z" fill="currentColor"/>'),
+  tune: _svg('<path d="M4 6h10M18 6h2M4 12h2M10 12h10M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="18" cy="18" r="2"/>'),
+  flag: _svg('<path d="M5 21V4"/><path d="M5 4h12l-2.5 4L17 12H5"/>'),
+  del: _svg('<path d="M21 5H9l-6 7 6 7h12z"/><path d="M12.5 9.5l5 5M17.5 9.5l-5 5"/>') };
+/* icon môn học: nét mảnh, cùng bộ, không dùng emoji */
+const SUBJ_IC = {
+  history: _svg('<path d="M3 21h18"/><path d="M6 21V11M10 21V11M14 21V11M18 21V11"/><path d="M3 11l9-7 9 7z"/>'),
+  geography: _svg('<circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c2.5 2.5 3.8 5.5 3.8 9s-1.3 6.5-3.8 9c-2.5-2.5-3.8-5.5-3.8-9S9.5 5.5 12 3z"/>'),
+  biology: _svg('<path d="M7 3c0 4.5 10 5.5 10 9s-10 4.5-10 9"/><path d="M17 3c0 4.5-10 5.5-10 9s10 4.5 10 9"/><path d="M8.8 6.4h6.4M8.8 17.6h6.4"/>'),
+  chemistry: _svg('<path d="M9.5 3h5"/><path d="M10 3v6.2L4.8 18a2 2 0 0 0 1.7 3h11a2 2 0 0 0 1.7-3L14 9.2V3"/><path d="M7.5 15h9"/>'),
+  math: _svg('<path d="M18 5H6.5l5.5 7-5.5 7H18"/>'),
+  physics: _svg('<circle cx="12" cy="12" r="1.4" fill="currentColor"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/>')
+};
+const subjIcon = s => SUBJ_IC[s.id] || _svg('<path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h10"/>');
 /* ===== Câu trọng tâm (tô đỏ trong đề cương KTTX2) ===== */
 const HOT_IDS = new Set(["biology-1-H-01", "biology-1-B-01", "biology-1-H-03", "biology-1-H-04", "biology-1-B-02", "biology-1-T-01", "biology-1-T-04", "biology-1-N-01", "biology-1-N-02", "biology-1-N-03", "biology-1-N-04", "biology-1-N-05", "biology-1-N-06", "biology-1-N-09", "biology-1-N-10", "biology-1-N-12", "biology-2-B-01", "biology-2-B-02", "biology-2-B-03", "biology-2-H-06", "biology-2-B-06", "biology-2-H-08", "biology-2-B-07", "biology-2-B-08", "biology-2-B-09", "biology-2-B-10", "biology-2-H-11", "biology-2-H-14", "biology-2-H-15", "biology-2-B-14", "biology-2-B-15", "biology-2-H-19", "biology-2-H-20", "biology-2-H-21", "biology-2-H-22", "biology-2-H-23", "biology-2-B-16", "biology-2-B-17", "biology-2-B-18", "biology-2-B-19", "biology-2-H-25", "biology-2-B-20", "biology-2-H-28", "biology-2-V-03", "biology-2-H-30", "biology-2-T-04", "biology-2-T-06", "biology-1-N-07"]);
 const HOT_KEYS = {"biology-1": ["**Chức năng DNA**: lưu giữ – bảo quản – truyền đạt thông tin di truyền (và tạo biến dị → tiến hóa). **Không** xúc tác phản ứng, **không** vận chuyển amino acid.", "DNA mạch kép: **A = T, G = C** (A–T: 2 liên kết H; G–C: 3 liên kết H) ⇒ **A + G = T + C = 50%**, (A+G)/(T+C) = **1**. Biết %A ⇒ %T = %A, %G = %C = 50% − %A (A = 20% ⇒ G = C = 30%).", "Trên **một mạch** thì A+G không cố định; tỉ lệ (A+G)/(T+C) mạch này = **nghịch đảo** mạch kia. Số liệu A ≠ T hoặc G ≠ C ⇒ **không phải DNA mạch kép**. Mạch 1 không có G ⇒ mạch 2 không có C.", "Tái bản theo **nguyên tắc bổ sung + bán bảo toàn** (mỗi DNA con = 1 mạch cũ + 1 mạch mới); giống mẹ nhờ bắt cặp **A–T, G–C**. Diễn ra ở **kì trung gian** (pha S), không phải kì giữa.", "Chạc chữ Y: DNA polymerase chỉ nối nucleotide vào đầu **3'** (mạch mới kéo dài **5' → 3'**). Khuôn 3'→5' ⇒ mạch mới **liên tục**; khuôn 5'→3' ⇒ **gián đoạn** (đoạn **Okazaki**, nhiều đoạn mồi RNA, nối bằng **ligase**).", "Truyền thông tin từ tế bào mẹ sang con / thế hệ sau = **tái bản DNA**; phiên mã, dịch mã là **biểu hiện** thông tin."], "biology-2": ["**Gene** = đoạn DNA mã hóa chuỗi polypeptide hoặc RNA. Cấu trúc (mạch gốc 3'→5'): **vùng điều hòa – vùng mã hóa – vùng kết thúc**. Vùng điều hòa có trình tự cho RNA polymerase bám, **không** được phiên mã.", "**Exon** mã hóa amino acid, **intron** không. Gene **phân mảnh** (nhân thực, có intron) khác gene **không phân mảnh** (nhân sơ, mã hóa liên tục). **Hệ gene** = toàn bộ DNA trong **tế bào**.", "**RNA**: mạch đơn, 4 loại nucleotide **A, U, G, C**. **mRNA** làm khuôn dịch mã; **tRNA** mang anticodon, vận chuyển amino acid (\"người phiên dịch\"); **rRNA** cấu tạo ribosome.", "Phiên mã: RNA polymerase di chuyển trên mạch gốc theo **3'→5'**, RNA kéo dài **5'→3'**. Phiên mã ngược: tổng hợp cDNA từ RNA nhờ **reverse transcriptase**.", "**Mã di truyền** là bộ ba, đọc liên tục 5'→3'. 64 bộ ba: **61 mã hóa amino acid**, 3 kết thúc **UAA, UAG, UGA**; mở đầu **5'AUG3'** (methionine).", "Tính chất: **đặc hiệu** (1 bộ ba – 1 amino acid), **thoái hóa** (nhiều bộ ba – 1 amino acid), **phổ biến** (chung các loài, trừ vài ngoại lệ). Đọc kĩ đề để phân biệt!", "Dịch mã kết thúc khi ribosome gặp **UAA/UAG/UGA**. Trực tiếp tham gia: mRNA, tRNA, ribosome, amino acid; **DNA không** tham gia trực tiếp.", "**Triplet** = bộ ba trên **DNA**; **codon** = trên **mRNA**; **anticodon** = trên **tRNA**."]};
@@ -7107,8 +7854,8 @@ let revealWrong = false; try { revealWrong = localStorage.getItem("quiz.reveal")
 const shuffle = a => { a = a.slice(); if (keepOrder) return a; for (let i = a.length; i > 1;) { const j = Math.random() * i-- | 0; [a[i], a[j]] = [a[j], a[i]]; } return a; };
 const rich = s => esc(s).replace(/\*\*(.+?)\*\*/g, "<b>$1</b>");
 const esc = s => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-const warnIcon = q => q.warn ? `<span class="wico" role="img" aria-label="Cảnh báo">⚠</span>` : "";
-const warnHTML = q => q.warn ? `<div class="warnq">⚠ ${esc(q.warn)}</div>` : "";
+const warnIcon = q => q.warn ? `<span class="wico" role="img" aria-label="Cảnh báo">${IC.warn}</span>` : "";
+const warnHTML = q => q.warn ? `<div class="warnq">${IC.warn}<span>${esc(q.warn)}</span></div>` : "";
 const flaggedList = () => { const out = []; quizData.subjects.forEach(sub => sub.chapters.forEach(ch => { const cnt = {}; ch.questions.forEach(q => { cnt[q.tag] = (cnt[q.tag] || 0) + 1; if (q.warn) out.push({ sub, ch, q, n: cnt[q.tag] }); }); })); return out; };
 const qimg = q => q.img ? `<img class="qimg" src="${q.img}" alt="Hình minh họa">` : "";
 const LETTERS = "ABCDEFGH";
@@ -7149,7 +7896,7 @@ const TYPES = {
   short: {
     rule: "Câu trả lời ngắn: nhập đáp án bằng bàn phím số; nhập sai thì nhập lại đến khi đúng.",
     prepare: q => ({ answers: q.answers, picked: null }),
-    render: r => `<input class="sa" id="sa" type="text" readonly inputmode="none" placeholder="Nhập đáp án" value=""><div class="kp">${["1","2","3","4","5","6","7","8","9",",","0","del"].map(k => `<button type="button" data-act="key" data-k="${k}">${k === "del" ? "⌫" : k}</button>`).join("")}</div>`,
+    render: r => `<input class="sa" id="sa" type="text" readonly inputmode="none" placeholder="Nhập đáp án" value=""><div class="kp">${["1","2","3","4","5","6","7","8","9",",","0","del"].map(k => `<button type="button" data-act="key" data-k="${k}">${k === "del" ? IC.del : k}</button>`).join("")}</div>`,
     select: () => {},
     ready: r => !!r.picked,
     mark: (r, root) => {
@@ -7230,11 +7977,11 @@ function setTheme(t, save) {
   document.body.appendChild(b);
 })();
 setTheme(theme, false);
-const themeCols = () => ["light", "dark"].map(m => `<div><div class="sec">${m === "light" ? "Giao diện sáng" : "Giao diện tối"}</div>${Object.entries(THEMES).filter(([k, v]) => v.mode === m).map(([k, v]) => `<button class="trow${k === pref[m] ? " on" : ""}" data-act="theme" data-t="${k}" style="--sw:${v.sw}"><i></i>${v.name}<span class="ck">✓</span></button>`).join("")}</div>`).join("");
+const themeCols = () => ["light", "dark"].map(m => `<div><div class="sec">${m === "light" ? "Giao diện sáng" : "Giao diện tối"}</div>${Object.entries(THEMES).filter(([k, v]) => v.mode === m).map(([k, v]) => `<button class="trow${k === pref[m] ? " on" : ""}" data-act="theme" data-t="${k}" style="--sw:${v.sw}"><i></i>${v.name}<span class="ck">${IC.check}</span></button>`).join("")}</div>`).join("");
 const themesHTML = () => `<div class="tpick">${themeCols()}</div>`;
 const syncTheme = () => document.querySelectorAll(".trow[data-t]").forEach(b => b.classList.toggle("on", pref[THEMES[b.dataset.t].mode] === b.dataset.t));
 /* Menu ☰ — thêm mục mới: chỉ cần thêm một object vào MENU */
-const shortModeHTML = () => [[1, "Chọn đáp án (trắc nghiệm)"], [0, "Nhập số bằng bàn phím"]].map(([m, t]) => `<button class="trow${+shortChoice === m ? " on" : ""}" data-act="shortmode" data-m="${m}" style="--sw:var(--ac)"><i></i>${t}<span class="ck">✓</span></button>`).join("");
+const shortModeHTML = () => [[1, "Chọn đáp án (trắc nghiệm)"], [0, "Nhập số bằng bàn phím"]].map(([m, t]) => `<button class="trow${+shortChoice === m ? " on" : ""}" data-act="shortmode" data-m="${m}" style="--sw:var(--ac)"><i></i>${t}<span class="ck">${IC.check}</span></button>`).join("");
 const MENU = [
   { title: "Giao diện", html: themesHTML },
   { title: "Câu trả lời ngắn", html: shortModeHTML }
@@ -7320,20 +8067,33 @@ const hist = () => { try { return JSON.parse(localStorage.getItem(HK)) || []; } 
 const dkey = t => { const d = new Date(t); return d.getFullYear() + "-" + d.getMonth() + "-" + d.getDate(); };
 function saveResult() { try { const h = hist(); h.push({ t: Date.now(), s: S.subjectId, c: S.chapterId, n: S.list.length, k: S.correct }); localStorage.setItem(HK, JSON.stringify(h.slice(-1000))); } catch (e) {} }
 const pcol = p => p >= 80 ? "var(--ok)" : p >= 50 ? "var(--ac)" : "var(--no)";
-function resumeHTML() { return ""; }
+function resumeHTML() {
+  const h = hist();
+  if (!h || !h.length) return "";
+  const last = [...h].reverse().find(x => x.c !== "mock");
+  if (!last) return "";
+  const s = getSubject(last.s), c = getChapter(last.s, last.c);
+  if (!s || !c) return "";
+  const p = Math.round(last.k / last.n * 100);
+  return `<div class="resume-card" data-act="resume" data-s="${s.id}" data-c="${c.id}" role="button" tabindex="0"><div class="r-info"><b>${esc(s.name)} · ${esc(c.subtitle || c.title)}</b><span class="mut">${last.k}/${last.n} câu đúng (${p}%) · ${agoText(last.t)}</span></div><span class="r-act">Ôn tiếp${IC.chev}</span></div>`;
+}
 let histAll = false;
 function histRowsHTML(all) {
   const h = hist();
   return (all ? h : h.slice(-4)).slice().reverse().map(x => {
     const c = getChapter(x.s, x.c), sb = getSubject(x.s), p = Math.round(x.k / x.n * 100), d = new Date(x.t);
-    return `<div class="hrow"><span>${esc(sb ? sb.name : "")} · ${esc(c ? c.subtitle : "")}<br><span class="mut">${d.toLocaleDateString("vi-VN")} ${d.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" })} · ${x.k}/${x.n} câu đúng</span></span><b style="color:${pcol(p)}">${p}%</b></div>`;
+    return `<div class="hrow"><span>${esc(sb ? sb.name : "")} · ${x.c === "mock" ? "Thi thử · " + fmtScore(x.m || 0) + " điểm" : esc(c ? c.subtitle : "")}<br><span class="mut">${d.toLocaleDateString("vi-VN")} ${d.toLocaleTimeString("vi-VN", { hour: "2-digit", minute: "2-digit" })} · ${x.k}/${x.n} câu đúng</span></span><b style="color:${pcol(p)}">${p}%</b></div>`;
   }).join("");
 }
 /* Lần làm gần nhất của từng bài / từng môn → dùng để xếp bài mới làm lên đầu */
 const lastMap = () => { const m = new Map(); hist().forEach(x => { const k = x.s + "|" + x.c, o = m.get(k); m.set(k, { t: x.t, n: x.n, k: x.k, cnt: (o ? o.cnt : 0) + 1 }); }); return m; };
 const subjLast = id => hist().reduce((a, x) => x.s === id ? Math.max(a, x.t) : a, 0);
-const homeSubjects = () => quizData.subjects.filter(s => s.chapters.length).map((s, i) => ({ s, i, t: subjLast(s.id) })).sort((a, b) => b.t - a.t || a.i - b.i).map(o => o.s);
-const sortedChapters = s => { const m = lastMap(); return s.chapters.map((c, i) => ({ c, i, l: m.get(s.id + "|" + c.id) })).sort((a, b) => (b.l ? b.l.t : 0) - (a.l ? a.l.t : 0) || a.i - b.i); };
+const homeSubjects = () => {
+  const withCh = quizData.subjects.filter(s => s.chapters && s.chapters.length && !s.chapters.every(c => c.formula)).map((s, i) => ({ s, i, t: subjLast(s.id) })).sort((a, b) => b.t - a.t || a.i - b.i).map(o => o.s);
+  const empty = quizData.subjects.filter(s => !s.chapters || !s.chapters.length);
+  return [...withCh, ...empty];
+};
+const sortedChapters = s => { const m = lastMap(); return s.chapters.filter(c => !c.formula).map((c, i) => ({ c, i, l: m.get(s.id + "|" + c.id) })).sort((a, b) => (b.l ? b.l.t : 0) - (a.l ? a.l.t : 0) || a.i - b.i); };
 function agoText(t) {
   const a = new Date(t), b = new Date(); a.setHours(0, 0, 0, 0); b.setHours(0, 0, 0, 0);
   const d = Math.round((b - a) / 864e5);
@@ -7341,7 +8101,9 @@ function agoText(t) {
 }
 function statsHTML() {
   const h = hist();
-  if (!h.length) return "";
+  if (!h.length) {
+    return "";
+  }
   const N = h.reduce((a, x) => a + x.n, 0), K = h.reduce((a, x) => a + x.k, 0), pc = Math.round(K / N * 100);
   const days = new Set(h.map(x => dkey(x.t))); let st = 0; const d = new Date();
   if (!days.has(dkey(d))) d.setDate(d.getDate() - 1);
@@ -7356,17 +8118,14 @@ function statsHTML() {
 }
 function fmtScore(x) { return String(+x.toFixed(2)); }
 function fmtDur(ms) { const t = Math.max(0, Math.round(ms / 1000)), h = Math.floor(t / 3600), m = Math.floor(t % 3600 / 60), sec = t % 60; return (h ? h + " giờ " : "") + (h || m ? m + " phút " : "") + sec + " giây"; }
-/* Tiêu đề trang chủ: từng chữ hiện lên, chạm vào thì nhảy; đổi sáng/tối thì nhảy theo */
-const titleHTML = () => `<div class="ttlhero"><h1 data-act="hop" aria-label="Ôn tập">${Array.from("Ôn\u00a0tập".normalize("NFC")).map((c, i) => `<span class="tl" aria-hidden="true" style="--k:${i}">${c}</span>`).join("")}</h1><span class="ul"></span><p class="mut">Chọn môn học để bắt đầu ôn luyện</p></div>`;
-function ttlHop() {
-  const col = getComputedStyle(document.documentElement).getPropertyValue("--ac").trim() || "#8ab4ff";
-  document.querySelectorAll(".ttlhero .tl").forEach((el, i) => { try { el.animate([{ transform: "none" }, { transform: "translateY(-.26em) scale(1.14)", color: col, offset: .4 }, { transform: "none" }], { duration: 640, delay: i * 55, easing: "cubic-bezier(.3,1.5,.5,1)" }); } catch (e) {} });
-}
+/* Tiêu đề trang chủ */
+const titleHTML = () => `<div class="ttlhero"><h1>Ôn tập</h1><p class="mut">Chọn môn học để bắt đầu ôn luyện</p></div>`;
+function ttlHop() {}
 /* phản hồi khi gạt công tắc: nảy + gợn sóng tại nút, chữ "Ôn tập" nhảy theo */
 function tglFx(toLight) {
   const b = document.getElementById("tgl");
   if (b) try {
-    b.animate([{ transform: "scale(1)" }, { transform: "scale(.88)", offset: .25 }, { transform: "scale(1.08)", offset: .6 }, { transform: "scale(1)" }], { duration: 480, easing: "ease-out" });
+    /* (đã bỏ hiệu ứng nảy scale của cả công tắc: trên PC trông như khung bị co rồi giãn) */
     const r = document.createElement("span"); r.className = "rip";
     r.style.cssText = `left:${toLight ? 15 : 41}px;top:16px;background:${toLight ? "rgba(255,196,40,.75)" : "rgba(150,170,255,.65)"}`;
     b.appendChild(r);
@@ -7387,7 +8146,7 @@ function cardsIntro(c, alt) {
   const gs = cardGroups(c);
   return `<div class="card"><div class="eyebrow">Flashcard</div><div class="big">Công thức cần nhớ</div><p class="mut">Nhìn mặt trước, tự nhớ lại rồi lật thẻ để kiểm tra.</p>` +
     (gs.length > 1 ? `<div class="pick" id="cpick">${[["all", "Tất cả", c.cards.length], ...gs.map(([g, n]) => [g, g, n])].map(([g, l, n]) => `<button class="${S.cg === g ? "on" : ""}" data-act="cgroup" data-g="${escA(g)}">${esc(l)} · ${n}</button>`).join("")}</div>` : "") +
-    `<div class="pick"><button id="cordbtn" class="${keepCardOrder ? "on" : ""}" data-act="cord">Giữ thứ tự thẻ</button></div>` +
+    `<div class="pick opts"><button id="cordbtn" class="${keepCardOrder ? "on" : ""}" data-act="cord">Giữ thứ tự thẻ</button></div>` +
     `<button class="btn${alt ? " alt" : ""}" id="cstart" data-act="cstart">Học flashcard (${cardCount(c, S.cg)} thẻ)</button></div>`;
 }
 function startCards(retryList) {
@@ -7404,18 +8163,18 @@ function cmark(known) {
   S.ci >= S.deck.length ? go("cardsend") : render();
 }
 const VIEWS = {
-  home: () => `<div class="top"><button class="icon-btn" data-act="menu" aria-label="Menu">${IC.menu}</button></div>${resumeHTML()}${titleHTML()}<div class="sec">Môn học</div><div class="grid two stagger">` +
-    homeSubjects().map((s, i) => { const n = s.chapters.length; return `<button class="tile ${n ? "" : "off"}" style="--i:${i}" ${n ? `data-act="subject" data-id="${s.id}"` : "disabled"}><span class="tt"><b>${esc(s.name)}</b><span class="mut">${n ? `${n} bài học` : "Chưa có dữ liệu"}</span></span>${n ? '<span class="go">›</span>' : ""}</button>`; }).join("") + `</div>` + statsHTML() + `<div class="gears"><button class="gear" data-act="themes"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>Màu giao diện</button><button class="gear" data-act="custom"><svg viewBox="0 0 24 24"><path d="M4 6h10M18 6h2M4 12h2M10 12h10M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="8" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg>Tùy chỉnh</button>${flaggedList().length ? `<button class="gear" data-act="flagged"><span class="wico" style="margin:0">⚠</span>Câu chưa chắc (${flaggedList().length})</button>` : ""}</div>`,
+  home: () => `<div class="top"><button class="icon-btn" data-act="menu" aria-label="Menu">${IC.menu}</button></div>${titleHTML()}${resumeHTML()}<div class="sec">Môn học</div><div class="grid two stagger">` +
+    homeSubjects().map((s, i) => { const n = s.chapters ? s.chapters.filter(c => !c.formula).length : 0; const qCount = s.chapters ? s.chapters.reduce((a, c) => a + (c.questions ? c.questions.length : 0), 0) : 0; return `<button class="tile ${n ? "" : "off"}" style="--i:${i}" ${n ? `data-act="subject" data-id="${s.id}"` : "disabled"}><span class="ico">${subjIcon(s)}</span><span class="tt"><b>${esc(s.name)}</b><span class="mut">${n ? `${n} bài học · ${qCount} câu` : "Sắp ra mắt"}</span></span>${n ? `<span class="go">${IC.chev}</span>` : '<span class="chip lock">Sắp có</span>'}</button>`; }).join("") + formTile() + `</div>` + statsHTML() + `<div class="gears"><button class="gear" data-act="themes">${IC.theme}<span>Màu giao diện</span><span class="go">${IC.chev}</span></button><button class="gear" data-act="custom">${IC.tune}<span>Tùy chỉnh</span><span class="go">${IC.chev}</span></button>${flaggedList().length ? `<button class="gear" data-act="flagged">${IC.flag}<span>Câu chưa chắc (${flaggedList().length})</span><span class="go">${IC.chev}</span></button>` : ""}</div>`,
 
-  subject: () => { const s = getSubject(S.subjectId); return topbar(`${esc(s.name)}`, "Chọn bài học") + `<div class="grid stagger">` +
+  subject: () => { const s = getSubject(S.subjectId); return topbar(`${esc(s.name)}`, "Chọn bài học") + (MOCK[s.id] ? mockTile(s) : "") + `<div class="grid two stagger">` +
     sortedChapters(s).map(({ c }, i) => { return `<button class="tile chap" style="--i:${i}" data-act="chapter" data-id="${c.id}"><span class="eyebrow">${esc(c.title)}</span><b>${esc(c.subtitle)}</b>${c.description ? `<span class="mut">${esc(c.description)}</span>` : ""}<span class="chips">${c.questions.length ? `<span class="chip">${c.questions.length} câu</span>` : ""}${c.cards && c.cards.length ? `<span class="chip">${c.cards.length} thẻ</span>` : ""}${chapterTags(c).map(([t]) => `<span class="chip">${esc(t)}</span>`).join("")}</span></button>`; }).join("") + `</div>`; },
 
   intro: () => { const s = getSubject(S.subjectId), c = chap(), tags = chapterTags(c);
     const hasShort = c.questions.some(q => q.type === "short");
-    const sum = c.summary && c.summary.length ? `<details class="sum"><summary>Tóm tắt ý cần nhớ<span class="chev">›</span></summary><div class="sumbody">${c.summary.map((g, i) => `<div class="sh"><span class="sn">${i + 1}</span>${esc(g.title)}</div><ul>${g.points.map(p => `<li>${pt(p)}</li>`).join("")}</ul>`).join("")}</div></details>` : "";
+    const sum = c.summary && c.summary.length ? `<details class="sum"><summary>Tóm tắt ý cần nhớ<span class="chev">${IC.chev}</span></summary><div class="sumbody">${c.summary.map((g, i) => `<div class="sh"><span class="sn">${i + 1}</span>${esc(g.title)}</div><ul>${g.points.map(p => `<li>${pt(p)}</li>`).join("")}</ul>`).join("")}</div></details>` : "";
     return topbar(esc(s.name)) + `<div class="card"><div class="eyebrow">${esc(c.title)}</div><div class="big">${esc(c.subtitle)}</div>${c.description ? `<p class="mut">${esc(c.description)}</p>` : ""}${c.questions.length ? `<p class="mut">${c.questions.length} câu hỏi</p>` : ""}` +
     (tags.length > 1 ? `<div class="pick" id="pick">${[["all", "Tất cả", c.questions.length], ...(hotN(c) ? [["hot", "Trọng tâm", hotN(c)]] : []), ...tags.map(([t, n]) => [t, t, n])].map(([t, l, n]) => `<button class="${S.tag === t ? "on" : ""}" data-act="tag" data-tag="${esc(t)}">${esc(l)} · ${n}</button>`).join("")}</div>` : "") +
-    (c.questions.length ? `<div class="pick"><button id="ordbtn" class="${keepOrder ? "on" : ""}" data-act="order">Giữ thứ tự câu</button><button id="rvbtn" class="${revealWrong ? "on" : ""}" data-act="reveal">Hiện đáp án khi chọn sai</button><button data-act="answers">Xem đáp án</button>${hasShort ? `<button id="kpbtn" class="${shortChoice ? "" : "on"}" data-act="kpmode">Nhập số (trả lời ngắn)</button>` : ""}</div>` : "") + `</div>` + cardsIntro(c, c.questions.length > 0) + sum +
+    (c.questions.length ? `<div class="pick opts"><button id="ordbtn" class="${keepOrder ? "on" : ""}" data-act="order">Giữ thứ tự câu</button><button id="rvbtn" class="${revealWrong ? "on" : ""}" data-act="reveal">Hiện đáp án khi chọn sai</button><button data-act="answers">Xem đáp án${IC.chev}</button>${hasShort ? `<button id="kpbtn" class="${shortChoice ? "" : "on"}" data-act="kpmode">Nhập số (trả lời ngắn)</button>` : ""}</div>` : "") + `</div>` + cardsIntro(c, c.questions.length > 0) + sum +
     (c.questions.length ? `<div class="dock"><button class="btn" id="start" data-act="start">Bắt đầu kiểm tra (${countFor(c, S.tag)} câu)</button></div>` : ""); },
 
   quiz: () => { const r = cur(), n = S.list.length;
@@ -7430,7 +8189,7 @@ const VIEWS = {
     `<div class="rrow"><span class="ri">${ico.clock}</span><span class="rl">Thời gian làm bài</span><b>${fmtDur(S.dur)}</b></div>` +
     `<div class="rrow"><span class="ri">${ico.ok}</span><span class="rl">Số câu trắc nghiệm đúng</span><b>${S.correct}/${n}</b></div>` +
     `<button class="btn alt or" data-act="restart">Luyện tập lại</button>` +
-    (w ? `<button class="btn alt bl" data-act="review">Xem đáp án ›</button><button class="btn alt" data-act="retry">Làm lại ${w} câu đã sai</button>` : "") +
+    (w ? `<button class="btn alt bl" data-act="review">Xem đáp án${IC.chev}</button><button class="btn alt" data-act="retry">Làm lại ${w} câu đã sai</button>` : "") +
     `<button class="lnk" data-act="chapters">Về danh sách bài</button></div></div>`; },
 
   cards: () => { const c = chap(), n = S.deck.length, d = S.deck[S.ci];
@@ -7473,6 +8232,166 @@ const AFTER = {
   }
 };
 
+/* ============================================================
+   THI THỬ — đề ngẫu nhiên theo cấu trúc từng môn, làm một lần, nộp bài mới chấm
+   ============================================================ */
+Object.assign(IC, {
+  grid: _svg('<rect x="4" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="4" width="6.5" height="6.5" rx="1.5"/><rect x="4" y="13.5" width="6.5" height="6.5" rx="1.5"/><rect x="13.5" y="13.5" width="6.5" height="6.5" rx="1.5"/>'),
+  exam: _svg('<path d="M9 4h6v3H9z"/><path d="M9 5.5H6a1 1 0 0 0-1 1V20a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V6.5a1 1 0 0 0-1-1h-3"/><path d="M9 14l2 2 4-4"/>')
+});
+const MOCK = { biology: { single: 18, true_false: 4, short: 4 }, geography: { single: 18, true_false: 4 }, history: { single: 18, true_false: 4 } };
+const MKEYS = ["single", "true_false", "short"];
+const MLABEL = { single: "trắc nghiệm", true_false: "đúng/sai", short: "trả lời ngắn" };
+const MTAG = { single: "Trắc nghiệm", true_false: "Đúng/Sai", short: "Trả lời ngắn" };
+const mockDesc = id => MKEYS.filter(k => MOCK[id][k]).map(k => `${MOCK[id][k]} ${MLABEL[k]}`).join(" · ");
+const mockTile = s => `<button class="tile mock" data-act="mockpick"><span class="ico">${IC.exam}</span><span class="tt"><b>Thi thử</b><span class="mut">${mockDesc(s.id)}</span></span><span class="go">${IC.chev}</span></button>`;
+const mock = { sid: null, sel: new Set() };
+const M = { sid: null, items: [], idx: 0, short: {}, t0: 0, dur: 0, res: null };
+
+const mockPool = (sid, ids) => {
+  const p = { single: [], true_false: [], short: [] };
+  getSubject(sid).chapters.filter(c => ids.has(c.id)).forEach(c => c.questions.forEach(q => { if (p[q.type]) p[q.type].push(q); }));
+  return p;
+};
+function mockPlan() {
+  const cfg = MOCK[S.subjectId], p = mockPool(S.subjectId, mock.sel); let total = 0; const miss = [];
+  MKEYS.forEach(k => { if (!cfg[k]) return; const g = Math.min(cfg[k], p[k].length); total += g; if (g < cfg[k]) miss.push(`Thiếu ${cfg[k] - g} câu ${MLABEL[k]} (có ${g}/${cfg[k]})`); });
+  return { total, miss, p };
+}
+function mockInfoHTML() {
+  const { total, miss } = mockPlan();
+  return `<div class="card" style="margin-top:12px"><div class="mut">${total ? `Đề sẽ có <b style="color:var(--tx)">${total}</b> câu` : "Chọn ít nhất một bài có câu hỏi"}</div>${miss.map(m => `<div class="msg bad">${IC.warn}<span>${m}</span></div>`).join("")}</div>`;
+}
+function mockRefresh() {
+  const i = document.getElementById("mxinfo"), b = document.getElementById("mxstart"), { total } = mockPlan();
+  if (i) i.innerHTML = mockInfoHTML();
+  if (b) { b.disabled = !total; b.textContent = total ? `Bắt đầu thi (${total} câu)` : "Bắt đầu thi"; }
+}
+function buildMock() {
+  const cfg = MOCK[S.subjectId], { p } = mockPlan(), items = [], short = {};
+  MKEYS.forEach(k => {
+    if (!cfg[k]) return;
+    const pick = shufflePlain(p[k]).slice(0, cfg[k]);
+    if (pick.length < cfg[k]) short[k] = cfg[k] - pick.length;
+    pick.forEach(q => items.push({ src: q, type: k, ...TYPES[k].prepare(q) }));
+  });
+  Object.assign(M, { sid: S.subjectId, items, idx: 0, short, t0: Date.now(), dur: 0, res: null });
+}
+
+/* ---- chấm điểm ---- */
+const MX_TF = [0, 0.1, 0.25, 0.5, 1];
+const mxNorm = x => String(x).toLowerCase().replace(/[’‘`´]/g, "'").replace(/\s+/g, "").replace(/,/g, ".").replace(/\.$/, "");
+const mxDone = it => it.type === "single" ? it.picked !== null : it.type === "short" ? !!it.picked : it.statements.every(s => s.picked !== null);
+function mxItem(it) {
+  if (it.type === "single") { const ok = it.picked === it.answer; return { pts: ok ? 0.25 : 0, max: 0.25, ok }; }
+  if (it.type === "short") { const ok = !!it.picked && it.answers.some(a => mxNorm(a) === mxNorm(it.picked)); return { pts: ok ? 0.25 : 0, max: 0.25, ok }; }
+  const n = it.statements.length, c = it.statements.filter(s => s.picked === s.answer).length;
+  return { pts: n === 4 ? MX_TF[c] : c / n, max: 1, ok: c === n, c, n };
+}
+function mxGrade() {
+  const part = { single: { ok: 0, n: 0 }, true_false: { pts: 0, max: 0, ok: 0, n: 0, c: 0, sn: 0 }, short: { ok: 0, n: 0 } };
+  let pts = 0, max = 0, okN = 0;
+  M.items.forEach(it => {
+    const g = mxItem(it), p = part[it.type]; pts += g.pts; max += g.max; if (g.ok) okN++;
+    p.n++; if (g.ok) p.ok++;
+    if (it.type === "true_false") { p.pts += g.pts; p.max += g.max; p.c += g.c; p.sn += g.n; }
+  });
+  return { pts, max, okN, part, score: max ? pts / max * 10 : 0 };
+}
+function mxFinish() {
+  M.dur = Date.now() - M.t0; M.res = mxGrade();
+  try { const h = hist(); h.push({ t: Date.now(), s: M.sid, c: "mock", n: M.items.length, k: M.res.okN, m: M.res.score }); localStorage.setItem(HK, JSON.stringify(h.slice(-1000))); } catch (e) {}
+  go("examresult");
+}
+
+/* ---- giao diện ---- */
+VIEWS.mockpick = () => {
+  const s = getSubject(S.subjectId), cfg = MOCK[s.id];
+  const rows = s.chapters.filter(c => c.questions.length).map(c => {
+    const n = { single: 0, true_false: 0, short: 0 }; c.questions.forEach(q => { if (n[q.type] !== undefined) n[q.type]++; });
+    const info = MKEYS.filter(k => cfg[k]).map(k => `${n[k]} ${MLABEL[k]}`).join(" · ");
+    return `<button class="mrow${mock.sel.has(c.id) ? " on" : ""}" data-act="mxch" data-id="${c.id}"><span class="cb">${IC.check}</span><span class="tt"><span class="eyebrow">${esc(c.title)}</span><b>${esc(c.subtitle)}</b><span class="mut">${info}</span></span></button>`;
+  }).join("");
+  const { total } = mockPlan();
+  return topbar("Thi thử", esc(s.name)) +
+    `<div class="card"><div class="eyebrow">Cấu trúc đề</div><div class="big" style="font-size:18px">${mockDesc(s.id)}</div><p class="mut">Câu hỏi lấy ngẫu nhiên từ các bài bạn chọn. Làm một lần, nộp bài xong mới biết đúng sai.</p></div>` +
+    `<div class="sec">Chọn bài</div>${rows}<div id="mxinfo">${mockInfoHTML()}</div>` +
+    `<div class="dock"><button class="btn" id="mxstart" data-act="mxstart"${total ? "" : " disabled"}>Bắt đầu thi${total ? ` (${total} câu)` : ""}</button></div>`;
+};
+
+function mxBody(it) {
+  if (it.type === "single") return it.options.map((o, k) => `<button class="opt${it.picked === k ? " sel" : ""}" data-act="mxpick" data-k="${k}"><b>${LETTERS[k]}</b><span>${esc(o)}</span></button>`).join("");
+  if (it.type === "true_false") return it.statements.map((s, k) => `<div class="row"><div class="st"><b>${"abcdefgh"[k]})</b> ${esc(s.text)}</div><div class="tf"><button class="opt${s.picked === true ? " sel" : ""}" data-act="mxtf" data-k="${k}" data-v="1">Đúng</button><button class="opt${s.picked === false ? " sel" : ""}" data-act="mxtf" data-k="${k}" data-v="0">Sai</button></div></div>`).join("");
+  return `<input class="sa" id="sa" type="text" readonly inputmode="none" placeholder="Nhập đáp án" value="${escA(it.picked || "")}"><div class="kp">${["1","2","3","4","5","6","7","8","9",",","0","del"].map(k => `<button type="button" data-act="mxkey" data-k="${k}">${k === "del" ? IC.del : k}</button>`).join("")}</div>`;
+}
+VIEWS.exam = () => {
+  const n = M.items.length, it = M.items[M.idx], done = M.items.filter(mxDone).length, last = M.idx === n - 1;
+  return `<div class="qhead"><button class="icon-btn" data-act="back" aria-label="Thoát">${IC.back}</button><div class="bar"><i id="bar" style="transform:scaleX(${done / n})"></i></div><span class="count">${M.idx + 1}/${n}</span><button class="icon-btn" data-act="mxgrid" aria-label="Danh sách câu">${IC.grid}</button></div>` +
+    `<div class="card"><div class="tag">Thi thử · ${MTAG[it.type]} · ${esc(it.src.tag)}</div><p class="q">${warnIcon(it.src)}${esc(it.src.question)}</p>${qimg(it.src)}<div id="opts">${mxBody(it)}</div></div>` +
+    `<div class="dock two"><button class="btn alt" id="mxprev" data-act="mxprev"${M.idx === 0 ? " disabled" : ""}>Trước</button><button class="btn" id="mxnext" data-act="${last ? "mxsubmit" : "mxnext"}">${last ? "Nộp bài" : "Tiếp"}</button></div>`;
+};
+VIEWS.examresult = () => {
+  const r = M.res, sb = getSubject(M.sid), p = r.part, n = M.items.length;
+  const ico = { clock: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>', ok: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.8"/></svg>' };
+  const row = (l, v) => `<div class="rrow"><span class="ri">${ico.ok}</span><span class="rl">${l}</span><b>${v}</b></div>`;
+  const lack = MKEYS.filter(k => M.short[k]).map(k => `${M.short[k]} câu ${MLABEL[k]}`).join(", ");
+  return `<div class="result card"><div class="rscore"><span>Điểm của bạn:</span><b id="scoreN" data-v="${r.score}">${fmtScore(r.score)}</b><b class="of">/10</b></div>` +
+    `<div class="rbody"><div class="rname">Thi thử · ${esc(sb.name)}</div>` +
+    `<div class="rrow"><span class="ri">${ico.clock}</span><span class="rl">Thời gian làm bài</span><b>${fmtDur(M.dur)}</b></div>` +
+    (p.single.n ? row("Trắc nghiệm đúng", `${p.single.ok}/${p.single.n}`) : "") +
+    (p.true_false.n ? row("Đúng/Sai (số ý đúng)", `${p.true_false.c}/${p.true_false.sn}`) : "") +
+    (p.short.n ? row("Trả lời ngắn đúng", `${p.short.ok}/${p.short.n}`) : "") +
+    (Math.abs(r.max - 10) > 0.001 ? `<p class="mut" style="margin:10px 2px 0">Điểm gốc ${fmtScore(r.pts)}/${fmtScore(r.max)}, đã quy đổi về thang 10.</p>` : "") +
+    (lack ? `<p class="mut" style="margin:6px 2px 0">Đề thiếu ${lack} so với cấu trúc chuẩn.</p>` : "") +
+    `<button class="btn alt or" data-act="mxagain">Thi lại (đề mới)</button><button class="btn alt bl" data-act="mxreview">Xem đáp án${IC.chev}</button><button class="lnk" data-act="chapters">Về danh sách bài</button></div></div>`;
+};
+VIEWS.examreview = () => {
+  const r = M.res;
+  return topbar("Xem lại bài thi", `${r.okN}/${M.items.length} câu đúng hoàn toàn`) + M.items.map((it, i) => {
+    const g = mxItem(it), done = mxDone(it) || (it.type === "true_false" && it.statements.some(s => s.picked !== null));
+    const st = !done ? '<span class="pill no">Chưa làm</span>' : g.ok ? '<span class="pill ok">Đúng</span>' : it.type === "true_false" && g.c ? `<span class="pill no">${g.c}/${g.n} ý</span>` : '<span class="pill no">Sai</span>';
+    let body;
+    if (it.type === "single") body = it.options.map((o, k) => `<div class="opt static ${k === it.answer ? "ok" : k === it.picked ? "bad" : ""}"><b>${LETTERS[k]}</b><span>${esc(o)}</span></div>`).join("");
+    else if (it.type === "true_false") body = it.statements.map((s, k) => `<div class="row"><div class="st"><b>${"abcdefgh"[k]})</b> ${esc(s.text)}<span class="pill ${s.answer ? "ok" : "no"}">${s.answer ? "Đúng" : "Sai"}</span>${s.picked === null ? ' <span class="mut">· bỏ trống</span>' : s.picked !== s.answer ? ` <span class="mut">· bạn chọn ${s.picked ? "Đúng" : "Sai"}</span>` : ""}</div></div>`).join("");
+    else body = `<div class="opt static ok"><span>Đáp án: ${esc(it.answers[0])}</span></div>` + (it.picked && !g.ok ? `<div class="opt static bad"><span>Bạn nhập: ${esc(it.picked)}</span></div>` : !it.picked ? '<p class="mut">Bạn chưa nhập.</p>' : "");
+    return `<div class="card"><div class="tag">Câu ${i + 1} · ${MTAG[it.type]} ${st}</div><p class="q">${warnIcon(it.src)}${esc(it.src.question)}</p>${qimg(it.src)}${body}</div>`;
+  }).join("");
+};
+AFTER.examresult = AFTER.result;
+
+function openExamExit() { $modal.innerHTML = `<div class="scrim"><div class="dialog"><h2>Thoát bài thi thử?</h2><p class="mut">Bài làm hiện tại sẽ bị mất.</p><button class="btn" data-act="stay">Tiếp tục làm bài</button><button class="btn alt" data-act="mxleave">Thoát</button></div></div>`; }
+function mxBar() { const b = document.getElementById("bar"); if (b) b.style.transform = `scaleX(${M.items.filter(mxDone).length / M.items.length})`; }
+function mxKey(k) {
+  const it = M.items[M.idx]; if (S.view !== "exam" || it.type !== "short") return;
+  let v = it.picked || "";
+  if (k === "del") v = v.slice(0, -1); else if (k === ",") { if (v.includes(",")) return; v += ","; } else if (v.length < 8) v += k;
+  it.picked = v; const el = document.getElementById("sa"); if (el) el.value = v; mxBar();
+}
+document.addEventListener("keydown", e => {
+  if (S.view !== "exam" || $modal.innerHTML || e.ctrlKey || e.metaKey || M.items[M.idx].type !== "short") return;
+  if (/^[0-9]$/.test(e.key)) mxKey(e.key); else if (e.key === "," || e.key === ".") mxKey(","); else if (e.key === "Backspace") mxKey("del");
+});
+
+/* ============================================================
+   MỤC CÔNG THỨC — tab "Ghi nhớ": hiện sẵn toàn bộ công thức của Toán, Lý, Hóa, Địa
+   Dữ liệu lấy từ CARD_DATA (các chương có formula: true). Thêm công thức: xem hướng dẫn ở CARD_DATA.
+   ============================================================ */
+IC.formula = _svg('<path d="M16 4h-1.5A3.5 3.5 0 0 0 11 7.5v9A3.5 3.5 0 0 1 7.5 20H6"/><path d="M7 11.5h8"/>');
+const FORM_TABS = [["math", "Toán"], ["physics", "Lý"], ["chemistry", "Hóa"], ["geography", "Địa"]];
+const formChaps = id => { const s = getSubject(id); return s ? s.chapters.filter(c => c.formula && c.cards && c.cards.length) : []; };
+const formTotal = () => FORM_TABS.reduce((a, [id]) => a + formChaps(id).reduce((x, c) => x + c.cards.length, 0), 0);
+const formTile = () => `<button class="tile" data-act="formulas"><span class="ico">${IC.formula}</span><span class="tt"><b>Công thức</b><span class="mut">Toán · Lý · Hóa · Địa · ${formTotal()} thẻ</span></span><span class="go">${IC.chev}</span></button>`;
+const fgh = t => { const m = String(t).split(" · "); return m.length > 1 ? `<span class="bdg">${esc(m[0])}</span><span>${esc(m.slice(1).join(" · "))}</span>` : esc(t); };
+VIEWS.formulas = () => {
+  const id = S.fsub || "math", chs = formChaps(id);
+  const body = chs.length ? chs.map(c => {
+    let k = 0; const groups = []; c.cards.forEach(x => { let g = groups.find(y => y.g === x.g); if (!g) groups.push(g = { g: x.g, c: [] }); g.c.push(x); });
+    return `<div class="fhead"><div><div class="eyebrow">${esc(c.title)}</div><div class="big">${esc(c.subtitle)}</div>${c.description ? `<p class="mut">${esc(c.description)}</p>` : ""}</div><button class="btn alt fbtn" data-act="fcstudy" data-s="${id}" data-c="${c.id}">Học thẻ</button></div>` +
+      groups.map(g => `<div class="sec${id === "physics" ? " phs" : ""}">${id === "physics" ? fgh(g.g) : esc(g.g)}</div><div class="card fgrp${id === "physics" ? " phy" : ""}">${g.c.map(x => `<div class="fitem"${id === "physics" ? ` data-k="${k++ % 6}"` : ""}><div class="ff">${frich(x.f)}</div><div class="fb">${frich(x.b)}</div></div>`).join("")}</div>`).join("");
+  }).join("") : `<div class="card"><p class="mut">Chưa có công thức nào.</p></div>`;
+  return topbar("Công thức") + `<div class="tabs"><button class="tab on">Ghi nhớ</button></div><div class="pick" id="fsub">${FORM_TABS.map(([i, n]) => `<button class="${i === id ? "on" : ""}" data-act="fsub" data-id="${i}">${n}</button>`).join("")}</div>` + body;
+};
+
 function render(anim = true) {
   if (autoT) { clearTimeout(autoT); autoT = null; }
   document.body.dataset.view = S.view;
@@ -7487,7 +8406,9 @@ function go(view) { S.view = view; render(); }
    ============================================================ */
 function back() {
   if ($modal.innerHTML) return closeModal();
-  const to = { subject: "home", intro: "subject", result: "subject", review: "result", flagged: "home", answers: "intro", cards: "intro", cardsend: "intro" }[S.view];
+  const to = { subject: "home", intro: "subject", result: "subject", review: "result", flagged: "home", answers: "intro", cards: "intro", cardsend: "intro", mockpick: "subject", formulas: "home", examresult: "subject", examreview: "examresult" }[S.view];
+  if (S.view === "exam") return openExamExit();
+  if (S.view === "intro" && chap() && chap().formula) return go("formulas");
   if (S.view === "quiz") return S.idx === 0 && !S.locked ? go("intro") : openModal();
   if (to) go(to);
 }
@@ -7525,7 +8446,7 @@ function revealAnswer(r, btn, res) {
   S.locked = true;
   const sk = document.getElementById("skip"); if (sk) sk.hidden = true;
   document.getElementById("opts").classList.add("locked");
-  res.innerHTML = `<div class="msg bad">✗ Chưa đúng. Đáp án đúng đã được hiển thị.</div>` + showKeys(r);
+  res.innerHTML = `<div class="msg bad">${IC.no}<span>Chưa đúng. Đáp án đúng đã được hiển thị.</span></div>` + showKeys(r);
   document.getElementById("bar").style.transform = `scaleX(${(S.idx + 1) / n})`;
   btn.disabled = false; btn.textContent = last ? "Xem kết quả" : "Câu tiếp theo";
 }
@@ -7541,7 +8462,7 @@ function next() {
     if (ob) { ob.classList.remove("shaking"); void ob.offsetWidth; ob.classList.add("shaking"); setTimeout(() => ob.classList.remove("shaking"), 750); }
     try { navigator.vibrate && navigator.vibrate([40, 30, 40]); } catch (e) {}
     if (revealWrong) return revealAnswer(r, btn, res);
-    res.innerHTML = `<div class="msg bad">✗ Chưa đúng, hãy chọn lại.</div>` + showKeys(r);
+    res.innerHTML = `<div class="msg bad">${IC.no}<span>Chưa đúng, hãy chọn lại.</span></div>` + showKeys(r);
     btn.disabled = true;
     return;
   }
@@ -7551,7 +8472,7 @@ function next() {
   const last = S.idx === n - 1;
   if (!r.missed) { S.correct++; if (!last) confetti(); }
   if (!last) playSound("ok");
-  res.innerHTML = `<div class="msg ok">✓ Chính xác!</div>`;
+  res.innerHTML = `<div class="msg ok">${IC.check}<span>Chính xác!</span></div>`;
   document.getElementById("bar").style.transform = `scaleX(${(S.idx + 1) / n})`;
   btn.textContent = last ? "Xem kết quả" : "Câu tiếp theo";
 }
@@ -7567,7 +8488,7 @@ const themeVarNames = () => {
   const set = new Set();
   for (const sh of document.styleSheets) {
     let rules; try { rules = sh.cssRules; } catch (e) { continue; }
-    for (const r of rules) if (r.style) for (let i = 0; i < r.style.length; i++) if (r.style[i].indexOf("--") === 0) set.add(r.style[i]);
+    for (const r of rules) if (r.style) for (let i = 0; i < r.style.length; i++) if (r.style[i].indexOf("--") === 0 && r.style[i] !== "--mw") set.add(r.style[i]);   /* --mw (bề rộng trang) KHÔNG phải biến màu: nếu chép vào lớp phủ thì trang chủ bị co hẹp lúc đổi màu */
   }
   return (_themeVars = [...set]);
 };
@@ -7627,24 +8548,7 @@ function themeSwitchClone(apply, x, y) {
 }
 /* iPhone: giữ hiệu ứng loang cũ (máy khỏe, chạy mượt). Android/khung xem khác: chỉ mờ nhẹ qua màu nền mới (chỉ dùng opacity nên rất nhẹ). */
 const isIOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-function themeSwitch(apply, x, y, col) {
-  if (isIOS) return themeSwitchClone(apply, x, y);
-  document.querySelectorAll(".rv,.rp").forEach(n => n.remove());
-  let done = false;
-  const doApply = () => { if (!done) { done = true; apply(); } };
-  if (!col || !document.body.animate || matchMedia("(prefers-reduced-motion: reduce)").matches) return doApply();
-  try {
-    const d = document.createElement("div"); d.className = "rp"; d.setAttribute("aria-hidden", "true"); d.style.background = col;
-    document.body.appendChild(d);
-    d.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 140, fill: "forwards" }).onfinish = () => {
-      doApply();
-      requestAnimationFrame(() => requestAnimationFrame(() => {
-        try { d.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 220, fill: "forwards" }).onfinish = () => d.remove(); } catch (e) { d.remove(); }
-      }));
-    };
-    setTimeout(() => { doApply(); d.remove(); }, 1200);   /* chốt chặn */
-  } catch (e) { doApply(); }
-}
+function themeSwitch(apply, x, y) { themeSwitchClone(apply, x, y); }
 let lastTap = { x: 0, y: 0 };
 
 /* Bỏ qua (chỉ câu Đúng/Sai): hiện đáp án, tính là câu sai (đưa vào phần làm lại), bấm "Câu tiếp theo" để sang câu mới */
@@ -7734,7 +8638,7 @@ const ACTIONS = {
     const b = document.getElementById("instbtn"); if (b) b.classList.toggle("on", instantMode);
     playSound("tick");
   },
-  themes: () => { $modal.innerHTML = `<div class="scrim"><div class="dialog wide"><h2>Màu giao diện</h2><p class="mut">Chọn màu cho chế độ sáng và chế độ tối. Màu của chế độ còn lại chỉ được lưu lại; bấm công tắc ☀/🌙 phía trên để chuyển sang đó.</p><div class="tpick">${themeCols()}</div><button class="btn" data-act="stay">Xong</button></div></div>`; },
+  themes: () => { $modal.innerHTML = `<div class="scrim"><div class="dialog wide"><h2>Màu giao diện</h2><p class="mut">Chọn màu cho chế độ sáng và chế độ tối. Màu của chế độ còn lại chỉ được lưu lại; bấm nút sáng/tối ở góc trên để chuyển sang đó.</p><div class="tpick">${themeCols()}</div><button class="btn" data-act="stay">Xong</button></div></div>`; },
   kpmode: () => {
     shortChoice = !shortChoice;
     try { localStorage.setItem("quiz.shortmc", shortChoice ? "1" : "0"); } catch (e) {}
@@ -7775,6 +8679,38 @@ const ACTIONS = {
   chapters: () => go("subject")
 };
 
+/* ---------- Thi thử: thao tác ---------- */
+Object.assign(ACTIONS, {
+  mockpick: () => { const s = getSubject(S.subjectId); if (!MOCK[s.id]) return; if (mock.sid !== s.id) { mock.sid = s.id; mock.sel = new Set(s.chapters.filter(c => c.questions.length).map(c => c.id)); } go("mockpick"); },
+  mxch: d => { if (mock.sel.has(d.id)) mock.sel.delete(d.id); else mock.sel.add(d.id); const b = document.querySelector(`.mrow[data-id="${d.id}"]`); if (b) b.classList.toggle("on", mock.sel.has(d.id)); mockRefresh(); playSound("tick"); },
+  mxstart: () => { if (!mockPlan().total) return; buildMock(); go("exam"); },
+  mxpick: d => { const it = M.items[M.idx]; if (S.view !== "exam" || it.type !== "single") return; it.picked = +d.k; $app.querySelectorAll("[data-act=mxpick]").forEach((el, k) => el.classList.toggle("sel", k === it.picked)); mxBar(); playSound("tick"); },
+  mxtf: d => { const it = M.items[M.idx]; if (S.view !== "exam" || it.type !== "true_false") return; const k = +d.k, v = d.v === "1"; it.statements[k].picked = v; $app.querySelectorAll(`[data-act=mxtf][data-k="${k}"]`).forEach(el => el.classList.toggle("sel", (el.dataset.v === "1") === v)); mxBar(); playSound("tick"); },
+  mxkey: d => mxKey(d.k),
+  mxprev: () => { if (M.idx > 0) { M.idx--; render(false); } },
+  mxnext: () => { if (M.idx < M.items.length - 1) { M.idx++; render(false); } },
+  mxgrid: () => {
+    const sec = k => { const idx = M.items.map((it, i) => ({ it, i })).filter(x => x.it.type === k); return idx.length ? `<div class="sec" style="margin:14px 2px 8px">${MTAG[k]}</div><div class="mgrid">${idx.map(({ it, i }) => `<button class="mcell${mxDone(it) ? " on" : ""}${i === M.idx ? " cur" : ""}" data-act="mxgo" data-i="${i}">${i + 1}</button>`).join("")}</div>` : ""; };
+    $modal.innerHTML = `<div class="scrim"><div class="dialog wide mxdlg"><h2>Danh sách câu</h2><p class="mut">Đã làm ${M.items.filter(mxDone).length}/${M.items.length} câu</p>${MKEYS.map(sec).join("")}<button class="btn" data-act="mxsubmit">Nộp bài</button><button class="btn alt" data-act="stay">Làm tiếp</button></div></div>`;
+  },
+  mxgo: d => { M.idx = +d.i; closeModal(); render(false); },
+  mxsubmit: () => {
+    const left = M.items.filter(it => !mxDone(it)).length;
+    $modal.innerHTML = `<div class="scrim"><div class="dialog"><h2>Nộp bài?</h2><p class="mut">${left ? `Còn ${left} câu chưa trả lời đầy đủ, các câu đó sẽ tính là sai.` : "Bạn đã trả lời hết các câu. Nộp xong không sửa được nữa."}</p><button class="btn" data-act="mxfinal">Nộp bài</button><button class="btn alt" data-act="stay">Làm tiếp</button></div></div>`;
+  },
+  mxfinal: () => { closeModal(); mxFinish(); },
+  mxleave: () => { closeModal(); go("mockpick"); },
+  mxreview: () => go("examreview"),
+  mxagain: () => { S.subjectId = M.sid; buildMock(); go("exam"); }
+});
+
+/* ---------- Mục Công thức: thao tác ---------- */
+Object.assign(ACTIONS, {
+  formulas: () => { if (!S.fsub) S.fsub = "math"; go("formulas"); },
+  fsub: d => { S.fsub = d.id; render(false); playSound("tick"); },
+  fcstudy: d => { S.subjectId = d.s; S.chapterId = d.c; S.tag = "all"; S.cg = "all"; go("intro"); }
+});
+
 /* ---------- Tùy chỉnh: chế độ "ấn 1 cái là ra đáp án" + phím 1-4 ----------
    Mặc định: BẬT trên máy có chuột (laptop/PC), TẮT trên cảm ứng (điện thoại vẫn ấn đáp án rồi bấm Xác nhận).
    Chỉ áp dụng cho câu trắc nghiệm A-D (single, short_mc). Đúng/Sai và nhập số vẫn bấm Xác nhận. */
@@ -7795,7 +8731,7 @@ function instantPick(d) {
   if (good) {
     if (!r.missed) S.correct++;
     playSound("ok");
-    res.innerHTML = `<div class="msg ok">✓ Chính xác!</div>`;
+    res.innerHTML = `<div class="msg ok">${IC.check}<span>Chính xác!</span></div>`;
   } else {
     if (!r.missed) { r.missed = true; S.wrong.push(r); }
     els[k].classList.add("bad");
@@ -7803,7 +8739,7 @@ function instantPick(d) {
     const ob = document.getElementById("opts");
     if (ob) { ob.classList.remove("shaking"); void ob.offsetWidth; ob.classList.add("shaking"); setTimeout(() => ob.classList.remove("shaking"), 750); }
     try { navigator.vibrate && navigator.vibrate([40, 30, 40]); } catch (e) {}
-    res.innerHTML = `<div class="msg bad">✗ Chưa đúng. Đáp án đúng: ${LETTERS[r.answer]}</div>` + showKeys(r);
+    res.innerHTML = `<div class="msg bad">${IC.no}<span>Chưa đúng. Đáp án đúng: ${LETTERS[r.answer]}</span></div>` + showKeys(r);
   }
   const wait = good ? delayGet("quiz.okd", .8) : delayGet("quiz.nod", 1.5);
   const fire = () => { if ($modal.innerHTML) { autoT = setTimeout(fire, 300); return; } autoT = null; next(); };
@@ -7875,7 +8811,7 @@ guard();
   const b = document.createElement("button");
   b.className = "icon-btn fback"; b.type = "button"; b.setAttribute("data-act", "back"); b.setAttribute("aria-label", "Quay lại"); b.innerHTML = IC.back;
   document.body.appendChild(b);
-  const upd = () => b.classList.toggle("show", (window.scrollY || 0) > 140 && !["home", "quiz", "cards"].includes(S.view) && !$modal.innerHTML);
+  const upd = () => b.classList.toggle("show", (window.scrollY || 0) > 140 && !["home", "quiz", "cards", "exam"].includes(S.view) && !$modal.innerHTML);
   window.addEventListener("scroll", upd, { passive: true });
   window.addEventListener("click", () => setTimeout(upd, 0));
 })();
