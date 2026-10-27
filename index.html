@@ -828,7 +828,7 @@ body[data-view=result] main, body[data-view=examresult] main { padding-top: calc
 
   /* Nút đổi màu trên Desktop: Định vị chính xác, góc trên bên phải, không cản trở nội dung */
   .tgl { top: calc(28px + env(safe-area-inset-top, 0px)); right: max(20px, calc((100vw - var(--mw)) / 2 + 16px)); }
-  .fback { left: max(20px, calc((100vw - var(--mw)) / 2 + 16px)); }
+  .fback { left: max(16px, calc((100vw - var(--mw)) / 2 - 52px)); }
 
   /* Tiêu đề trang chủ: Điềm đạm, bản lĩnh học thuật */
   .ttlhero { padding: 10px 80px 18px 2px; }
@@ -1255,7 +1255,13 @@ body[data-view=result] main, body[data-view=examresult] main { padding-top: calc
 
 /* Thanh phân loại môn (Segmented Pills) */
 .fsub-wrap { margin: 4px 0 12px; }
-#fsub { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin: 0; }
+#fsub { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin: 0; }
+@media (max-width: 480px) {
+  #fsub { gap: 4px; }
+  #fsub button { padding: 8px 3px; gap: 4px; font-size: 12.5px; min-height: 40px; border-radius: 10px; }
+  #fsub button svg { width: 14px; height: 14px; }
+  #fsub button .ftab-cnt { padding: 1px 4px; font-size: 10px; }
+}
 #fsub button {
   position: relative;
   display: flex;
@@ -1596,6 +1602,985 @@ body[data-view=result] main, body[data-view=examresult] main { padding-top: calc
     background: color-mix(in srgb, var(--ac) 10%, var(--card2));
     border-radius: 8px;
   }
+}
+
+/* ===== GIAO DIỆN MÔN NGỮ VĂN: PHONG CÁCH HỌC THUẬT HIỆN ĐẠI (ZERO ICON) ===== */
+.lit-study-page {
+  padding-bottom: 80px;
+}
+
+/* 1. THANH ĐIỀU HƯỚNG TỔNG QUAN (KHÔNG ICON) */
+.lit-toolbar {
+  background: var(--card2);
+  border: 1px solid var(--bd);
+  border-radius: 14px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.lit-pills {
+  display: flex;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.lit-pills::-webkit-scrollbar { display: none; }
+.lit-pill {
+  flex: none;
+  background: var(--card);
+  border: 1.5px solid var(--bd);
+  color: var(--tx);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 7px 15px;
+  border-radius: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all .15s ease;
+}
+.lit-pill:hover {
+  border-color: var(--ac);
+  color: var(--ac);
+  background: var(--card2);
+}
+.lit-pill.active {
+  background: var(--ac);
+  color: var(--onac, #fff);
+  border-color: var(--ac);
+}
+.lit-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  border-top: 1px dashed var(--bd);
+  padding-top: 12px;
+}
+.lit-hint-txt {
+  font-size: 12.5px;
+  color: var(--mut);
+}
+.lit-btn-sm {
+  min-height: 32px !important;
+  padding: 5px 14px !important;
+  font-size: 12.5px !important;
+  width: auto !important;
+  border-radius: 8px !important;
+  font-weight: 600 !important;
+}
+
+/* 2. CÁC PHẦN ACCORDION (ĐÓNG/MỞ) */
+.lit-accordion {
+  background: var(--card);
+  border: 1.5px solid var(--bd);
+  border-radius: 16px;
+  margin-bottom: 20px;
+  overflow: hidden;
+  transition: border-color .18s ease, box-shadow .18s ease;
+}
+.lit-accordion[open] {
+  border-color: var(--bd2);
+  box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+}
+.lit-sec-summary {
+  list-style: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  cursor: pointer;
+  user-select: none;
+  background: var(--card);
+  transition: background .15s ease;
+}
+.lit-sec-summary::-webkit-details-marker { display: none; }
+.lit-sec-summary:hover {
+  background: var(--card2);
+}
+.lit-sec-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.lit-sec-badge {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  padding: 3px 9px;
+  border-radius: 6px;
+  background: var(--card2);
+  color: var(--ac);
+  border: 1px solid var(--bd2);
+  flex-shrink: 0;
+}
+.lit-sec-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--tx);
+  line-height: 1.35;
+}
+.lit-sec-chev {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: .02em;
+  padding: 4px 12px;
+  border-radius: 6px;
+  background: var(--card2);
+  border: 1px solid var(--bd);
+  color: var(--mut);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-left: 8px;
+  user-select: none;
+  transition: all .18s ease;
+}
+.lit-sec-summary:hover .lit-sec-chev {
+  border-color: var(--ac);
+  color: var(--tx);
+}
+.lit-sec-chev::before {
+  content: "Mở rộng";
+}
+.lit-accordion[open] > .lit-sec-summary .lit-sec-chev {
+  background: color-mix(in srgb, var(--ac) 12%, var(--card2));
+  color: var(--ac);
+  border-color: color-mix(in srgb, var(--ac) 35%, var(--bd));
+}
+.lit-accordion[open] > .lit-sec-summary .lit-sec-chev::before {
+  content: "Thu gọn";
+}
+.lit-accordion[open] > .lit-sec-content {
+  animation: litSecFadeIn 0.22s ease-out;
+}
+@keyframes litSecFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.lit-sec-content {
+  padding: 16px 20px 28px;
+  border-top: 1px solid var(--bd);
+}
+
+/* 3. KHỐI THÔNG TIN & THẺ PHỤ */
+.lit-info-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+@media (min-width: 620px) {
+  .lit-info-grid { grid-template-columns: 1fr 1fr; }
+}
+.lit-box {
+  background: var(--card2);
+  border: 1px solid var(--bd);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.lit-box-title {
+  font-weight: 700;
+  font-size: 14.5px;
+  margin-bottom: 10px;
+  color: var(--tx);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.lit-tag-label {
+  font-size: 11px;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 4px;
+  background: var(--card);
+  border: 1px solid var(--bd);
+  color: var(--ac);
+}
+.lit-list {
+  margin: 0;
+  padding-left: 18px;
+  font-size: 13.5px;
+  line-height: 1.65;
+  color: var(--tx);
+}
+.lit-list li { margin-bottom: 8px; }
+.lit-list li:last-child { margin-bottom: 0; }
+
+.lit-card-sub {
+  background: var(--card2);
+  border: 1px solid var(--bd);
+  border-radius: 12px;
+  padding: 16px 18px;
+}
+.lit-sub-hd {
+  font-weight: 700;
+  font-size: 15px;
+  color: var(--tx);
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.lit-grid-two {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+}
+@media (min-width: 680px) {
+  .lit-grid-two { grid-template-columns: 1fr 1fr; }
+}
+
+/* 4. THANH TRỰC QUAN HOÁ THỜI GIAN 90 PHÚT */
+.lit-time-bar-wrap {
+  margin-top: 10px;
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 12px;
+  padding: 14px 16px;
+}
+.lit-time-bar {
+  display: flex;
+  height: 28px;
+  border-radius: 8px;
+  overflow: hidden;
+  margin: 8px 0 10px;
+  border: 1px solid var(--bd);
+}
+.lit-time-part-1 {
+  width: 39%;
+  background: rgba(59, 130, 246, 0.2);
+  border-right: 1.5px solid var(--bd);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #3b82f6;
+  letter-spacing: .02em;
+}
+.lit-time-part-2 {
+  width: 61%;
+  background: rgba(168, 85, 247, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #a855f7;
+  letter-spacing: .02em;
+}
+
+/* 5. CÁC DẠNG CÂU HỎI TRỌNG TÂM */
+.lit-qa-item {
+  margin-bottom: 12px;
+  font-size: 13.5px;
+  line-height: 1.6;
+  background: var(--card);
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--bd);
+}
+.lit-qa-item:last-child { margin-bottom: 0; }
+.lit-qa-item b {
+  color: var(--ac);
+  display: block;
+  margin-bottom: 4px;
+  font-size: 13.5px;
+}
+.lit-qa-item p {
+  margin: 0;
+  color: var(--tx);
+}
+
+/* 6. MẪU CÂU LIÊN KẾT CÓ NÚT SAO CHÉP */
+.lit-tpl-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 8px;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+.lit-tpl-row:last-child { margin-bottom: 0; }
+.lit-tpl-text {
+  flex: 1;
+}
+.lit-tpl-text b {
+  color: var(--ac);
+  display: block;
+  font-size: 12.5px;
+  margin-bottom: 2px;
+}
+.lit-tpl-copy-btn {
+  flex: none;
+  background: var(--card2);
+  border: 1px solid var(--bd);
+  color: var(--tx);
+  font-size: 11.5px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.lit-tpl-copy-btn:hover {
+  border-color: var(--ac);
+  color: var(--ac);
+}
+.lit-tpl-copy-btn.copied {
+  background: var(--okb, rgba(34,197,94,0.2));
+  color: var(--ok, #22c55e);
+  border-color: var(--ok, #22c55e);
+}
+
+/* 7. DÀN Ý CÁC BƯỚC */
+.lit-outline-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.lit-step {
+  font-size: 13.5px;
+  line-height: 1.6;
+  background: var(--card);
+  border-left: 3.5px solid var(--ac);
+  padding: 10px 14px;
+  border-radius: 0 10px 10px 0;
+  color: var(--tx);
+  border-top: 1px solid var(--bd);
+  border-right: 1px solid var(--bd);
+  border-bottom: 1px solid var(--bd);
+}
+.lit-step b {
+  color: var(--ac);
+}
+
+/* 8. NGỮ LIỆU ĐỌC HIỂU */
+.passage-box {
+  background: var(--card2);
+  border-left: 4px solid var(--ac2);
+  border-radius: 0 14px 14px 0;
+  padding: 16px 20px;
+  font-size: 15px;
+  line-height: 1.85;
+  color: var(--tx);
+  font-style: normal;
+  margin: 12px 0 18px;
+  border-top: 1px solid var(--bd);
+  border-right: 1px solid var(--bd);
+  border-bottom: 1px solid var(--bd);
+}
+
+/* 9. DANH SÁCH CÂU HỎI ĐỌC HIỂU */
+.lit-qa-deck {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.lit-qa-card {
+  background: var(--card2);
+  border: 1.5px solid var(--bd);
+  border-radius: 14px;
+  padding: 18px 20px;
+  margin: 0;
+  transition: border-color .15s ease;
+}
+.lit-qa-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.lit-level-tag {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: var(--card);
+  border: 1px solid var(--bd);
+  color: var(--ac);
+}
+.lit-qa-card .q {
+  font-size: 15.5px;
+  font-weight: 700;
+  line-height: 1.5;
+  color: var(--tx);
+  margin: 0 0 12px;
+}
+
+/* Hộp đáp án đọc hiểu: Toggle mượt mà */
+.lit-ans-box {
+  display: block;
+  background: var(--card);
+  border: 1.5px solid rgba(34, 197, 94, 0.4);
+  border-radius: 12px;
+  padding: 14px 18px;
+  margin-top: 10px;
+}
+.lit-ans-hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 13.5px;
+  font-weight: 800;
+  color: var(--ok, #22c55e);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: .04em;
+}
+.lit-ans-body {
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--tx);
+}
+.lit-ans-rat {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px dashed var(--bd);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--mut);
+}
+.lit-ans-rat b {
+  color: var(--tx);
+}
+
+/* Nút ẩn/hiện đáp án riêng từng câu */
+.lit-toggle-ans-btn {
+  background: var(--card);
+  border: 1px solid var(--bd);
+  color: var(--tx);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.lit-toggle-ans-btn:hover {
+  border-color: var(--ac);
+  color: var(--ac);
+}
+
+/* Cảnh báo (Không icon - dùng text badge) */
+.warnq-clean {
+  background: rgba(234, 179, 8, 0.1);
+  border: 1px solid rgba(234, 179, 8, 0.35);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #eab308;
+  margin: 10px 0 12px;
+}
+.warnq-badge {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: .05em;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(234, 179, 8, 0.2);
+  color: #eab308;
+  margin-right: 6px;
+}
+
+/* 10. BÀI VĂN MẪU TƯƠNG TÁC CHUYÊN SÂU */
+.lit-essay-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: var(--card2);
+  border: 1px solid var(--bd);
+  border-radius: 14px;
+  padding: 14px 18px;
+  margin-bottom: 14px;
+}
+.lit-essay-tabs {
+  display: flex;
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 10px;
+  padding: 3px;
+  gap: 4px;
+}
+.lit-essay-tab-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--mut);
+  font-size: 13px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all .15s ease;
+  text-align: center;
+}
+.lit-essay-tab-btn.active {
+  background: var(--card2);
+  color: var(--tx);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+}
+
+/* Bộ lọc màu theo nhóm lập luận */
+.lit-essay-filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.lit-essay-filter-bar::-webkit-scrollbar { display: none; }
+.lit-filter-chip {
+  flex: none;
+  border: 1px solid var(--bd);
+  background: var(--card);
+  color: var(--tx);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 5px 11px;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all .15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.lit-filter-chip:hover {
+  border-color: var(--ac);
+}
+.lit-filter-chip.active {
+  border-color: var(--ac);
+  background: var(--card2);
+  color: var(--ac);
+}
+
+/* Thân bài văn */
+.essay-body {
+  font-size: 15.5px;
+  line-height: 1.85;
+  background: var(--card);
+  border: 1px solid var(--bd);
+  border-radius: 14px;
+  padding: 20px 22px;
+  margin: 0 0 14px;
+}
+.essay-p {
+  margin-bottom: 16px;
+  text-indent: 1.5em;
+  text-align: justify;
+}
+.essay-p:last-child { margin-bottom: 0; }
+.essay-seg {
+  display: inline;
+  text-indent: 0;
+  padding: 2px 2px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all .18s ease;
+  text-decoration: underline;
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+}
+.essay-seg:hover {
+  background: rgba(255,255,255,0.06);
+}
+.essay-seg.active {
+  background: color-mix(in srgb, var(--seg-col, var(--ac)) 25%, transparent) !important;
+  font-weight: 600;
+  outline: 2px solid var(--seg-col, var(--ac));
+  outline-offset: 1px;
+}
+.essay-seg.dimmed {
+  opacity: 0.35;
+}
+
+/* Màu các nhóm lập luận */
+.essay-seg.intro { text-decoration-color: #60a5fa; --seg-col: #60a5fa; }
+.essay-seg.same { text-decoration-color: #34d399; --seg-col: #34d399; }
+.essay-seg.diff { text-decoration-color: #f472b6; --seg-col: #f472b6; }
+.essay-seg.explain { text-decoration-color: #fbbf24; --seg-col: #fbbf24; }
+.essay-seg.eval { text-decoration-color: #22d3ee; --seg-col: #22d3ee; }
+.essay-seg.outro { text-decoration-color: #a78bfa; --seg-col: #a78bfa; }
+
+/* Bảng chú thích trực tiếp bên dưới bài văn */
+.inspector-panel-inline {
+  background: var(--card2);
+  border: 1.5px solid var(--bd2);
+  border-radius: 14px;
+  padding: 16px 18px;
+  margin-top: 14px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+}
+.inspector-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid var(--bd);
+  padding-bottom: 10px;
+}
+.inspector-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 6px;
+  background: var(--card);
+  border: 1px solid var(--bd);
+  color: var(--tx);
+}
+.inspector-nav-btns {
+  display: flex;
+  gap: 6px;
+}
+.inspector-nav-btn {
+  background: var(--card);
+  border: 1px solid var(--bd);
+  color: var(--tx);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all .15s ease;
+}
+.inspector-nav-btn:hover:not(:disabled) {
+  border-color: var(--ac);
+  color: var(--ac);
+}
+.inspector-nav-btn:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+.inspector-note {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--tx);
+  margin-bottom: 8px;
+}
+.inspector-source {
+  font-size: 12.5px;
+  line-height: 1.5;
+  color: var(--mut);
+}
+
+/* 11. BẢNG MATRIX TOÀN DIỆN */
+.lit-table-responsive {
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid var(--bd);
+  background: var(--card);
+}
+.lit-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+  text-align: left;
+}
+.lit-table th {
+  background: var(--card2);
+  padding: 11px 14px;
+  font-weight: 700;
+  border-bottom: 1.5px solid var(--bd);
+  color: var(--tx);
+  white-space: nowrap;
+}
+.lit-table td {
+  padding: 11px 14px;
+  border-bottom: 1px solid var(--bd);
+  vertical-align: top;
+  color: var(--tx);
+}
+.lit-table tr:last-child td { border-bottom: none; }
+.lit-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+/* Vị trí nút quay lại nổi: Luôn nằm ở lề trống, không bao giờ đè lên nội dung */
+.fback {
+  left: max(16px, calc((100vw - var(--mw)) / 2 - 54px)) !important;
+}
+@media (max-width: 800px) {
+  .fback {
+    left: 12px !important;
+    top: 10px !important;
+  }
+}
+
+
+/* ===== HIỆU ỨNG TƯƠNG TÁC ĐỈNH CAO CHO MÔN NGỮ VĂN (ZERO ICON) ===== */
+
+/* 1. THANH TIẾN TRÌNH ĐỌC PHÁT SÁNG CỐ ĐỊNH Ở ĐẦU TRANG */
+#lit-progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 0%;
+  height: 3px;
+  background: linear-gradient(90deg, var(--ac), #38bdf8, #818cf8, #c084fc);
+  z-index: 1000;
+  transition: width 0.1s ease-out;
+  box-shadow: 0 0 10px color-mix(in srgb, var(--ac) 60%, transparent);
+}
+
+/* 2. HIỆU ỨNG NÂNG THẺ XÚC GIÁC (TACTILE ELEVATION) */
+.lit-box,
+.lit-card-sub,
+.lit-qa-card,
+.lit-qa-item,
+.lit-tpl-row,
+.lit-step {
+  transition: transform 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.22s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.22s ease;
+}
+
+.lit-box:hover,
+.lit-card-sub:hover,
+.lit-qa-card:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--ac) 45%, var(--bd));
+  box-shadow: 0 8px 24px -4px rgba(0, 0, 0, 0.12),
+              0 0 0 1px color-mix(in srgb, var(--ac) 20%, transparent);
+}
+
+.lit-qa-item:hover,
+.lit-step:hover {
+  transform: translateX(3px);
+  border-left-color: var(--ac);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+}
+
+/* 3. THANH THỜI GIAN 90 PHÚT: HIỆU ỨNG MỞ RỘNG ĐỘNG & TƯƠNG TÁC BẤM */
+.lit-time-bar {
+  cursor: pointer;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.lit-time-bar:hover {
+  transform: scaleY(1.08);
+  box-shadow: 0 4px 16px color-mix(in srgb, var(--ac) 25%, transparent);
+}
+.lit-time-part-1,
+.lit-time-part-2 {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+.lit-time-part-1:hover {
+  background: rgba(59, 130, 246, 0.35);
+  font-weight: 800;
+}
+.lit-time-part-2:hover {
+  background: rgba(168, 85, 247, 0.35);
+  font-weight: 800;
+}
+.lit-time-part-1::after,
+.lit-time-part-2::after {
+  content: "";
+  position: absolute;
+  top: 0; left: -100%; width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  animation: litShimmer 3.5s infinite;
+}
+@keyframes litShimmer {
+  0% { left: -100%; }
+  40%, 100% { left: 100%; }
+}
+
+/* 4. ĐOẠN VĂN TRÍCH DẪN: DROP CAP VĂN HỌC & VIỀN GRADIENT */
+.passage-box {
+  position: relative;
+  border-left: 4px solid transparent;
+  border-image: linear-gradient(to bottom, var(--ac), #c084fc) 1 100%;
+  background: color-mix(in srgb, var(--card2) 90%, transparent);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+}
+.passage-box .passage-p:first-of-type::first-letter {
+  float: left;
+  font-size: 38px;
+  line-height: 0.9;
+  font-weight: 800;
+  color: var(--ac);
+  margin-right: 10px;
+  margin-top: 2px;
+  font-family: inherit;
+  text-shadow: 0 2px 8px color-mix(in srgb, var(--ac) 30%, transparent);
+}
+
+/* 5. MẪU CÂU SO SÁNH: HIỆU ỨNG SÓNG XUNG KÍCH & SAO CHÉP */
+.lit-tpl-row:hover {
+  transform: translateY(-2px);
+  border-color: color-mix(in srgb, var(--ac) 45%, var(--bd));
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+.lit-tpl-copy-btn {
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.lit-tpl-copy-btn:hover {
+  transform: scale(1.06);
+  border-color: var(--ac);
+  color: var(--ac);
+}
+.lit-tpl-copy-btn:active {
+  transform: scale(0.94);
+}
+.lit-tpl-copy-btn.copied {
+  background: var(--okb, rgba(34,197,94,0.25)) !important;
+  color: var(--ok, #22c55e) !important;
+  border-color: var(--ok, #22c55e) !important;
+  font-weight: 700;
+  animation: litCopyPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+@keyframes litCopyPop {
+  0% { transform: scale(0.9); }
+  50% { transform: scale(1.12); }
+  100% { transform: scale(1); }
+}
+
+/* 6. HỘP ĐÁP ÁN: HIỆU ỨNG TRƯỢT MỞ MƯỢT MÀ */
+.lit-ans-box {
+  animation: litAnsSlide 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  box-shadow: 0 4px 20px color-mix(in srgb, var(--ok, #22c55e) 12%, transparent);
+}
+@keyframes litAnsSlide {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* 7. LĂNG KÍNH TU TỪ (RHETORICAL LENS): HIỆU ỨNG CÂU VĂN BỪNG SÁNG */
+.essay-seg {
+  position: relative;
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.essay-seg:hover {
+  background: color-mix(in srgb, var(--seg-col, var(--ac)) 18%, transparent) !important;
+  border-radius: 4px;
+}
+.essay-seg.active {
+  background: color-mix(in srgb, var(--seg-col, var(--ac)) 30%, transparent) !important;
+  outline: 2px solid var(--seg-col, var(--ac));
+  outline-offset: 2px;
+  border-radius: 4px;
+  box-shadow: 0 0 16px color-mix(in srgb, var(--seg-col, var(--ac)) 40%, transparent);
+}
+.essay-seg.dimmed {
+  opacity: 0.16 !important;
+  filter: grayscale(85%) blur(0.3px) !important;
+}
+.essay-seg.lens-match {
+  animation: litPulseMatch 1.6s ease-in-out infinite alternate;
+}
+@keyframes litPulseMatch {
+  0% {
+    background: color-mix(in srgb, var(--seg-col, var(--ac)) 12%, transparent);
+  }
+  100% {
+    background: color-mix(in srgb, var(--seg-col, var(--ac)) 35%, transparent);
+    box-shadow: 0 0 10px color-mix(in srgb, var(--seg-col, var(--ac)) 35%, transparent);
+  }
+}
+
+/* 8. THANH PHÂN TÍCH NỔI: TIẾN TRÌNH TỪNG ĐOẠN & NÚT ĐIỀU HƯỚNG TACTILE */
+.inspector-panel-inline {
+  position: relative;
+  overflow: hidden;
+  border: 1.5px solid color-mix(in srgb, var(--ac) 40%, var(--bd));
+  transition: all 0.25s ease;
+}
+.inspector-seg-track {
+  display: flex;
+  height: 4px;
+  background: var(--bd);
+  border-radius: 2px;
+  overflow: hidden;
+  margin-bottom: 12px;
+}
+.inspector-seg-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--ac), #38bdf8);
+  border-radius: 2px;
+  transition: width 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.inspector-note,
+.inspector-source {
+  animation: litFadeInText 0.2s ease-out;
+}
+@keyframes litFadeInText {
+  from { opacity: 0; transform: translateY(3px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.inspector-nav-btn {
+  transition: all 0.18s ease;
+}
+.inspector-nav-btn:hover:not(:disabled) {
+  border-color: var(--ac);
+  background: var(--card2);
+  color: var(--ac);
+  transform: translateY(-1px);
+}
+.inspector-nav-btn:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+/* 9. NÚT NỔI "LÊN ĐẦU TRANG" (ZERO ICON) */
+#lit-back-top {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 95;
+  background: var(--card);
+  color: var(--tx);
+  border: 1.5px solid var(--bd2);
+  border-radius: 30px;
+  padding: 8px 16px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: .02em;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(12px);
+  transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.15s ease, border-color 0.15s ease;
+}
+#lit-back-top.show {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+#lit-back-top:hover {
+  background: var(--card2);
+  border-color: var(--ac);
+  color: var(--ac);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3), 0 0 0 1px var(--ac);
+}
+#lit-back-top:active {
+  transform: scale(0.95);
 }
 
 </style>
@@ -8102,7 +9087,105 @@ const quizData = {
       ]
     },
     { id: "math", name: "Toán", icon: "📐", description: "", chapters: [] },
-    { id: "physics", name: "Vật lý", icon: "⚛️", description: "", chapters: [] }
+    { id: "physics", name: "Vật lý", icon: "⚛️", description: "", chapters: [] },
+        {
+      id: "literature",
+      name: "Ngữ văn",
+      icon: "📖",
+      description: "Ngữ văn 12 · Giữa HK1",
+      chapters: [
+        {
+          id: "literature-midterm-1",
+          title: "Ngữ văn 12",
+          subtitle: "Ôn giữa học kì 1",
+          description: "Cấu trúc đề · Trọng tâm Đọc hiểu & Làm văn · Giải Đề 1 & Đề 2 · Bài văn mẫu 600 chữ",
+          questions: [
+            {
+              id: "literature-1-B-01",
+              type: "qa",
+              tag: "Biết",
+              question: "Xác định ngôi kể và điểm nhìn trong đoạn trích Bến quê.",
+              answer: "Ngôi kể thứ ba (người kể giấu mình, gọi nhân vật là \"anh\", \"Nhĩ\"), điểm nhìn bên trong nhân vật Nhĩ.",
+              rationale: "Thuộc dạng \"xác định ngôi kể, điểm nhìn\" của đề cương. Dấu hiệu: không có \"tôi\", nhân vật gọi bằng \"Nhĩ\", \"anh\", nhưng người kể đi vào được suy nghĩ, cảm xúc của Nhĩ."
+            },
+            {
+              id: "literature-1-B-02",
+              type: "qa",
+              tag: "Biết",
+              question: "Chỉ ra những công việc Hộ buộc phải làm sau khi có gia đình.",
+              answer: "- Cho in nhiều cuốn văn viết vội vàng.\n- Viết những bài báo để người ta đọc rồi quên ngay.",
+              rationale: "Dạng \"chỉ ra nội dung có trong văn bản\", đáp án lấy thẳng từ câu \"Hắn phải cho in… Hắn phải viết…\"."
+            },
+            {
+              id: "literature-1-H-01",
+              type: "qa",
+              tag: "Thông hiểu",
+              question: "Nêu tác dụng của biện pháp nói mỉa ở câu: \"Rồi mỗi lần đọc lại… mắng mình như một thằng khốn nạn\".",
+              answer: "- Bộc lộ sự tự giễu, tự khinh bỉ của Hộ khi buộc phải viết vội, viết cẩu thả vì cơm áo.\n- Cho thấy nỗi đau, sự dằn vặt của người nghệ sĩ có lòng tự trọng và ý thức cao về giá trị văn chương.\n- Tạo giọng điệu chua chát, tăng sức biểu cảm, thể hiện sự xót thương của tác giả với bi kịch người trí thức nghèo.",
+              rationale: "Dạng \"tác dụng của nói mỉa\" trong đề cương.",
+              warn: "Chưa chắc: đã tra thêm: nói mỉa là dùng lời lẽ trái với ý thật để chê, giễu. Ở đây Hộ tự giễu, tự chê gay gắt chính mình, nên viết theo hướng tự mỉa mai, tự giễu là hợp lí. Chưa tìm thấy đáp án chính thức của đề này, nếu cô có thì nên đối chiếu lại."
+            },
+            {
+              id: "literature-1-H-02",
+              type: "qa",
+              tag: "Thông hiểu",
+              question: "Phân tích ý nghĩa chi tiết bàn tay Liên: \"những ngón tay gầy guộc âu yếm vuốt ve\".",
+              answer: "- Là biểu tượng cho sự hi sinh, tảo tần thầm lặng và tình yêu thương vô điều kiện của Liên dành cho chồng.\n- Là điểm tựa bình yên, vững chắc nhất của Nhĩ trong những ngày bệnh tật cuối đời.\n- Thức tỉnh Nhĩ nhận ra vẻ đẹp giản dị, thiêng liêng của hạnh phúc gia đình mà bấy lâu nay anh bỏ quên.",
+              rationale: "Dạng \"ý nghĩa của chi tiết nghệ thuật\" trong đề cương."
+            },
+            {
+              id: "literature-1-V-01",
+              type: "qa",
+              tag: "Vận dụng",
+              question: "Viết đoạn văn khoảng 120 chữ nhận xét nghệ thuật miêu tả tâm lí nhân vật trong đoạn trích Bến quê.",
+              answer: "Đoạn trích Bến quê thể hiện ngòi bút miêu tả tâm lí bậc thầy của Nguyễn Minh Châu. Tác giả đặt nhân vật Nhĩ vào tình huống nghịch lí ngặt nghèo để soi chiếu chiều sâu nội tâm. Bằng nghệ thuật độc thoại nội tâm tinh tế cùng sự kết hợp hài hoà giữa điểm nhìn bên trong và bên ngoài, từng biến chuyển tâm lí của Nhĩ – từ tiếc nuối, khao khát đến xót xa, chiêm nghiệm – đều hiện lên chân thực, lay động lòng người. Qua đó, nhà văn gửi gắm thông điệp sâu sắc về sự thức tỉnh trước những vẻ đẹp bình dị quanh mình.",
+              rationale: "Dạng câu hỏi vận dụng bài 1: nhận xét nghệ thuật bằng đoạn văn khoảng 120 chữ."
+            },
+            {
+              id: "literature-2-V-01",
+              type: "qa",
+              tag: "Biết",
+              question: "Xác định thể thơ của văn bản Mẹ và quả.",
+              answer: "Thể thơ tự do (số tiếng trong các dòng không đều nhau, ngắt nhịp và gieo vần linh hoạt).",
+              rationale: "Dạng \"xác định thể thơ và dấu hiệu nhận biết\" trong đề cương bài 2.",
+              warn: "Chưa chắc: đã tra thêm, một số tài liệu (Loigiaihay) xếp bài này vào nhóm thơ tự do nên giữ đáp án thơ tự do. Chưa có nguồn chính thức khẳng định chắc, nên vẫn nên đối chiếu với cô."
+            },
+            {
+              id: "literature-2-V-02",
+              type: "qa",
+              tag: "Biết",
+              question: "Chỉ ra những từ ngữ, hình ảnh thể hiện sự lao động vất vả của người mẹ trong khổ 2.",
+              answer: "Các từ ngữ, hình ảnh: \"tay mẹ lớn lên\", \"lớn xuống\", \"dáng giọt mồ hôi mặn\", \"rỏ xuống lòng thầm lặng mẹ tôi\".",
+              rationale: "Dạng \"chỉ ra từ ngữ, hình ảnh trong khổ thơ\", đáp án lấy trực tiếp từ khổ 2."
+            },
+            {
+              id: "literature-2-V-03",
+              type: "qa",
+              tag: "Thông hiểu",
+              question: "Phân tích ý nghĩa biểu tượng của hình ảnh \"quả\" trong bài thơ.",
+              answer: "- Nghĩa thực: những quả bầu, quả bí cụ thể ngoài vườn – thành quả từ đôi bàn tay lao động cần mẫn của mẹ.\n- Nghĩa biểu tượng: ẩn dụ cho những đứa con được mẹ nuôi nấng, dạy dỗ khôn lớn bằng tất cả sự hi sinh thầm lặng.\n- Thể hiện sự trân trọng, biết ơn của con đối với công lao trời biển của mẹ, đồng thời là ý thức trách nhiệm phải sống sao cho xứng đáng.",
+              rationale: "Dạng \"ý nghĩa biểu tượng của hình ảnh thơ\" trong đề cương bài 2."
+            },
+            {
+              id: "literature-2-V-04",
+              type: "qa",
+              tag: "Thông hiểu",
+              question: "Xác định cảm hứng chủ đạo và mạch cảm xúc của bài thơ Mẹ và quả.",
+              answer: "- Cảm hứng chủ đạo: lòng biết ơn sâu nặng và nỗi xót xa trước sự già đi của mẹ theo năm tháng.\n- Mạch cảm xúc: từ quan sát những mùa quả mẹ trồng ngoài vườn → liên tưởng đến sự hi sinh nuôi con của mẹ → suy ngẫm, thảng thốt âu lo khi nhận ra mẹ ngày một già mà con vẫn còn \"non xanh\".",
+              rationale: "Dạng \"xác định cảm hứng chủ đạo, mạch cảm xúc\" trong đề cương bài 2."
+            },
+            {
+              id: "literature-2-V-05",
+              type: "qa",
+              tag: "Vận dụng",
+              question: "Viết đoạn văn khoảng 120 chữ trình bày suy nghĩ về nỗi niềm của tác giả qua hai câu thơ cuối bài Mẹ và quả.",
+              answer: "Hai câu thơ cuối bài thơ Mẹ và quả là tiếng lòng thảng thốt, đầy xúc động của người con trước bước đi vô tình của thời gian. Hình ảnh \"bàn tay mẹ mỏi\" gợi nhắc tuổi xế chiều hao gầy của mẹ, đối lập với nỗi băn khoăn \"mình vẫn còn một thứ quả non xanh\". Từ \"hoảng sợ\" không chỉ là nỗi đau khi nghĩ đến ngày mẹ rời xa, mà còn là sự tự vấn lương tâm: liệu con đã kịp trưởng thành để mẹ yên lòng, đã kịp đền đáp công ơn sinh thành dưỡng dục? Nỗi trăn trở ấy thức tỉnh mỗi chúng ta phải biết trân quý từng phút giây bên mẹ và nỗ lực sống có ích, sống trọn đạo làm con.",
+              rationale: "Dạng câu hỏi vận dụng bài 2: viết đoạn văn 120 chữ về một ý thơ giàu sức gợi."
+            }
+          ]
+        }
+      ]
+    }
   ]
 };
 
@@ -8488,6 +9571,84 @@ const BIO_HIST_CARDS = {
   ]
 };
 Object.assign(CARD_DATA, BIO_HIST_CARDS);
+const LIT_CARDS = {
+  literature: [
+    {
+      id: "literature-k0",
+      title: "Cấu trúc đề",
+      subtitle: "Thông tin chung & Phạm vi kiến thức",
+      description: "Cấu trúc đề kiểm tra giữa HK1 năm học 2026 – 2027",
+      groups: [
+        {
+          g: "Thông tin chung & Phạm vi",
+          c: [
+            ["Thông tin chung về đề thi (Mục A1)", "• **Thời gian kiểm tra**: 26/10/2026 đến 06/11/2026 (tuần 9 đến tuần 10).\n• **Thời gian làm bài**: **90 phút**, hình thức **tự luận 100%**.\n• **Cấu trúc đề**: **Đọc hiểu 5 điểm** (5 câu: 2 nhận biết, 2 thông hiểu, 1 vận dụng) + **Làm văn 5 điểm** (nghị luận văn học)."],
+            ["Phạm vi kiến thức Đọc hiểu (Mục A2)", "• **Ngữ liệu**: Đoạn trích **tiểu thuyết** hoặc **thơ hiện đại**.\n• **Câu nhận biết và thông hiểu**: Xoay quanh đặc trưng thể loại ở **bài 1, bài 2**, trong đó có **1 câu tiếng Việt**.\n• **Câu vận dụng**: Viết đoạn văn khoảng **120 chữ** nhận xét một nghệ thuật đặc sắc."],
+            ["Phạm vi kiến thức Làm văn (Mục A2)", "• **Yêu cầu**: So sánh một phương diện **nội dung** của 2 đoạn trích tiểu thuyết hoặc 2 đoạn trích thơ.\n• **Đặc điểm**: Trong đó có **đoạn trích ở phần Đọc hiểu**.\n• **Dung lượng**: Dài khoảng **600 chữ**."]
+          ]
+        }
+      ]
+    },
+    {
+      id: "literature-k1",
+      title: "Đọc hiểu",
+      subtitle: "Các dạng câu hỏi Truyện & Thơ",
+      description: "Kiến thức trọng tâm và hướng trả lời 12 dạng câu hỏi đọc hiểu",
+      groups: [
+        {
+          g: "Tiểu thuyết / Truyện (6 dạng câu hỏi)",
+          c: [
+            ["Dạng 1: Xác định ngôi kể, điểm nhìn", "• **Ngôi thứ nhất** (xưng \"tôi\"): người kể trực tiếp tham gia câu chuyện, mang tính chủ quan cao.\n• **Ngôi thứ ba** (giấu mình, gọi tên nhân vật bằng \"hắn\", tên riêng...): bao quát, khách quan.\n• **Điểm nhìn bên ngoài**: quan sát hành vi, ngoại hình, lời nói nhân vật.\n• **Điểm nhìn bên trong**: đi sâu vào tâm lí, ý nghĩ, cảm xúc, độc thoại nội tâm của nhân vật."],
+            ["Dạng 2: Nêu các sự kiện chính; chỉ ra nội dung trong văn bản", "• Đọc kĩ ngữ liệu, bám sát các từ ngữ, câu văn xuất hiện trực tiếp trong văn bản.\n• Trả lời trực tiếp, gạch đầu dòng rõ ràng, đúng trọng tâm câu hỏi, không suy diễn thêm."],
+            ["Dạng 3: Tác dụng của biện pháp nói mỉa, nghịch ngữ", "• **Nói mỉa**: dùng lời lẽ trái với ý thật để chê, giễu (hoặc tự giễu bản thân).\n• **Tác dụng**: tăng sức biểu cảm, tạo giọng điệu chua chát, bộc lộ thái độ mỉa mai, phê phán hoặc nỗi đau đớn, dằn vặt của nhân vật."],
+            ["Dạng 4: Ý nghĩa của chi tiết; tác dụng của tình huống truyện", "• **Ý nghĩa chi tiết**: thúc đẩy cốt truyện phát triển, khắc hoạ tính cách số phận nhân vật, gửi gắm tư tưởng nhà văn.\n• **Tình huống truyện**: tạo bước ngoặt, bộc lộ phẩm chất hoặc bi kịch nhân vật, làm nổi bật chủ đề tư tưởng."],
+            ["Dạng 5: Nhận xét hình tượng nhân vật", "• Nhận xét toàn diện từ các phương diện: hoàn cảnh xuất thân, phẩm chất, tính cách, hành động, bi kịch tinh thần.\n• Đánh giá ý nghĩa biểu tượng của nhân vật và tấm lòng nhân đạo của nhà văn."],
+            ["Dạng 6: Suy nghĩ về giá trị nội dung, bài học, thông điệp", "• Khái quát giá trị nội dung và thông điệp sâu sắc mà tác giả gửi gắm qua văn bản.\n• Rút ra bài học nhận thức (hiểu biết về cuộc sống) và bài học hành động cho bản thân."]
+          ]
+        },
+        {
+          g: "Thơ (6 dạng câu hỏi)",
+          c: [
+            ["Dạng 1: Xác định thể thơ và dấu hiệu nhận biết", "• Đếm số chữ trong các dòng thơ (ví dụ 5 chữ, 7 chữ, 8 chữ, lục bát, thơ tự do).\n• **Dấu hiệu nhận biết**: số chữ trên mỗi dòng cố định hay biến đổi (dài ngắn đan xen), cách ngắt nhịp, gieo vần, cách chia khổ."],
+            ["Dạng 2: Chỉ ra từ ngữ, hình ảnh trong khổ thơ, đoạn thơ", "• Đọc kĩ yêu cầu đề bài, tìm đúng các từ ngữ, hình ảnh xuất hiện trực tiếp trong văn bản.\n• Trích dẫn nguyên văn bằng dấu ngoặc kép, gạch đầu dòng rõ ràng."],
+            ["Dạng 3: Xác định nhân vật trữ tình / chủ thể trữ tình", "• **Chủ thể trực tiếp**: xưng đại từ nhân xưng rõ ràng (\"tôi\", \"chúng tôi\", \"anh\", \"em\"...).\n• **Chủ thể ẩn**: không xuất hiện đại từ nhân xưng, cảm xúc toát lên qua bức tranh thiên nhiên, cảnh vật, con người."],
+            ["Dạng 4: Xác định cảm hứng chủ đạo, cảm xúc chủ đạo; nêu mạch cảm xúc", "• **Cảm hứng chủ đạo**: tình cảm, thái độ bao trùm tác phẩm (ngợi ca, biết ơn, xót xa, tự hào, tri ân...).\n• **Mạch cảm xúc**: sự vận động cảm xúc từ đầu đến cuối đoạn thơ (phân tích sự chuyển biến qua từng khổ thơ)."],
+            ["Dạng 5: Ý nghĩa biểu tượng của hình ảnh thơ; cách hiểu câu thơ", "• Giải thích nghĩa đen: hình ảnh thực trong đời sống.\n• Khái quát nghĩa bóng / nghĩa biểu tượng: hàm ý triết lí, cảm xúc sâu xa mà tác giả gửi gắm qua hình ảnh."],
+            ["Dạng 6: Suy nghĩ về giá trị nội dung, bài học, thông điệp", "• Nêu thông điệp ý nghĩa và sâu sắc nhất mà người đọc cảm nhận được từ bài thơ.\n• Liên hệ với thực tế cuộc sống và ý thức trách nhiệm của bản thân."]
+          ]
+        }
+      ]
+    },
+    {
+      id: "literature-k2",
+      title: "Làm văn",
+      subtitle: "4 dạng dàn ý so sánh & Mẫu câu",
+      description: "Khung Mở – Thân (giống, khác, lí giải) – Kết & Bảng câu mở đầu",
+      groups: [
+        {
+          g: "Khung dàn ý so sánh (4 dạng)",
+          c: [
+            ["Khung chung của bài văn so sánh (cả 4 dạng)", "**Mở bài** (dẫn dắt đề tài chung → giới thiệu 2 tác phẩm, tác giả → nêu nội dung so sánh)\n**Thân bài**:\n• Luận điểm 1: Điểm giống nhau và ý nghĩa\n• Luận điểm 2: Điểm khác nhau và ý nghĩa\n• Luận điểm 3: Lí giải nguyên nhân giống và khác\n**Kết bài** (khẳng định giá trị 2 tác phẩm, cá tính sáng tạo của nhà văn, quy luật tiếp nhận)"],
+            ["Dạng a: So sánh hai đoạn trích truyện / tiểu thuyết (chung)", "• **Mở bài (3 ý)**: Dẫn dắt bằng đề tài chung hoặc ý nghĩa văn học → Giới thiệu 2 tác phẩm, tác giả, điểm chung → Nêu nội dung sẽ so sánh.\n• **Luận điểm 1 (Giống)**: Nêu khái quát → Phân tích từng tác phẩm → Đánh giá ý nghĩa (vẻ đẹp nhân văn, tấm lòng nhà văn, cảm xúc cho người đọc).\n• **Luận điểm 2 (Khác)**: Nêu khái quát → Phân tích từng tác phẩm → Đánh giá (phong cách riêng, bối cảnh sáng tác, sự đa dạng của đời sống).\n• **Luận điểm 3 (Lí giải)**: Nguyên nhân giống (cùng đề tài phổ quát, cùng bối cảnh hoặc tư tưởng nhân đạo); Nguyên nhân khác (thời điểm sáng tác, phong cách tác giả, ngôi kể, kết cấu, giọng điệu, đối tượng phản ánh).\n• **Kết bài (3 ý)**: Khẳng định giá trị 2 tác phẩm → Rút ra cá tính sáng tạo của nhà văn → Nhận xét về quy luật sáng tạo và tiếp nhận văn chương."],
+            ["Dạng b: So sánh một nội dung cụ thể của hai đoạn truyện", "Thân bài luôn là 3 luận điểm: **Giống – Khác – Lí giải**.\n• **So sánh Nhân vật (thường gặp)**: Giống về phẩm chất, vai trò; Khác về hoàn cảnh, tính cách, hành động; Lí giải.\n• **Nội dung / chủ đề**: Giống về chủ đề; Khác về cách thể hiện; Lí giải (bối cảnh, phong cách, thời đại).\n• **Chi tiết hoặc tình huống**: Giống về vai trò, ý nghĩa; Khác về cách xây dựng và cảm xúc; Lí giải.\n• **Nghệ thuật kể chuyện (ngôi kể, điểm nhìn, lời kể)**: Giống về hiệu quả chung; Khác về ngôi kể, điểm nhìn, giọng điệu; Lí giải."],
+            ["Dạng c: So sánh hai bài thơ (chung)", "• **Mở bài (5 ý)**: Giới thiệu đề tài chung → Nhấn mạnh mỗi bài có nét riêng → Giới thiệu nhan đề, tác giả → Nêu rõ vừa giống vừa khác → Trích thơ ngắn có dấu tỉnh lược.\n• **Thân bài (4 bước)**: (1) Giới thiệu 2 bài thơ, hoàn cảnh sáng tác, phong cách tác giả; (2) Điểm tương đồng về đề tài, cảm hứng và hình thức (thể thơ, hình ảnh, ngôn từ, biện pháp tu từ, chủ thể trữ tình...);\n(3) Điểm khác biệt và lí giải (khách quan: thời đại, giai đoạn; chủ quan: quan niệm thẩm mĩ, cá tính, góc nhìn);\n(4) Đánh giá đóng góp về phong cách, tư tưởng, thông điệp.\n• **Kết bài**: Ý nghĩa việc so sánh + Cảm nhận cá nhân (thông điệp, bài nào ấn tượng hơn, vì sao)."],
+            ["Dạng d: So sánh một nội dung cụ thể của hai bài thơ", "• **Mở bài (3 ý)**: Giới thiệu đề tài → 2 tác phẩm, tác giả → Nêu nội dung so sánh.\n• **Luận điểm 1 (Tương đồng nội dung & chủ đề)**: Chung chủ đề, đối tượng thể hiện; Chung mạch cảm xúc, tư tưởng chủ đạo, giá trị nhân văn.\n• **Luận điểm 2 (Khác biệt)**: Phân tích lần lượt bài A rồi bài B (sắc thái chủ đề, bản chất cảm xúc/cái tôi trữ tình, cách thể hiện).\n• **Luận điểm 3 (Lí giải & đánh giá chung)**: Lí giải nguyên nhân (hoàn cảnh sáng tác, thời đại, cá tính phong cách) và đánh giá chung (hai bài bổ sung cho nhau, làm phong phú đề tài).\n• **Kết bài**: Ý nghĩa so sánh + Cảm nhận, thông điệp cá nhân."]
+          ]
+        },
+        {
+          g: "Gợi ý câu mở đầu từng đoạn",
+          c: [
+            ["Đoạn Giống (Tìm điểm gặp gỡ)", "Gợi ý bắt đầu câu:\n• \"Cả hai tác phẩm đều...\"\n• \"Đều thể hiện...\"\n• \"Cùng gặp nhau ở...\"\n• \"Điểm chung nổi bật là...\"\n• \"Trước hết, cả hai tác giả cùng hướng ngòi bút về...\""],
+            ["Đoạn Khác (Chỉ rõ sự phân hoá)", "Gợi ý bắt đầu câu:\n• \"Tuy nhiên, mỗi tác phẩm lại có nét riêng...\"\n• \"Nếu như ở tác phẩm A... thì ở tác phẩm B...\"\n• \"Khác biệt nằm ở chỗ...\"\n• \"Dù vậy, cách tiếp cận của từng nhà văn lại phân hóa rõ rệt...\""],
+            ["Đoạn Lí giải (Truy tìm nguyên nhân)", "Gợi ý bắt đầu câu:\n• \"Sở dĩ có sự tương đồng như vậy là vì...\"\n• \"Sự khác biệt bắt nguồn từ...\"\n• \"Điều này xuất phát từ bối cảnh thời đại và cá tính sáng tạo...\"\n• \"Do góc nhìn và quan niệm nghệ thuật riêng biệt của tác giả...\""],
+            ["Đoạn Bình luận / Đánh giá (Nâng cao đánh giá)", "Gợi ý bắt đầu câu:\n• \"Điều đó cho thấy tài năng và tấm lòng nhân đạo của...\"\n• \"Qua đó, ta hiểu rằng quy luật của sáng tạo văn chương là...\"\n• \"Chính vì vậy, hai tác phẩm không triệt tiêu mà bổ sung cho nhau...\"\n• \"Điều này làm sáng rõ hơn thông điệp sâu sắc...\""]
+          ]
+        }
+      ]
+    }
+  ]
+};
+Object.assign(CARD_DATA, LIT_CARDS);
 /* dựng thẻ từ CARD_DATA rồi gắn vào các môn tương ứng (mỗi chương có thể có cả questions lẫn cards) */
 Object.keys(CARD_DATA).forEach(sid => {
   const sub = quizData.subjects.find(s => s.id === sid); if (!sub) return;
@@ -8520,7 +9681,8 @@ const SUBJ_IC = {
   biology: _svg('<path d="M7 3c0 4.5 10 5.5 10 9s-10 4.5-10 9"/><path d="M17 3c0 4.5-10 5.5-10 9s10 4.5 10 9"/><path d="M8.8 6.4h6.4M8.8 17.6h6.4"/>'),
   chemistry: _svg('<path d="M9.5 3h5"/><path d="M10 3v6.2L4.8 18a2 2 0 0 0 1.7 3h11a2 2 0 0 0 1.7-3L14 9.2V3"/><path d="M7.5 15h9"/>'),
   math: _svg('<path d="M18 5H6.5l5.5 7-5.5 7H18"/>'),
-  physics: _svg('<circle cx="12" cy="12" r="1.4" fill="currentColor"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/>')
+  physics: _svg('<circle cx="12" cy="12" r="1.4" fill="currentColor"/><ellipse cx="12" cy="12" rx="10" ry="4"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(60 12 12)"/><ellipse cx="12" cy="12" rx="10" ry="4" transform="rotate(120 12 12)"/>'),
+  literature: _svg('<path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/><path d="M8 7h8M8 11h6"/>')
 };
 const subjIcon = s => SUBJ_IC[s.id] || _svg('<path d="M5 4h10a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h10"/>');
 /* ===== Câu trọng tâm (tô đỏ trong đề cương KTTX2) ===== */
@@ -9168,6 +10330,38 @@ const TYPES = {
       el.classList.add("bad"); return false;
     },
     review: r => `<div class="opt static ok"><span>Đáp án: ${esc(r.answers[0])}</span></div>`
+  },
+  qa: {
+    rule: "Câu hỏi tự luận / đọc hiểu: đối chiếu câu trả lời với gợi ý đáp án và giải thích.",
+    prepare: q => ({ answer: q.answer, rationale: q.rationale, warn: q.warn, revealed: false, selfChecked: null }),
+    render: r => `<div class="qa-box">
+      <div class="qa-prompt mut">Tự suy nghĩ hoặc ghi câu trả lời ra nháp, sau đó bấm xem gợi ý đáp án.</div>
+      <div id="qa-ans" class="qa-content" style="${r.revealed ? "" : "display:none;"}">
+        <div class="qa-sec-title">Gợi ý đáp án:</div>
+        <div class="qa-ans-text">${esc(r.answer).replace(/\n/g, "<br>")}</div>
+        ${r.rationale ? `<div class="qa-sec-title" style="margin-top:10px;">Vì sao (lấy từ đề cương):</div><div class="qa-rat-text">${esc(r.rationale).replace(/\n/g, "<br>")}</div>` : ""}
+      </div>
+      ${!r.revealed ? `<button type="button" class="btn alt" data-act="qareveal" style="width:100%;margin-top:8px;">Xem đáp án & Hướng dẫn giải</button>` : `<div class="qa-self" style="margin-top:12px;"><div class="mut" style="font-size:13px;margin-bottom:8px;">Tự đánh giá câu trả lời của bạn:</div><div style="display:flex;gap:8px;"><button type="button" class="opt ${r.selfChecked === 1 ? "ok" : ""}" data-act="qaself" data-v="1" style="flex:1;justify-content:center;">Đạt yêu cầu</button><button type="button" class="opt ${r.selfChecked === 0 ? "bad" : ""}" data-act="qaself" data-v="0" style="flex:1;justify-content:center;">Cần ôn lại</button></div></div>`}
+    </div>`,
+    select: () => {},
+    ready: r => r.revealed && r.selfChecked !== null,
+    check: r => r.selfChecked === 1,
+    mark: (r, root) => {
+      if (r.selfChecked === 0 && !r.missed) {
+        r.missed = true;
+        S.wrong.push(r);
+      }
+      return true;
+    },
+    review: r => {
+      const ans = r.answer || (r.src && r.src.answer) || "";
+      const rat = r.rationale || (r.src && r.src.rationale) || "";
+      return `<div class="opt static ok" style="display:block;padding:12px 14px;text-align:left;">
+        <div style="font-weight:600;margin-bottom:6px;color:var(--ok);">Đáp án:</div>
+        <div style="line-height:1.6;">${esc(ans).replace(/\n/g, "<br>")}</div>
+        ${rat ? `<div style="font-weight:600;margin-top:10px;margin-bottom:4px;color:var(--mut);">Vì sao (lấy từ đề cương):</div><div class="mut" style="line-height:1.5;">${esc(rat).replace(/\n/g, "<br>")}</div>` : ""}
+      </div>`;
+    }
   }
 };
 
@@ -9425,6 +10619,658 @@ function cmark(known) {
   playSound(known ? "ok" : "tick");
   S.ci >= S.deck.length ? go("cardsend") : render();
 }
+
+// literature_view_builder.js
+// Creates the full Literature Study Page with 5 collapsible sections, quick navigation, interactive essays, and complete annotations.
+
+const LIT_ESSAY_1_DATA = {
+  title: "So sánh nhân vật Hộ (Đời thừa) và nhân vật Điền (Giăng sáng)",
+  type: "Dạng b: So sánh hai nhân vật truyện cùng một tác giả (Nam Cao)",
+  wordCount: "Khoảng 600 chữ",
+  segments: [
+    { p: 0, text: "Nam Cao là nhà văn hiện thực xuất sắc, luôn trăn trở về số phận người trí thức nghèo có hoài bão nhưng bị cơm áo đè nặng.", label: "Mở bài, ý 1", group: "intro", note: "Dẫn dắt bằng đề tài chung: số phận người trí thức nghèo trước Cách mạng.", source: "Mục A4, dạng b, mở bài ý 1" },
+    { p: 0, text: "Hai đoạn trích Đời thừa và Giăng sáng đều khắc hoạ bi kịch ấy qua hai nhà văn nghèo: Hộ và Điền.", label: "Mở bài, ý 2", group: "intro", note: "Giới thiệu hai tác phẩm, tác giả và điểm chung (hai nhà văn nghèo).", source: "Dạng b, mở bài ý 2" },
+    { p: 0, text: "So sánh hai nhân vật giúp ta thấy điểm gặp gỡ lẫn nét riêng trong cách xây dựng nhân vật của Nam Cao.", label: "Mở bài, ý 3", group: "intro", note: "Nêu rõ nội dung sẽ so sánh: nhân vật Hộ và nhân vật Điền.", source: "Dạng b, mở bài ý 3" },
+    { p: 1, text: "Trước hết, Hộ và Điền gặp nhau ở lí tưởng văn chương cao đẹp và ý thức trách nhiệm với gia đình.", label: "Điểm giống, câu nêu ý", group: "same", note: "Gọi tên nét chung: lí tưởng văn chương và trách nhiệm với gia đình.", source: "Dạng 2 (nhân vật), luận điểm 1: giống về phẩm chất, vai trò" },
+    { p: 1, text: "Hộ từng là gã trẻ tuổi \"say mê lí tưởng\", khinh những lo lắng tủn mủn, ấp ủ một tác phẩm làm mờ các tác phẩm khác. Điền từng \"nao nức muốn trở nên một văn sĩ\", sẵn sàng cam chịu thiếu thốn, đoạ đày.", label: "Dẫn chứng", group: "same", note: "Dẫn lí tưởng của từng nhân vật bằng từ ngữ lấy từ đoạn trích.", source: "Luận điểm 1, bước 2: phân tích từng tác phẩm" },
+    { p: 1, text: "Nhưng khi gánh nặng gia đình ập đến, cả hai đều phải gác lại giấc mộng: Hộ phải viết vội để kiếm tiền, Điền thấy mình ích kỉ và quyết định tạm quên mộng văn chương.", label: "Dẫn chứng", group: "same", note: "Cả hai cùng phải gác giấc mộng vì cơm áo: Hộ viết vội, Điền tạm quên mộng văn chương.", source: "Luận điểm 1, bước 2" },
+    { p: 1, text: "Họ đều là những người giàu lòng tự trọng, giàu tình thương. Qua đó, Nam Cao bày tỏ sự cảm thông với người trí thức nghèo và tố cáo hiện thực xã hội bóp nghẹt tài năng.", label: "Điểm giống, ý nghĩa", group: "same", note: "Đánh giá điều giống nhau cho thấy gì: Nam Cao cảm thông với trí thức nghèo, tố cáo xã hội bóp nghẹt tài năng.", source: "Luận điểm 1, bước 3; mẫu câu \"Qua đó, người đọc nhận thấy…\"" },
+    { p: 2, text: "Tuy nhiên, hai nhân vật khác nhau ở hoàn cảnh và cách đối diện bi kịch.", label: "Điểm khác, câu nêu ý", group: "diff", note: "Chuyển ý sang khác biệt về hoàn cảnh và cách đối diện bi kịch.", source: "Luận điểm 2, bước 1; mẫu \"Tuy nhiên\", \"Khác biệt nằm ở…\"" },
+    { p: 2, text: "Hộ đã có vợ con, hiểu \"giá trị của đồng tiền\", bị những bận rộn tẹp nhẹp ngốn hết thời gian. Bi kịch của Hộ đã diễn ra và kéo dài: mỗi lần đọc lại văn mình, Hộ \"đỏ mặt, cau mày, nghiến răng, vò nát sách mà mắng mình như một thằng khốn nạn\". Đó là nỗi đau của người nghệ sĩ tự thấy mình phản bội lí tưởng.", label: "Điểm khác, Hộ", group: "diff", note: "Bi kịch của Hộ đã diễn ra và kéo dài, Hộ tự giày vò.", source: "Luận điểm 2, bước 2: tác phẩm A" },
+    { p: 2, text: "Điền thì còn đứng ở ngưỡng cửa lựa chọn. Gia đình Điền xác xơ, em thất học, bố bỏ đi, mẹ gồng gánh nuôi con. Điền tự trách mình \"ích kỉ\" và đi đến quyết định dứt khoát qua những câu ngắn, điệp \"Điền phải…\".", label: "Điểm khác, Điền", group: "diff", note: "Điền chưa chìm vào bi kịch, chủ động đặt trách nhiệm lên trên giấc mộng.", source: "Luận điểm 2, bước 2: tác phẩm B" },
+    { p: 2, text: "Nếu Hộ day dứt, tự giày vò thì Điền chủ động đặt trách nhiệm lên trên giấc mộng.", label: "Điểm khác, câu chốt", group: "diff", note: "Câu \"Nếu… thì…\" gom hai nhân vật lại để làm nổi bật sự khác nhau.", source: "Mẫu câu \"Nếu… thì…\"" },
+    { p: 2, text: "Về nghệ thuật, đoạn trích về Hộ giàu độc thoại nội tâm, đối lập trước và sau khi có gia đình; đoạn trích về Điền có nhịp gấp gáp, nhấn mạnh khoảnh khắc đưa ra quyết định.", label: "Điểm khác, nghệ thuật", group: "diff", note: "Khác về cách kể và miêu tả tâm lí: độc thoại nội tâm, đối lập trước sau, so với nhịp gấp gáp.", source: "Dạng 4: nghệ thuật kể chuyện (ngôi kể, điểm nhìn, giọng điệu)" },
+    { p: 3, text: "Sự giống nhau bắt nguồn từ việc cả hai đoạn trích cùng một nhà văn, cùng viết năm 1943, cùng bối cảnh xã hội trước Cách mạng, cùng tư tưởng nhân đạo về mối quan hệ giữa lí tưởng và cơm áo.", label: "Lí giải, điểm giống", group: "explain", note: "Nguyên nhân giống: cùng nhà văn, cùng năm viết, cùng bối cảnh, cùng tư tưởng nhân đạo.", source: "Luận điểm 3, bước 2" },
+    { p: 3, text: "Sự khác nhau bắt nguồn từ tình huống truyện và dụng ý nghệ thuật: Đời thừa đi sâu vào bi kịch tinh thần đã thành hình, giọng điệu chua chát, triết lí; Giăng sáng chọn khoảnh khắc chuyển biến trong nhận thức, giọng kể giàu cảm thông.", label: "Lí giải, điểm khác", group: "explain", note: "Nguyên nhân khác: tình huống truyện khác, dụng ý khắc hoạ khoảnh khắc khác nhau.", source: "Luận điểm 3, bước 3" },
+    { p: 4, text: "Tóm lại, Hộ và Điền cho thấy cùng một đề tài nhưng mỗi tác phẩm là một cách nhìn, một cách cảm riêng của Nam Cao. Sự gặp gỡ làm nổi bật giá trị nhân đạo, sự khác biệt làm nên vẻ phong phú của văn chương,", label: "Kết bài, ý nghĩa so sánh", group: "outro", note: "Nêu ý nghĩa của việc so sánh: làm nổi bật giá trị nhân đạo và nét độc đáo của từng tác phẩm.", source: "Kết bài, ý 1" },
+    { p: 4, text: "và người đọc cần tiếp nhận bằng tư duy mở.", label: "Kết bài, cảm nhận", group: "outro", note: "Nêu ấn tượng, bài học cá nhân khi tiếp nhận tác phẩm.", source: "Kết bài, ý 2" }
+  ]
+};
+
+const LIT_ESSAY_2_DATA = {
+  title: "So sánh hình ảnh người mẹ trong Mẹ và quả và Trong lời mẹ hát",
+  type: "Dạng c: So sánh hai bài thơ khác tác giả",
+  wordCount: "Khoảng 600 chữ",
+  segments: [
+    { p: 0, text: "Tình mẫu tử là mạch nguồn cảm xúc không bao giờ vơi cạn trong thơ ca Việt Nam.", label: "Mở bài, ý 1", group: "intro", note: "Dẫn dắt bằng đề tài chung: tình mẫu tử trong thơ.", source: "Dạng d, mở bài ý 1" },
+    { p: 0, text: "Mẹ và quả của Nguyễn Khoa Điềm và Trong lời mẹ hát của Trương Nam Hương cùng viết về người mẹ với niềm biết ơn và xót thương sâu sắc.", label: "Mở bài, ý 2", group: "intro", note: "Giới thiệu hai bài thơ, hai tác giả và điểm chung (biết ơn, xót thương).", source: "Dạng d, mở bài ý 2" },
+    { p: 0, text: "Tuy vậy, mỗi nhà thơ có cách nhìn riêng về hình ảnh người mẹ và có những phát hiện độc đáo về cảm xúc.", label: "Mở bài, ý 3", group: "intro", note: "Nêu nội dung so sánh (hình ảnh người mẹ) và nhấn mạnh mỗi bài có nét riêng.", source: "Dạng d, mở bài ý 3" },
+    { p: 1, text: "Trước hết, cả hai đoạn thơ đều khắc hoạ hình ảnh người mẹ tần tảo, hi sinh thầm lặng vì con.", label: "Điểm giống, câu nêu ý", group: "same", note: "Giống: mẹ tần tảo, hi sinh thầm lặng để con trưởng thành.", source: "Luận điểm 1: tương đồng về chủ đề và đối tượng thể hiện" },
+    { p: 1, text: "Trong Mẹ và quả, \"lũ chúng tôi từ tay mẹ lớn lên\", mẹ gắn liền với luống rau, giàn bầu, giọt mồ hôi lặng thầm rơi theo năm tháng.", label: "Dẫn chứng, bài A", group: "same", note: "Dẫn hình ảnh mẹ ở đoạn thơ của Nguyễn Khoa Điềm.", source: "Luận điểm 1" },
+    { p: 1, text: "Trong Trong lời mẹ hát, \"lưng mẹ còng rồi\", mái tóc mẹ bạc trắng theo thời gian, mẹ chắt chiu từng lời ru để nuôi con khôn lớn.", label: "Dẫn chứng, bài B", group: "same", note: "Dẫn hình ảnh mẹ ở đoạn thơ của Trương Nam Hương.", source: "Luận điểm 1" },
+    { p: 1, text: "Cả hai cùng có một nghịch lí xót xa: con ngày một lớn lên, trưởng thành thì mẹ ngày một già đi, hao gầy.", label: "Điểm giống, nhận xét", group: "same", note: "Chỉ ra nét chung trong cách nói: mẹ nhỏ đi, con lớn lên.", source: "Luận điểm 1" },
+    { p: 1, text: "Chủ thể trữ tình đều xuất hiện trực tiếp, bộc lộ nỗi niềm xót xa pha lẫn ân hận vì sợ mình chưa kịp đền đáp công ơn sinh thành.", label: "Điểm giống, cảm xúc", group: "same", note: "Chung chủ thể trữ tình trực tiếp, chung sắc thái biết ơn và xót xa.", source: "Luận điểm 1: tương đồng về mạch cảm xúc" },
+    { p: 1, text: "Qua đó, hai nhà thơ cùng ngợi ca đức hi sinh cao cả của người mẹ và nhắc nhở đạo làm con.", label: "Điểm giống, ý nghĩa", group: "same", note: "Nêu giá trị nhân văn chung: tình mẫu tử.", source: "Luận điểm 1: giá trị nhân văn" },
+    { p: 2, text: "Dù vậy, hai đoạn thơ khắc hoạ người mẹ qua những lăng kính nghệ thuật rất riêng.", label: "Điểm khác, câu nêu ý", group: "diff", note: "Chuyển ý: cùng viết về mẹ nhưng ở hai khía cạnh khác nhau.", source: "Luận điểm 2" },
+    { p: 2, text: "Ở Nguyễn Khoa Điềm, mẹ hiện lên qua hình tượng lao động vun trồng; tác giả dùng đối lập \"lớn lên, lớn xuống\" và câu hỏi tu từ mang tính triết lí, giọng thơ trầm lắng, giàu suy tư.", label: "Điểm khác, bài A", group: "diff", note: "Mẹ qua hình ảnh lao động vun trồng; đối lập \"lớn lên, lớn xuống\"; giọng trầm lắng, chiêm nghiệm.", source: "Luận điểm 2: sắc thái chủ đề, cách thể hiện của bài A" },
+    { p: 2, text: "Ở Trương Nam Hương, mẹ hiện lên qua âm hưởng lời ru ngọt ngào; tác giả dùng thể thơ sáu chữ, nhịp điệu êm đềm như nhịp võng đưa, giọng thơ tha thiết, dạt dào cảm xúc.", label: "Điểm khác, bài B", group: "diff", note: "Mẹ qua dấu vết thời gian: nhân hoá, từ láy \"nôn nao\", đối lập; giọng tha thiết như lời ru.", source: "Luận điểm 2: sắc thái chủ đề, cách thể hiện của bài B" },
+    { p: 2, text: "Nếu mẹ của Nguyễn Khoa Điềm gắn với trăn trở về sự đền đáp thì mẹ của Trương Nam Hương gắn với hoài niệm êm đềm thời thơ ấu.", label: "Điểm khác, câu chốt", group: "diff", note: "Câu \"Nếu… thì…\" đúc kết sự khác nhau giữa hai hình ảnh mẹ.", source: "Mẫu câu \"Nếu… thì…\"" },
+    { p: 3, text: "Sự tương đồng bắt nguồn từ đề tài mẫu tử vốn là cội nguồn cảm xúc thiêng liêng, và cả hai nhà thơ đều có tấm lòng hiếu thảo, nhạy cảm trước quy luật thời gian.", label: "Lí giải, điểm giống", group: "explain", note: "Nguyên nhân giống: đề tài mẹ là nguồn cảm hứng lớn, hai nhà thơ cùng nhạy cảm.", source: "Luận điểm 3a: lí giải điểm tương đồng" },
+    { p: 3, text: "Sự khác biệt bắt nguồn từ thế hệ sáng tác và phong cách cá nhân: Nguyễn Khoa Điềm thuộc thế hệ nhà thơ chống Mĩ với giọng trữ tình - chính luận sâu sắc; Trương Nam Hương thuộc thế hệ sau với ngòi bút trong trẻo, giàu nhạc điệu.", label: "Lí giải, điểm khác", group: "explain", note: "Nguyên nhân khác: góc nhìn, thế hệ, phong cách.", source: "Luận điểm 3a: hoàn cảnh sáng tác, cá tính, phong cách" },
+    { p: 3, text: "Sự khác biệt không triệt tiêu mà bổ sung cho nhau, làm phong phú thêm kho tàng thơ ca viết về mẹ.", label: "Đánh giá chung", group: "eval", note: "Hai bài bổ sung cho nhau, làm phong phú đề tài.", source: "Luận điểm 3b: đánh giá chung" },
+    { p: 4, text: "Tóm lại, điểm giống cho thấy nét chung của văn học khi viết về mẹ, điểm khác làm nổi bật cá tính sáng tạo riêng của từng nhà thơ.", label: "Kết bài, ý nghĩa so sánh", group: "outro", note: "Nêu ý nghĩa của việc so sánh: chung của đề tài, riêng của từng nhà thơ.", source: "Kết bài: khẳng định ý nghĩa của việc so sánh" },
+    { p: 4, text: "Hai đoạn thơ để lại thông điệp: hãy biết trân trọng và đền đáp công ơn của mẹ khi còn có thể.", label: "Kết bài, cảm nhận", group: "outro", note: "Nêu thông điệp và cảm nhận cá nhân.", source: "Kết bài: nêu cảm nhận, ấn tượng cá nhân" }
+  ]
+};
+
+// literature_view_code.js
+// literature_view_code.js
+// lit_redesign_view.js
+// Enhanced Literature Study View: Modern academic design, zero icons, deep interactivity.
+
+// lit_redesign_view.js
+// Enhanced Literature Study View: Modern academic design, zero icons, deep interactivity.
+
+// lit_redesign_view.js
+// Enhanced Literature Study View: Modern academic design, zero icons, deep interactivity.
+
+function renderLiteratureStudyView(s, c) {
+  const legend = [
+    { g: "intro", l: "Mở bài" },
+    { g: "same", l: "Điểm giống / Dẫn chứng" },
+    { g: "diff", l: "Điểm khác" },
+    { g: "explain", l: "Lí giải" },
+    { g: "eval", l: "Đánh giá / Bình luận" },
+    { g: "outro", l: "Kết bài" }
+  ];
+
+  const renderEssayBody = (essayData, mid) => {
+    const paras = [];
+    essayData.segments.forEach((seg, idx) => {
+      const pIdx = seg.p !== undefined ? seg.p : 0;
+      if (!paras[pIdx]) paras[pIdx] = [];
+      paras[pIdx].push({ ...seg, idx });
+    });
+    return paras.map(pSegs => `<p class="essay-p">${pSegs.map(seg => `<span class="essay-seg ${seg.group || ""}${seg.idx === 0 ? " active" : ""}" data-act="litseg" data-mid="${mid}" data-idx="${seg.idx}">${esc(seg.text)}</span> `).join("")}</p>`).join("");
+  };
+
+  const renderTableRows = (segments) => {
+    return segments.map((seg, i) => `<tr>
+      <td style="font-weight:700;font-size:12px;color:var(--mut);text-align:center;">${i + 1}</td>
+      <td style="font-size:13px;line-height:1.45;"><b style="color:var(--tx);">${esc(seg.text.slice(0, 48))}...</b></td>
+      <td><span class="legend-chip" style="margin:0;"><i class="legend-dot ${seg.group || ""}"></i>${esc(seg.label)}</span></td>
+      <td style="font-size:13px;line-height:1.5;">${esc(seg.note)}</td>
+      <td style="font-size:12px;color:var(--mut);">${esc(seg.source)}</td>
+    </tr>`).join("");
+  };
+
+  const passage1 = `Buổi sáng hôm nay, mùa thu đã sang rõ rệt. Nhĩ nằm trên giường bệnh nhìn qua khung cửa sổ. Trước mặt anh, bến quê thân quen hiện lên trong một buổi sáng thu tinh khôi, bãi bồi bên kia sông Hồng một màu mỡ màng, màu vàng thau của đất cát, màu tím biếc của hoa dại... Lần đầu tiên sau bao năm bôn tẩu khắp nơi trên thế giới, Nhĩ mới nhận ra vẻ đẹp bình dị, trù phú mà đầy quyến rũ của bãi bồi quen thuộc đối ngạn. Anh khao khát được một lần đặt chân lên bờ bãi ấy, nhưng căn bệnh hiểm nghèo đã trói chặt anh vào chiếc giường hẹp. Nhĩ đành nhờ cậu con trai thực hiện ước mơ giúp mình, nhưng rồi người con lại sa vào một đám chơi cờ trên đường đi, để lỡ chuyến đò duy nhất trong ngày. Trong giây phút cuối đời, Nhĩ thấu hiểu sâu sắc quy luật éo le, nghịch lí của cuộc đời: con người ta trên đường đời thật khó tránh khỏi những điều vòng vèo hoặc chùng chình...`;
+
+  const passage2 = `Những mùa quả mẹ tôi hái được
+Mẹ vẫn trông vào tay mẹ vun trồng
+Những mùa quả lặn rồi lại mọc
+Như mặt trời, khi như mặt trăng.
+
+Lũ chúng tôi từ tay mẹ lớn lên
+Còn những bí và bầu thì lớn xuống
+Chúng mang dáng giọt mồ hôi mặn
+Rỏ xuống lòng thầm lặng mẹ tôi.
+
+Và chúng tôi một thứ quả trên đời
+Bảy mươi tuổi mẹ mong chờ được hái
+Tôi hoảng sợ, ngày bàn tay mẹ mỏi
+Mình vẫn còn một thứ quả non xanh?
+(Nguyễn Khoa Điềm, Mẹ và quả)`;
+
+  const templates = [
+    { title: "Nêu điểm tương đồng", text: "Trước hết, cả hai tác phẩm đều gặp gỡ ở..." },
+    { title: "Nêu điểm tương đồng", text: "Điểm tương đồng nổi bật giữa hai nhân vật là..." },
+    { title: "Chuyển ý sang điểm khác biệt", text: "Tuy nhiên, nét độc đáo làm nên cá tính sáng tạo riêng lại nằm ở chỗ..." },
+    { title: "Chuyển ý sang điểm khác biệt", text: "Khác biệt căn bản giữa hai đoạn trích thể hiện ở..." },
+    { title: "Cấu trúc đối chiếu song song", text: "Nếu nhân vật A day dứt, tự giày vò thì nhân vật B lại chủ động đặt trách nhiệm lên trên giấc mộng." },
+    { title: "Lí giải nguyên nhân giống và khác", text: "Sự tương đồng bắt nguồn từ... trong khi nét khác biệt được quy định bởi phong cách nghệ thuật và hoàn cảnh sáng tác." },
+    { title: "Đánh giá chung sau so sánh", text: "Sự khác biệt không triệt tiêu mà bổ sung cho nhau, làm phong phú thêm cho đề tài." }
+  ];
+
+  return topbar(esc(s.name) + " 12", "Ôn tập giữa HK1 · Đề cương & Đề minh hoạ") +
+    `<div class="lit-study-page"><div id="lit-progress-bar"></div>
+      <!-- 1. THANH ĐIỀU HƯỚNG TỔNG QUAN -->
+      <div class="lit-toolbar">
+        <div class="lit-pills">
+          <button type="button" class="lit-pill" data-act="lit_jump" data-target="lit-sec-1">1. Cấu trúc đề</button>
+          <button type="button" class="lit-pill" data-act="lit_jump" data-target="lit-sec-2">2. Kỹ năng Đọc hiểu</button>
+          <button type="button" class="lit-pill" data-act="lit_jump" data-target="lit-sec-3">3. Kỹ năng Làm văn</button>
+          <button type="button" class="lit-pill" data-act="lit_jump" data-target="lit-sec-4">4. Đề minh hoạ 01</button>
+          <button type="button" class="lit-pill" data-act="lit_jump" data-target="lit-sec-5">5. Đề minh hoạ 02</button>
+        </div>
+        <div class="lit-actions">
+          <span class="lit-hint-txt">Chạm vào tiêu đề từng phần bên dưới để mở rộng hoặc thu gọn</span>
+          <div style="display:flex;gap:8px;">
+            <button type="button" class="btn alt lit-btn-sm" data-act="lit_toggle_all" data-v="open">Mở tất cả</button>
+            <button type="button" class="btn alt lit-btn-sm" data-act="lit_toggle_all" data-v="close">Thu gọn</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PHẦN 1: CẤU TRÚC ĐỀ -->
+      <details class="lit-accordion" id="lit-sec-1" open>
+        <summary class="lit-sec-summary">
+          <div class="lit-sec-title-wrap">
+            <span class="lit-sec-badge">Phần 1</span>
+            <span class="lit-sec-title">Cấu trúc đề thi & Phân bổ thời gian (Mục A1, A2, D)</span>
+          </div>
+          <span class="lit-sec-chev"></span>
+        </summary>
+        <div class="lit-sec-content">
+          <div class="lit-info-grid">
+            <div class="lit-box">
+              <div class="lit-box-title"><span class="lit-tag-label">QUY CHUẨN</span> Thông tin kiểm tra</div>
+              <ul class="lit-list">
+                <li><b>Thời gian kiểm tra:</b> 26/10/2026 đến 06/11/2026 (tuần 9 đến tuần 10).</li>
+                <li><b>Thời lượng làm bài:</b> <b>90 phút</b>, hình thức <b>tự luận 100%</b>.</li>
+                <li><b>Tỉ lệ điểm:</b> Đọc hiểu <b>5.0 điểm</b> + Làm văn <b>5.0 điểm</b>.</li>
+              </ul>
+            </div>
+            <div class="lit-box">
+              <div class="lit-box-title"><span class="lit-tag-label">PHẠM VI</span> Ngữ liệu & Yêu cầu</div>
+              <ul class="lit-list">
+                <li><b>Đọc hiểu:</b> Đoạn trích <b>tiểu thuyết/truyện</b> hoặc <b>thơ hiện đại</b> ngoài SGK (cùng thể loại bài 1, 2). Gồm 5 câu: 2 Nhận biết, 2 Thông hiểu, 1 Vận dụng (viết đoạn ~120 chữ).</li>
+                <li><b>Làm văn:</b> So sánh một phương diện nội dung của 2 đoạn trích (trong đó có 1 đoạn ở phần Đọc hiểu), dài khoảng <b>600 chữ</b>.</li>
+              </ul>
+            </div>
+          </div>
+
+          <!-- Trực quan hoá thời gian 90 phút -->
+          <div class="lit-time-bar-wrap">
+            <div style="display:flex;justify-content:space-between;align-items:center;">
+              <span style="font-weight:700;font-size:14px;color:var(--tx);">Chiến lược quản lí thời gian 90 phút</span>
+              <span class="mut" style="font-size:12px;">Đọc hiểu 35p · Làm văn 55p</span>
+            </div>
+            <div class="lit-time-bar">
+              <div class="lit-time-part-1" data-act="lit_jump" data-target="lit-sec-2" title="Nhấn để xem phần Đọc hiểu">ĐỌC HIỂU · 35 PHÚT (5.0Đ)</div>
+              <div class="lit-time-part-2" data-act="lit_jump" data-target="lit-sec-3" title="Nhấn để xem phần Làm văn">LÀM VĂN SO SÁNH · 55 PHÚT (5.0Đ)</div>
+            </div>
+            <div class="lit-table-responsive" style="margin-top:10px;">
+              <table class="lit-table">
+                <thead><tr><th>Phần thi</th><th>Thời gian</th><th>Kế hoạch chi tiết từng bước</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td><b>Phần I: Đọc hiểu</b><br><span class="fbadge">5 câu · 5.0đ</span></td>
+                    <td><b>30 – 35 phút</b></td>
+                    <td>
+                      • Đọc kĩ văn bản + gạch chân từ khóa chính (3-5 phút).<br>
+                      • Câu 1, 2 (Nhận biết): trả lời trúng ý, rõ ràng, không vòng vo (3-5 phút).<br>
+                      • Câu 3, 4 (Thông hiểu): phân tích tác dụng, biểu tượng (6-8 phút).<br>
+                      • Câu 5 (Vận dụng): viết đoạn văn 120 chữ có Mở - Thân - Kết (12-15 phút).
+                    </td>
+                  </tr>
+                  <tr>
+                    <td><b>Phần II: Làm văn</b><br><span class="fbadge">So sánh · 5.0đ</span></td>
+                    <td><b>50 – 55 phút</b></td>
+                    <td>
+                      • Đọc đề, xác định đối tượng so sánh + lập dàn ý nhanh ra nháp (5 phút).<br>
+                      • Viết Mở bài (5 phút) + Thân bài 3 luận điểm: Giống, Khác, Lí giải (32-35 phút) + Kết bài (3 phút).<br>
+                      • Dành <b>3-5 phút cuối</b> soát lỗi chính tả, liên kết câu và chữ viết.
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- PHẦN 2: KỸ NĂNG ĐỌC HIỂU -->
+      <details class="lit-accordion" id="lit-sec-2" open>
+        <summary class="lit-sec-summary">
+          <div class="lit-sec-title-wrap">
+            <span class="lit-sec-badge">Phần 2</span>
+            <span class="lit-sec-title">Trọng tâm Đọc hiểu & Hướng dẫn 6 dạng câu hỏi (Mục A3)</span>
+          </div>
+          <span class="lit-sec-chev"></span>
+        </summary>
+        <div class="lit-sec-content">
+          <div class="lit-grid-two">
+            <!-- Dạng câu hỏi truyện -->
+            <div class="lit-card-sub">
+              <div class="lit-sub-hd"><span class="lit-tag-label">TRUYỆN</span> 6 dạng câu hỏi Tiểu thuyết / Văn xuôi</div>
+              <div class="lit-qa-item">
+                <b>1. Xác định ngôi kể & điểm nhìn:</b>
+                <p>• Ngôi 1 (xưng "tôi"): chân thực, bộc lộ trực tiếp tâm trạng.<br>• Ngôi 3 (người kể giấu mình, gọi tên nhân vật): khách quan, bao quát. Điểm nhìn bên trong (đi sâu tâm lí) / bên ngoài.</p>
+              </div>
+              <div class="lit-qa-item">
+                <b>2. Chỉ ra sự việc chính, chi tiết trong văn bản:</b>
+                <p>Tìm đúng từ ngữ, hành động diễn ra trong đoạn trích; trích dẫn chính xác hoặc diễn đạt lại súc tích.</p>
+              </div>
+              <div class="lit-qa-item">
+                <b>3. Biện pháp tu từ nói mỉa, nghịch ngữ (Trọng tâm bài 1):</b>
+                <p>• Nói mỉa: dùng lời lẽ khen ngợi hoặc bình thản bề ngoài để giễu cợt, phê phán.<br>• Tác dụng: tăng tính trào phúng, tự giễu xót xa hoặc tố cáo hiện thực.</p>
+              </div>
+              <div class="lit-qa-item">
+                <b>4. Ý nghĩa chi tiết nghệ thuật, tình huống truyện:</b>
+                <p>Chi tiết là "hạt bụi vàng"; phân tích chi tiết thể hiện tính cách nhân vật gì, thúc đẩy cốt truyện ra sao và gửi gắm tư tưởng gì.</p>
+              </div>
+              <div class="lit-qa-item">
+                <b>5. Nhận xét hình tượng nhân vật:</b>
+                <p>Nêu hoàn cảnh → phân tích phẩm chất, tính cách, bi kịch → đánh giá tấm lòng nhân đạo của tác giả.</p>
+              </div>
+              <div class="lit-qa-item">
+                <b>6. Bài học, thông điệp rút ra:</b>
+                <p>Nêu thông điệp sâu sắc nhất (về lẽ sống, tình người, lí tưởng) và liên hệ ngắn gọn với bản thân.</p>
+              </div>
+            </div>
+
+            <!-- Dạng câu hỏi thơ -->
+            <div class="lit-card-sub">
+              <div class="lit-sub-hd"><span class="lit-tag-label">THƠ</span> 6 dạng câu hỏi Thơ hiện đại</div>
+              <div class="lit-qa-item">
+                <b>1. Xác định thể thơ & dấu hiệu nhận biết:</b>
+                <p>Đếm số chữ trong các dòng: thơ tự do (số chữ biến đổi linh hoạt), thơ 5 chữ, 7 chữ, 8 chữ, lục bát...</p>
+              </div>
+              <div class="lit-qa-item">
+                <b>2. Chỉ ra từ ngữ, hình ảnh trong khổ thơ:</b>
+                <p>Ghi lại đúng các từ ngữ, hình ảnh đặc sắc bộc lộ đối tượng hoặc tâm trạng nhân vật trữ tình.</p>
+              </div>
+              <div class="lit-qa-item">
+                <b>3. Nhân vật trữ tình / Chủ thể trữ tình:</b>
+                <p>Người bộc lộ cảm xúc trong thơ (chủ thể ẩn hoặc xuất hiện trực tiếp xưng "tôi", "anh", "chúng tôi"...).</p>
+              </div>
+              <div class="lit-qa-item">
+                <b>4. Cảm hứng chủ đạo & Mạch cảm xúc:</b>
+                <p>• Cảm hứng chủ đạo: tình mẫu tử, lòng yêu nước, nỗi xót xa trước thời gian...<br>• Mạch cảm xúc: từ trực tiếp quan sát → suy ngẫm → chiêm nghiệm triết lí.</p>
+              </div>
+              <div class="lit-qa-item">
+                <b>5. Ý nghĩa biểu tượng hình ảnh & Biện pháp tu từ:</b>
+                <p>Chỉ rõ biện pháp (ẩn dụ, nhân hóa, đối lập, điệp từ) + phân tích tác dụng gợi hình, gợi cảm.</p>
+              </div>
+              <div class="lit-qa-item">
+                <b>6. Viết đoạn văn vận dụng (~120 chữ):</b>
+                <p><b>Công thức 3 phần:</b><br>• Mở đoạn (1 câu): Nêu nét đặc sắc nghệ thuật.<br>• Thân đoạn (4-5 câu): Phân tích tác dụng, biểu hiện.<br>• Kết đoạn (1 câu): Khẳng định tài năng và tấm lòng tác giả.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- PHẦN 3: KỸ NĂNG LÀM VĂN -->
+      <details class="lit-accordion" id="lit-sec-3" open>
+        <summary class="lit-sec-summary">
+          <div class="lit-sec-title-wrap">
+            <span class="lit-sec-badge">Phần 3</span>
+            <span class="lit-sec-title">Kỹ năng Làm văn & 4 dạng dàn ý So sánh, Đánh giá (Mục A4)</span>
+          </div>
+          <span class="lit-sec-chev"></span>
+        </summary>
+        <div class="lit-sec-content">
+          <div class="lit-box" style="margin-bottom:14px;">
+            <div class="lit-box-title"><span class="lit-tag-label">DÀN Ý CHUẨN</span> Khung 3 phần của bài văn So sánh (~600 chữ)</div>
+            <p style="margin:4px 0 12px;font-size:13.5px;color:var(--tx);">Bất kể dạng so sánh nào (2 đoạn truyện, 2 nhân vật, 2 bài thơ), thân bài bắt buộc phải đủ 3 luận điểm cốt lõi: <b>Điểm giống</b>, <b>Điểm khác</b>, và <b>Lí giải nguyên nhân</b>.</p>
+            <div class="lit-outline-steps">
+              <div class="lit-step"><b>1. Mở bài (3 ý):</b> Dẫn dắt đề tài chung → Giới thiệu 2 tác giả, 2 tác phẩm → Nêu phương diện so sánh.</div>
+              <div class="lit-step"><b>2. Thân bài - Luận điểm 1 (Điểm tương đồng):</b> Nêu nét chung → Dẫn chứng & phân tích từng tác phẩm → Ý nghĩa điểm giống.</div>
+              <div class="lit-step"><b>3. Thân bài - Luận điểm 2 (Điểm khác biệt):</b> Nêu nét riêng → Phân tích tác phẩm 1 → Phân tích tác phẩm 2 → Chốt khác biệt nội dung & nghệ thuật.</div>
+              <div class="lit-step"><b>4. Thân bài - Luận điểm 3 (Lí giải nguyên nhân):</b> Vì sao giống (cùng thời đại, cùng tư tưởng, đề tài) → Vì sao khác (phong cách, góc nhìn, hoàn cảnh sáng tác) → Đánh giá chung.</div>
+              <div class="lit-step"><b>5. Kết bài (2 ý):</b> Khẳng định lại ý nghĩa việc so sánh → Nêu ấn tượng, bài học cá nhân khi tiếp nhận.</div>
+            </div>
+          </div>
+
+          <div class="lit-grid-two">
+            <div class="lit-card-sub">
+              <div class="lit-sub-hd"><span class="lit-tag-label">4 DẠNG ĐỀ</span> Dàn ý so sánh quy định trong đề cương</div>
+              <ul class="lit-list">
+                <li><b>Dạng a (2 đoạn trích cùng tác giả):</b> So sánh nội dung/tư tưởng của 2 trích đoạn truyện cùng một nhà văn (ví dụ: tư tưởng nhân đạo qua 2 đoạn văn).</li>
+                <li><b>Dạng b (2 nhân vật cùng tác giả):</b> So sánh tính cách, số phận, bi kịch hoặc sự lựa chọn của 2 nhân vật (ví dụ: Hộ trong <i>Đời thừa</i> và Điền trong <i>Giăng sáng</i>).</li>
+                <li><b>Dạng c (2 bài thơ khác tác giả):</b> So sánh một hình tượng hoặc cảm xúc qua 2 tác phẩm thơ khác tác giả (ví dụ: hình ảnh người mẹ trong <i>Mẹ và quả</i> và <i>Trong lời mẹ hát</i>).</li>
+                <li><b>Dạng d (2 đoạn trích khác tác giả):</b> So sánh cách nhìn hiện thực, thân phận con người qua 2 đoạn văn xuôi khác tác giả.</li>
+              </ul>
+            </div>
+
+            <div class="lit-card-sub">
+              <div class="lit-sub-hd"><span class="lit-tag-label">MẪU CÂU</span> Công thức chuyển ý so sánh (Có nút chép nhanh)</div>
+              <div>
+                ${templates.map((t, idx) => `<div class="lit-tpl-row">
+                  <div class="lit-tpl-text">
+                    <b>${esc(t.title)}</b>
+                    <i>"${esc(t.text)}"</i>
+                  </div>
+                  <button type="button" class="lit-tpl-copy-btn" data-act="lit_copy" data-fid="${idx}" data-txt="${escA(t.text)}">Chép</button>
+                </div>`).join("")}
+              </div>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- PHẦN 4: ĐỀ MINH HOẠ 01 -->
+      <details class="lit-accordion" id="lit-sec-4" open>
+        <summary class="lit-sec-summary">
+          <div class="lit-sec-title-wrap">
+            <span class="lit-sec-badge">Phần 4</span>
+            <span class="lit-sec-title">Giải Đề minh hoạ 01 · Bến quê & Đời thừa - Giăng sáng (Phần B + E1)</span>
+          </div>
+          <span class="lit-sec-chev"></span>
+        </summary>
+        <div class="lit-sec-content">
+          <!-- Ngữ liệu 1 -->
+          <div class="lit-sub-hd" style="margin-top:4px;"><span class="lit-tag-label">NGỮ LIỆU I</span> Trích đoạn truyện "Bến quê" (Nguyễn Minh Châu)</div>
+          <div class="passage-box"><p class="passage-p">${passage1}</p></div>
+
+          <!-- 5 câu hỏi đọc hiểu Đề 1 -->
+          <div style="display:flex;justify-content:space-between;align-items:center;margin:16px 0 10px;">
+            <div class="lit-sub-hd" style="margin:0;"><span class="lit-tag-label">CÂU HỎI</span> 5 Câu hỏi Đọc hiểu (5.0 điểm)</div>
+            <button type="button" class="btn alt lit-btn-sm" data-act="lit_toggle_ans" data-mid="1">Ẩn / Hiện tất cả đáp án</button>
+          </div>
+          <div class="lit-qa-deck" id="lit-qa-deck-1">
+            <!-- Câu 1 -->
+            <div class="lit-qa-card">
+              <div class="lit-qa-head">
+                <span class="lit-level-tag">Nhận biết · Câu 1</span>
+                <button type="button" class="lit-toggle-ans-btn" data-act="lit_toggle_one_ans" data-target="ans-1-1">Ẩn / Hiện đáp án</button>
+              </div>
+              <p class="q">Xác định ngôi kể và điểm nhìn trong đoạn trích.</p>
+              <div class="lit-ans-box" id="ans-1-1">
+                <div class="lit-ans-hd"><span>Đáp án gợi ý</span></div>
+                <div class="lit-ans-body">Ngôi kể thứ ba (người kể giấu mình, gọi tên nhân vật Nhĩ); Điểm nhìn bên trong (đặt vào nhân vật Nhĩ, đi sâu vào cảm xúc, suy ngẫm).</div>
+                <div class="lit-ans-rat"><b>Căn cứ đề cương:</b> Thuộc dạng "xác định ngôi kể, điểm nhìn". Dấu hiệu: không xưng "tôi", gọi nhân vật là "Nhĩ", "anh", nhưng miêu tả thế giới qua lăng kính nội tâm nhân vật.</div>
+              </div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="lit-qa-card">
+              <div class="lit-qa-head">
+                <span class="lit-level-tag">Nhận biết · Câu 2</span>
+                <button type="button" class="lit-toggle-ans-btn" data-act="lit_toggle_one_ans" data-target="ans-1-2">Ẩn / Hiện đáp án</button>
+              </div>
+              <p class="q">Chỉ ra những công việc Hộ buộc phải làm sau khi có gia đình (trong ngữ liệu liên hệ).</p>
+              <div class="lit-ans-box" id="ans-1-2">
+                <div class="lit-ans-hd"><span>Đáp án gợi ý</span></div>
+                <div class="lit-ans-body">
+                  • Phải cho in nhiều cuốn văn viết vội vàng.<br>
+                  • Phải viết những bài báo để người ta đọc rồi quên ngay.<br>
+                  • Gánh vác những lo toan bận rộn tẹp nhẹp đời thường.
+                </div>
+                <div class="lit-ans-rat"><b>Căn cứ đề cương:</b> Dạng "chỉ ra nội dung có trong văn bản", đối chiếu trực tiếp với các chi tiết được nêu trong tác phẩm.</div>
+              </div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="lit-qa-card">
+              <div class="lit-qa-head">
+                <span class="lit-level-tag">Thông hiểu · Câu 3</span>
+                <button type="button" class="lit-toggle-ans-btn" data-act="lit_toggle_one_ans" data-target="ans-1-3">Ẩn / Hiện đáp án</button>
+              </div>
+              <p class="q">Nêu tác dụng của biện pháp nói mỉa ở câu: "Rồi mỗi lần đọc lại… mắng mình như một thằng khốn nạn".</p>
+              <div class="warnq-clean"><span class="warnq-badge">CẦN LƯU Ý</span>Chưa có đáp án chính thức: đã tra cứu thêm lý thuyết tiếng Việt, nói mỉa là dùng lời lẽ trái với ý thật để chê, giễu. Ở đây Hộ tự giễu, tự chê gay gắt chính mình, nên viết theo hướng tự mỉa mai, tự giễu là hợp lí. Nên đối chiếu thêm với thầy cô.</div>
+              <div class="lit-ans-box" id="ans-1-3">
+                <div class="lit-ans-hd"><span>Đáp án gợi ý</span></div>
+                <div class="lit-ans-body">
+                  • Bộc lộ sự tự giễu, tự khinh bỉ gay gắt của Hộ khi buộc phải viết cẩu thả vì gánh nặng cơm áo.<br>
+                  • Khắc họa sâu sắc nỗi dằn vặt, đau đớn của người nghệ sĩ có lương tâm và ý thức nghề nghiệp cao độ.<br>
+                  • Tạo giọng điệu chua chát, thể hiện sự xót xa của nhà văn đối với bi kịch tinh thần của người trí thức.
+                </div>
+                <div class="lit-ans-rat"><b>Căn cứ đề cương:</b> Dạng "tác dụng của biện pháp nói mỉa". Phân tích trên 3 khía cạnh: tâm trạng nhân vật, giọng điệu nghệ thuật và tư tưởng tác giả.</div>
+              </div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="lit-qa-card">
+              <div class="lit-qa-head">
+                <span class="lit-level-tag">Thông hiểu · Câu 4</span>
+                <button type="button" class="lit-toggle-ans-btn" data-act="lit_toggle_one_ans" data-target="ans-1-4">Ẩn / Hiện đáp án</button>
+              </div>
+              <p class="q">Phân tích ý nghĩa chi tiết đôi bàn tay gầy guộc của người vợ (Liên) chăm sóc Nhĩ.</p>
+              <div class="lit-ans-box" id="ans-1-4">
+                <div class="lit-ans-hd"><span>Đáp án gợi ý</span></div>
+                <div class="lit-ans-body">
+                  • Là biểu tượng cảm động cho sự hi sinh, tần tảo thầm lặng và tình yêu thương vô điều kiện suốt đời của Liên dành cho chồng con.<br>
+                  • Là điểm tựa tinh thần vững chắc, ấm áp nhất của Nhĩ trong những ngày tháng bệnh tật cuối đời.<br>
+                  • Thức tỉnh Nhĩ nhận ra vẻ đẹp giản dị, thiêng liêng của hạnh phúc gia đình ngay bên cạnh mà bấy lâu nay anh bỏ quên.
+                </div>
+                <div class="lit-ans-rat"><b>Căn cứ đề cương:</b> Dạng "ý nghĩa của chi tiết nghệ thuật", gắn chi tiết với bước ngoặt thức tỉnh của nhân vật.</div>
+              </div>
+            </div>
+
+            <!-- Câu 5 -->
+            <div class="lit-qa-card">
+              <div class="lit-qa-head">
+                <span class="lit-level-tag">Vận dụng · Câu 5</span>
+                <button type="button" class="lit-toggle-ans-btn" data-act="lit_toggle_one_ans" data-target="ans-1-5">Ẩn / Hiện đáp án</button>
+              </div>
+              <p class="q">Viết đoạn văn khoảng 120 chữ nhận xét nghệ thuật miêu tả tâm lí nhân vật trong đoạn trích.</p>
+              <div class="lit-ans-box" id="ans-1-5">
+                <div class="lit-ans-hd"><span>Đoạn văn tham khảo (~120 chữ)</span></div>
+                <div class="lit-ans-body">
+                  Đoạn trích thể hiện tài năng bậc thầy của Nguyễn Minh Châu trong việc miêu tả thế giới nội tâm con người. Nhà văn khéo léo đặt nhân vật vào một tình huống nghịch lí ngặt nghèo để soi chiếu chiều sâu cảm xúc. Bằng nghệ thuật độc thoại nội tâm tinh tế cùng sự kết hợp nhuần nhuyễn giữa điểm nhìn bên trong và bên ngoài, từng biến chuyển tâm lí của Nhĩ – từ tiếc nuối, khao khát đến xót xa, chiêm nghiệm – đều hiện lên chân thực, xúc động. Ngòi bút của tác giả không chỉ phân tích sắc sảo tâm lí mà còn chan chứa tình yêu thương, làm nổi bật thông điệp sâu sắc về sự thức tỉnh trước những giá trị bình dị của cuộc đời.
+                </div>
+                <div class="lit-ans-rat"><b>Căn cứ đề cương:</b> Dạng câu hỏi vận dụng bài 1: nhận xét một nét nghệ thuật đặc sắc bằng đoạn văn 120 chữ có kết cấu Mở - Thân - Kết rõ ràng.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phần Làm văn Đề 1 -->
+          <div class="lit-sub-hd" style="margin-top:28px;"><span class="lit-tag-label">LÀM VĂN II</span> So sánh nhân vật Hộ (Đời thừa) và Điền (Giăng sáng) · 600 chữ</div>
+          <div class="lit-essay-controls">
+            <!-- Tab switcher: Bài văn tương tác vs Bảng đối chiếu -->
+            <div class="lit-essay-tabs">
+              <button type="button" class="lit-essay-tab-btn active" data-act="lit_essay_tab" data-mid="1" data-tab="read">Bài văn tương tác</button>
+              <button type="button" class="lit-essay-tab-btn" data-act="lit_essay_tab" data-mid="1" data-tab="matrix">Bảng đối chiếu đề cương (16 câu)</button>
+            </div>
+
+            <!-- Bộ lọc màu các nhóm lập luận -->
+            <div class="lit-essay-filter-bar" id="lit-filters-1">
+              <button type="button" class="lit-filter-chip active" data-act="lit_filter_essay" data-mid="1" data-grp="all">Tất cả</button>
+              <button type="button" class="lit-filter-chip" data-act="lit_filter_essay" data-mid="1" data-grp="intro">Mở bài</button>
+              <button type="button" class="lit-filter-chip" data-act="lit_filter_essay" data-mid="1" data-grp="same">Điểm giống</button>
+              <button type="button" class="lit-filter-chip" data-act="lit_filter_essay" data-mid="1" data-grp="diff">Điểm khác</button>
+              <button type="button" class="lit-filter-chip" data-act="lit_filter_essay" data-mid="1" data-grp="explain">Lí giải</button>
+              <button type="button" class="lit-filter-chip" data-act="lit_filter_essay" data-mid="1" data-grp="outro">Kết bài</button>
+            </div>
+          </div>
+
+          <!-- View 1: Bài văn tương tác -->
+          <div id="lit-essay-view-read-1">
+            <div class="essay-body" id="lit-essay-1">
+              ${renderEssayBody(LIT_ESSAY_1_DATA, "1")}
+            </div>
+
+            <!-- Khung chú thích tức thì có nút chuyển câu trước/sau -->
+            <div class="inspector-panel-inline" id="lit-insp-1">
+              <div class="inspector-seg-track"><div class="inspector-seg-bar" id="lit-insp-bar-1" style="width: %;"></div></div>
+              <div class="inspector-head">
+                <span class="inspector-tag"><i class="legend-dot intro"></i><b>${esc(LIT_ESSAY_1_DATA.segments[0].label)}</b></span>
+                <div class="inspector-nav-btns">
+                  <span class="mut" style="font-size:12px;margin-right:6px;" id="lit-insp-cnt-1">Câu 1/${LIT_ESSAY_1_DATA.segments.length}</span>
+                  <button type="button" class="inspector-nav-btn" data-act="lit_seg_step" data-mid="1" data-step="-1" id="lit-btn-prev-1" disabled>Trước</button>
+                  <button type="button" class="inspector-nav-btn" data-act="lit_seg_step" data-mid="1" data-step="1" id="lit-btn-next-1">Sau</button>
+                </div>
+              </div>
+              <div class="inspector-note"><b>Phân tích cấu trúc:</b> ${esc(LIT_ESSAY_1_DATA.segments[0].note)}</div>
+              <div class="inspector-source"><b>Căn cứ đề cương:</b> ${esc(LIT_ESSAY_1_DATA.segments[0].source)}</div>
+            </div>
+          </div>
+
+          <!-- View 2: Bảng đối chiếu matrix (mặc định ẩn) -->
+          <div id="lit-essay-view-matrix-1" style="display:none;">
+            <div class="lit-table-responsive">
+              <table class="lit-table">
+                <thead><tr><th>#</th><th>Bắt đầu bằng</th><th>Nhãn cấu trúc</th><th>Phân tích chi tiết</th><th>Căn cứ đề cương</th></tr></thead>
+                <tbody>${renderTableRows(LIT_ESSAY_1_DATA.segments)}</tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </details>
+
+      <!-- PHẦN 5: ĐỀ MINH HOẠ 02 -->
+      <details class="lit-accordion" id="lit-sec-5" open>
+        <summary class="lit-sec-summary">
+          <div class="lit-sec-title-wrap">
+            <span class="lit-sec-badge">Phần 5</span>
+            <span class="lit-sec-title">Giải Đề minh hoạ 02 · Mẹ và quả & Trong lời mẹ hát (Phần C + E2)</span>
+          </div>
+          <span class="lit-sec-chev"></span>
+        </summary>
+        <div class="lit-sec-content">
+          <!-- Ngữ liệu 2 -->
+          <div class="lit-sub-hd" style="margin-top:4px;"><span class="lit-tag-label">NGỮ LIỆU II</span> Bài thơ "Mẹ và quả" (Nguyễn Khoa Điềm)</div>
+          <div class="passage-box" style="white-space:pre-line;"><p class="passage-p">${passage2}</p></div>
+
+          <!-- 5 câu hỏi đọc hiểu Đề 2 -->
+          <div style="display:flex;justify-content:space-between;align-items:center;margin:16px 0 10px;">
+            <div class="lit-sub-hd" style="margin:0;"><span class="lit-tag-label">CÂU HỎI</span> 5 Câu hỏi Đọc hiểu (5.0 điểm)</div>
+            <button type="button" class="btn alt lit-btn-sm" data-act="lit_toggle_ans" data-mid="2">Ẩn / Hiện tất cả đáp án</button>
+          </div>
+          <div class="lit-qa-deck" id="lit-qa-deck-2">
+            <!-- Câu 1 -->
+            <div class="lit-qa-card">
+              <div class="lit-qa-head">
+                <span class="lit-level-tag">Nhận biết · Câu 1</span>
+                <button type="button" class="lit-toggle-ans-btn" data-act="lit_toggle_one_ans" data-target="ans-2-1">Ẩn / Hiện đáp án</button>
+              </div>
+              <p class="q">Xác định thể thơ của văn bản Mẹ và quả.</p>
+              <div class="warnq-clean"><span class="warnq-badge">CẦN LƯU Ý</span>Chưa có đáp án chính thức: đã tra cứu thêm (Loigiaihay), bài này được xếp vào nhóm thơ tự do vì số tiếng không đều (dòng 7, dòng 8, dòng 9 tiếng). Nên đối chiếu thêm với hướng dẫn của thầy cô.</div>
+              <div class="lit-ans-box" id="ans-2-1">
+                <div class="lit-ans-hd"><span>Đáp án gợi ý</span></div>
+                <div class="lit-ans-body">Thể thơ tự do (số tiếng trong mỗi dòng thơ không cố định: dòng 8 tiếng, dòng 7 tiếng, dòng 9 tiếng; ngắt nhịp và gieo vần linh hoạt).</div>
+                <div class="lit-ans-rat"><b>Căn cứ đề cương:</b> Dạng "xác định thể thơ và dấu hiệu nhận biết" trong đề cương bài 2. Dấu hiệu: số chữ không đều giữa các dòng.</div>
+              </div>
+            </div>
+
+            <!-- Câu 2 -->
+            <div class="lit-qa-card">
+              <div class="lit-qa-head">
+                <span class="lit-level-tag">Nhận biết · Câu 2</span>
+                <button type="button" class="lit-toggle-ans-btn" data-act="lit_toggle_one_ans" data-target="ans-2-2">Ẩn / Hiện đáp án</button>
+              </div>
+              <p class="q">Chỉ ra những từ ngữ, hình ảnh thể hiện sự lao động vất vả của người mẹ trong khổ thơ thứ hai.</p>
+              <div class="lit-ans-box" id="ans-2-2">
+                <div class="lit-ans-hd"><span>Đáp án gợi ý</span></div>
+                <div class="lit-ans-body">Các từ ngữ, hình ảnh: "tay mẹ lớn lên", "lớn xuống", "dáng giọt mồ hôi mặn", "rỏ xuống lòng thầm lặng mẹ tôi".</div>
+                <div class="lit-ans-rat"><b>Căn cứ đề cương:</b> Dạng "chỉ ra từ ngữ, hình ảnh trong khổ thơ", trích dẫn trực tiếp từ khổ 2 của bài thơ.</div>
+              </div>
+            </div>
+
+            <!-- Câu 3 -->
+            <div class="lit-qa-card">
+              <div class="lit-qa-head">
+                <span class="lit-level-tag">Thông hiểu · Câu 3</span>
+                <button type="button" class="lit-toggle-ans-btn" data-act="lit_toggle_one_ans" data-target="ans-2-3">Ẩn / Hiện đáp án</button>
+              </div>
+              <p class="q">Phân tích ý nghĩa biểu tượng của hình ảnh "quả" trong bài thơ.</p>
+              <div class="lit-ans-box" id="ans-2-3">
+                <div class="lit-ans-hd"><span>Đáp án gợi ý</span></div>
+                <div class="lit-ans-body">
+                  • Nghĩa thực: Những quả bầu, quả bí cụ thể ngoài vườn – thành quả từ đôi bàn tay lao động, chắt chiu của mẹ theo mùa vụ.<br>
+                  • Nghĩa biểu tượng: Ẩn dụ cho những đứa con được mẹ sinh thành, nuôi nấng khôn lớn bằng tất cả tình yêu thương và sự hi sinh thầm lặng.<br>
+                  • Thể hiện lòng biết ơn sâu sắc và nỗi trăn trở của con: mong sao mình trưởng thành, chín chắn để không phụ công ơn mẹ.
+                </div>
+                <div class="lit-ans-rat"><b>Căn cứ đề cương:</b> Dạng "ý nghĩa biểu tượng của hình ảnh thơ" trong đề cương bài 2.</div>
+              </div>
+            </div>
+
+            <!-- Câu 4 -->
+            <div class="lit-qa-card">
+              <div class="lit-qa-head">
+                <span class="lit-level-tag">Thông hiểu · Câu 4</span>
+                <button type="button" class="lit-toggle-ans-btn" data-act="lit_toggle_one_ans" data-target="ans-2-4">Ẩn / Hiện đáp án</button>
+              </div>
+              <p class="q">Xác định cảm hứng chủ đạo và mạch cảm xúc của bài thơ Mẹ và quả.</p>
+              <div class="lit-ans-box" id="ans-2-4">
+                <div class="lit-ans-hd"><span>Đáp án gợi ý</span></div>
+                <div class="lit-ans-body">
+                  • <b>Cảm hứng chủ đạo:</b> Lòng biết ơn vô hạn, nỗi xót xa và niềm yêu kính thiêng liêng đối với người mẹ tần tảo; nỗi âu lo trước quy luật thời gian mẹ ngày một già yếu.<br>
+                  • <b>Mạch cảm xúc:</b> Đi từ hình ảnh cụ thể (những mùa quả mẹ vun trồng ngoài vườn) → liên tưởng đến sự hi sinh, nuôi nấng con của mẹ → suy ngẫm, thảng thốt lo sợ khi thấy mẹ đã già mà con vẫn còn "non xanh" chưa đền đáp được.
+                </div>
+                <div class="lit-ans-rat"><b>Căn cứ đề cương:</b> Dạng "xác định cảm hứng chủ đạo, mạch cảm xúc" trong đề cương.</div>
+              </div>
+            </div>
+
+            <!-- Câu 5 -->
+            <div class="lit-qa-card">
+              <div class="lit-qa-head">
+                <span class="lit-level-tag">Vận dụng · Câu 5</span>
+                <button type="button" class="lit-toggle-ans-btn" data-act="lit_toggle_one_ans" data-target="ans-2-5">Ẩn / Hiện đáp án</button>
+              </div>
+              <p class="q">Viết đoạn văn khoảng 120 chữ trình bày suy nghĩ về nỗi niềm của tác giả qua hai câu thơ cuối: "Tôi hoảng sợ, ngày bàn tay mẹ mỏi / Mình vẫn còn một thứ quả non xanh?".</p>
+              <div class="lit-ans-box" id="ans-2-5">
+                <div class="lit-ans-hd"><span>Đoạn văn tham khảo (~120 chữ)</span></div>
+                <div class="lit-ans-body">
+                  Hai câu thơ cuối bài là nỗi niềm thảng thốt đầy ám ảnh và xúc động của người con trước bước đi vô tình của thời gian. Hình ảnh "bàn tay mẹ mỏi" gợi nhắc tuổi xế chiều hao gầy, sức cạn của mẹ, đối lập với nỗi băn khoăn "mình vẫn còn một thứ quả non xanh". Từ "hoảng sợ" không chỉ là nỗi đau khi nghĩ đến ngày mẹ rời xa cõi thế, mà còn là sự tự vấn lương tâm sâu sắc: liệu con đã kịp trưởng thành, kịp làm chỗ dựa để đền đáp công ơn biển trời của mẹ? Đó là vẻ đẹp của một nhân cách giàu lòng tự trọng và hiếu thảo, thức tỉnh mỗi người chúng ta phải biết trân quý từng phút giây bên mẹ và nỗ lực sống xứng đáng với đức hi sinh của đấng sinh thành.
+                </div>
+                <div class="lit-ans-rat"><b>Căn cứ đề cương:</b> Dạng câu hỏi vận dụng bài 2: viết đoạn văn 120 chữ bày tỏ suy nghĩ về một câu thơ/đoạn thơ giàu sức gợi.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Phần Làm văn Đề 2 -->
+          <div class="lit-sub-hd" style="margin-top:28px;"><span class="lit-tag-label">LÀM VĂN II</span> So sánh hình ảnh người mẹ trong "Mẹ và quả" và "Trong lời mẹ hát" · 600 chữ</div>
+          <div class="lit-essay-controls">
+            <!-- Tab switcher -->
+            <div class="lit-essay-tabs">
+              <button type="button" class="lit-essay-tab-btn active" data-act="lit_essay_tab" data-mid="2" data-tab="read">Bài văn tương tác</button>
+              <button type="button" class="lit-essay-tab-btn" data-act="lit_essay_tab" data-mid="2" data-tab="matrix">Bảng đối chiếu đề cương (18 câu)</button>
+            </div>
+
+            <!-- Bộ lọc màu các nhóm lập luận -->
+            <div class="lit-essay-filter-bar" id="lit-filters-2">
+              <button type="button" class="lit-filter-chip active" data-act="lit_filter_essay" data-mid="2" data-grp="all">Tất cả</button>
+              <button type="button" class="lit-filter-chip" data-act="lit_filter_essay" data-mid="2" data-grp="intro">Mở bài</button>
+              <button type="button" class="lit-filter-chip" data-act="lit_filter_essay" data-mid="2" data-grp="same">Điểm giống</button>
+              <button type="button" class="lit-filter-chip" data-act="lit_filter_essay" data-mid="2" data-grp="diff">Điểm khác</button>
+              <button type="button" class="lit-filter-chip" data-act="lit_filter_essay" data-mid="2" data-grp="explain">Lí giải</button>
+              <button type="button" class="lit-filter-chip" data-act="lit_filter_essay" data-mid="2" data-grp="eval">Đánh giá</button>
+              <button type="button" class="lit-filter-chip" data-act="lit_filter_essay" data-mid="2" data-grp="outro">Kết bài</button>
+            </div>
+          </div>
+
+          <!-- View 1: Bài văn tương tác -->
+          <div id="lit-essay-view-read-2">
+            <div class="essay-body" id="lit-essay-2">
+              ${renderEssayBody(LIT_ESSAY_2_DATA, "2")}
+            </div>
+
+            <!-- Khung chú thích tức thì có nút chuyển câu trước/sau -->
+            <div class="inspector-panel-inline" id="lit-insp-2">
+              <div class="inspector-seg-track"><div class="inspector-seg-bar" id="lit-insp-bar-2" style="width: %;"></div></div>
+              <div class="inspector-head">
+                <span class="inspector-tag"><i class="legend-dot intro"></i><b>${esc(LIT_ESSAY_2_DATA.segments[0].label)}</b></span>
+                <div class="inspector-nav-btns">
+                  <span class="mut" style="font-size:12px;margin-right:6px;" id="lit-insp-cnt-2">Câu 1/${LIT_ESSAY_2_DATA.segments.length}</span>
+                  <button type="button" class="inspector-nav-btn" data-act="lit_seg_step" data-mid="2" data-step="-1" id="lit-btn-prev-2" disabled>Trước</button>
+                  <button type="button" class="inspector-nav-btn" data-act="lit_seg_step" data-mid="2" data-step="1" id="lit-btn-next-2">Sau</button>
+                </div>
+              </div>
+              <div class="inspector-note"><b>Phân tích cấu trúc:</b> ${esc(LIT_ESSAY_2_DATA.segments[0].note)}</div>
+              <div class="inspector-source"><b>Căn cứ đề cương:</b> ${esc(LIT_ESSAY_2_DATA.segments[0].source)}</div>
+            </div>
+          </div>
+
+          <!-- View 2: Bảng đối chiếu matrix (mặc định ẩn) -->
+          <div id="lit-essay-view-matrix-2" style="display:none;">
+            <div class="lit-table-responsive">
+              <table class="lit-table">
+                <thead><tr><th>#</th><th>Bắt đầu bằng</th><th>Nhãn cấu trúc</th><th>Phân tích chi tiết</th><th>Căn cứ đề cương</th></tr></thead>
+                <tbody>${renderTableRows(LIT_ESSAY_2_DATA.segments)}</tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </details>
+    <button type="button" id="lit-back-top" data-act="lit_scroll_top">Lên đầu trang</button>
+    </div>`;
+}
+
+
 const VIEWS = {
   home: () => `<div class="top"><button class="icon-btn" data-act="menu" aria-label="Menu">${IC.menu}</button></div>${titleHTML()}${resumeHTML()}<div class="sec">Môn học</div><div class="grid two stagger">` +
     homeSubjects().map((s, i) => { const n = s.chapters ? s.chapters.filter(c => !c.formula).length : 0; const qCount = s.chapters ? s.chapters.reduce((a, c) => a + (c.questions ? c.questions.length : 0), 0) : 0; return `<button class="tile ${n ? "" : "off"}" style="--i:${i}" ${n ? `data-act="subject" data-id="${s.id}"` : "disabled"}><span class="ico">${subjIcon(s)}</span><span class="tt"><b>${esc(s.name)}</b><span class="mut">${n ? `${n} bài học · ${qCount} câu` : "Sắp ra mắt"}</span></span>${n ? `<span class="go">${IC.chev}</span>` : '<span class="chip lock">Sắp có</span>'}</button>`; }).join("") + formTile() + `</div>` + statsHTML() + `<div class="gears"><button class="gear" data-act="themes">${IC.theme}<span>Màu giao diện</span><span class="go">${IC.chev}</span></button><button class="gear" data-act="custom">${IC.tune}<span>Tùy chỉnh</span><span class="go">${IC.chev}</span></button>${flaggedList().length ? `<button class="gear" data-act="flagged">${IC.flag}<span>Câu chưa chắc (${flaggedList().length})</span><span class="go">${IC.chev}</span></button>` : ""}</div>`,
@@ -9432,17 +11278,22 @@ const VIEWS = {
   subject: () => { const s = getSubject(S.subjectId); return topbar(`${esc(s.name)}`, "Chọn bài học") + (MOCK[s.id] ? mockTile(s) : "") + `<div class="grid two stagger">` +
     sortedChapters(s).map(({ c }, i) => { return `<button class="tile chap" style="--i:${i}" data-act="chapter" data-id="${c.id}"><span class="eyebrow">${esc(c.title)}</span><b>${esc(c.subtitle)}</b>${c.description ? `<span class="mut">${esc(c.description)}</span>` : ""}<span class="chips">${c.questions.length ? `<span class="chip">${c.questions.length} câu</span>` : ""}${c.cards && c.cards.length ? `<span class="chip">${c.cards.length} thẻ</span>` : ""}${chapterTags(c).map(([t]) => `<span class="chip">${esc(t)}</span>`).join("")}</span></button>`; }).join("") + `</div>`; },
 
-  intro: () => { const s = getSubject(S.subjectId), c = chap(), tags = chapterTags(c);
+  intro: () => {
+    const s = getSubject(S.subjectId), c = chap();
+    if (s.id === "literature") {
+      return renderLiteratureStudyView(s, c);
+    }
+    const tags = chapterTags(c);
     const hasShort = c.questions.some(q => q.type === "short");
     const sum = c.summary && c.summary.length ? `<details class="sum"><summary>Tóm tắt ý cần nhớ<span class="chev">${IC.chev}</span></summary><div class="sumbody">${c.summary.map((g, i) => `<div class="sh"><span class="sn">${i + 1}</span>${esc(g.title)}</div>${g.img ? `<img class="qimg" src="${g.img}" alt="Minh họa">` : ""}<ul>${g.points.map(p => `<li>${pt(p)}</li>`).join("")}</ul>`).join("")}</div></details>` : "";
     return topbar(esc(s.name)) + `<div class="card"><div class="eyebrow">${esc(c.title)}</div><div class="big">${esc(c.subtitle)}</div>${c.description ? `<p class="mut">${esc(c.description)}</p>` : ""}${c.questions.length ? `<p class="mut">${c.questions.length} câu hỏi</p>` : ""}` +
     (tags.length > 1 ? `<div class="pick" id="pick">${[["all", "Tất cả", c.questions.length], ...(hotN(c) ? [["hot", "Trọng tâm", hotN(c)]] : []), ...tags.map(([t, n]) => [t, t, n])].map(([t, l, n]) => `<button class="${S.tag === t ? "on" : ""}" data-act="tag" data-tag="${esc(t)}">${esc(l)} · ${n}</button>`).join("")}</div>` : "") +
-    (c.questions.length ? `<div class="pick opts"><button id="ordbtn" class="${keepOrder ? "on" : ""}" data-act="order">Giữ thứ tự câu</button><button id="rvbtn" class="${revealWrong ? "on" : ""}" data-act="reveal">Hiện đáp án khi chọn sai</button><button data-act="answers">Xem đáp án${IC.chev}</button>${hasShort ? `<button id="kpbtn" class="${shortChoice ? "" : "on"}" data-act="kpmode">Nhập số (trả lời ngắn)</button>` : ""}</div>` : "") + `</div>` + renderSim(c) + cardsIntro(c, c.questions.length > 0) + sum +
+    (c.questions.length ? `<div class="pick opts"><button id="ordbtn" class="${keepOrder ? "on" : ""}" data-act="order">Giữ thứ tự câu</button><button id="rvbtn" class="${revealWrong ? "on" : ""}" data-act="reveal">Hiện đáp án khi chọn sai</button><button data-act="answers">Xem đáp án${IC.chev}</button>${hasShort ? `<button id="kpbtn" class="${shortChoice ? "" : "on"}" data-act="kpmode">Nhập số (trả lời ngắn)</button>` : ""}</div>` : "") + `</div>` + renderSim(c) + cardsIntro(c, c.questions.length > 0) + (c.essay ? `<div class="card essay-intro-card" data-act="openessay" style="cursor:pointer;"><div class="eyebrow" style="color:var(--ac2);">Bài văn mẫu · ${esc(c.essay.wordCount || "Khoảng 600 chữ")}</div><div class="big" style="font-size:17px;line-height:1.35;margin:4px 0 6px;">${esc(c.essay.title)}</div><p class="mut" style="font-size:13px;line-height:1.5;margin:0 0 12px;">Chạm từng câu để xem nhãn, phân tích &amp; nguồn đề cương</p><button class="btn alt" style="width:100%;margin-top:0;justify-content:center;gap:8px;" data-act="openessay"><span>Đọc bài văn mẫu</span>${IC.chev}</button></div>` : "") + sum +
     (c.questions.length ? `<div class="dock"><button class="btn" id="start" data-act="start">Bắt đầu kiểm tra (${countFor(c, S.tag)} câu)</button></div>` : ""); },
 
   quiz: () => { const r = cur(), n = S.list.length;
     return `<div class="qhead"><button class="icon-btn" data-act="back" aria-label="Thoát">${IC.back}</button><div class="bar"><i id="bar" style="transform:scaleX(${S.idx / n})"></i></div><span class="count">${S.idx + 1}/${n}</span><button class="icon-btn snd" data-act="sound" aria-label="Bật/tắt âm thanh">${sfx.on ? IC.volOn : IC.volOff}</button></div>` +
-    `<div class="card"><div class="tag">${S.retry ? "LÀM LẠI · " : ""}${esc(chap().title)} · ${r.src.hot ? "Trọng tâm · " : ""}${esc(r.src.tag)}</div><p class="q">${warnIcon(r.src)}${esc(r.src.question)}</p>${qimg(r.src)}<div id="opts">${TYPES[r.type].render(r)}</div><div id="res"></div></div>` +
+    `<div class="card"><div class="tag">${S.retry ? "LÀM LẠI · " : ""}${esc(chap().title)} · ${r.src.hot ? "Trọng tâm · " : ""}${esc(r.src.tag)}</div><p class="q">${warnIcon(r.src)}${esc(r.src.question)}</p>${warnHTML(r.src)}${qimg(r.src)}<div id="opts">${TYPES[r.type].render(r)}</div><div id="res"></div></div>` +
     `<div class="dock${r.type === "true_false" ? " two" : ""}"${instantFor(r) ? " hidden" : ""}>${r.type === "true_false" ? '<button class="btn alt" id="skip" data-act="skip">Bỏ qua</button>' : ""}<button class="btn" id="go" data-act="next" disabled>Xác nhận</button></div>`; },
 
   result: () => { const n = S.list.length, w = n - S.correct, sc = fmtScore(S.correct / n * 10), c = chap(), sb = getSubject(S.subjectId);
@@ -9469,14 +11320,63 @@ const VIEWS = {
 
   answers: () => { const c = chap(), cnt = {};
     const rows = c.questions.map(q => { cnt[q.tag] = (cnt[q.tag] || 0) + 1; return { q, n: cnt[q.tag] }; }).filter(x => S.tag === "all" || (S.tag === "hot" ? x.q.hot : x.q.tag === S.tag));
-    const rv = q => q.type === "single" ? { options: q.options, answer: q.answer, picked: null } : q.type === "short" || q.type === "short_mc" ? { answers: q.answers } : { statements: q.statements.map(t => ({ text: t.text, answer: t.answer, picked: t.answer })) };
-    return topbar(`${esc(c.title)} · Đáp án`, `${rows.length} câu · đúng thứ tự đề`) + rows.map(({ q, n }) => `<div class="card"><div class="tag">${q.hot ? "Trọng tâm · " : ""}${esc(q.tag)} · Câu ${n}</div><p class="q">${warnIcon(q)}${esc(q.question)}</p>${qimg(q)}${TYPES[q.type].review(rv(q))}</div>`).join(""); },
+    const rv = q => q.type === "single" ? { options: q.options, answer: q.answer, picked: null } : q.type === "short" || q.type === "short_mc" ? { answers: q.answers } : q.type === "qa" ? { answer: q.answer, rationale: q.rationale } : { statements: q.statements.map(t => ({ text: t.text, answer: t.answer, picked: t.answer })) };
+    return topbar(`${esc(c.title)} · Đáp án`, `${rows.length} câu · đúng thứ tự đề`) + rows.map(({ q, n }) => `<div class="card"><div class="tag">${q.hot ? "Trọng tâm · " : ""}${esc(q.tag)} · Câu ${n}</div><p class="q">${warnIcon(q)}${esc(q.question)}</p>${warnHTML(q)}${qimg(q)}${TYPES[q.type].review(rv(q))}</div>`).join(""); },
 
   flagged: () => { const list = flaggedList(); let last = "";
-    const rv = q => q.type === "single" ? { options: q.options, answer: q.answer, picked: null } : q.type === "short" || q.type === "short_mc" ? { answers: q.answers } : { statements: q.statements.map(t => ({ text: t.text, answer: t.answer, picked: t.answer })) };
-    return topbar("Câu chưa chắc", `${list.length} câu · nên hỏi lại thầy/cô`) + list.map(({ sub, ch, q, n }) => { const key = sub.id + ch.id, head = key !== last ? `<div class="sec">${esc(sub.name)} · ${esc(ch.title)}</div>` : ""; last = key; return head + `<div class="card"><div class="tag">${esc(q.tag)} · Câu ${n}</div><p class="q">${warnIcon(q)}${esc(q.question)}</p>${qimg(q)}${TYPES[q.type].review(rv(q))}</div>`; }).join(""); },
+    const rv = q => q.type === "single" ? { options: q.options, answer: q.answer, picked: null } : q.type === "short" || q.type === "short_mc" ? { answers: q.answers } : q.type === "qa" ? { answer: q.answer, rationale: q.rationale } : { statements: q.statements.map(t => ({ text: t.text, answer: t.answer, picked: t.answer })) };
+    return topbar("Câu chưa chắc", `${list.length} câu · nên hỏi lại thầy/cô`) + list.map(({ sub, ch, q, n }) => { const key = sub.id + ch.id, head = key !== last ? `<div class="sec">${esc(sub.name)} · ${esc(ch.title)}</div>` : ""; last = key; return head + `<div class="card"><div class="tag">${esc(q.tag)} · Câu ${n}</div><p class="q">${warnIcon(q)}${esc(q.question)}</p>${warnHTML(q)}${qimg(q)}${TYPES[q.type].review(rv(q))}</div>`; }).join(""); },
 
-  review: () => topbar("Xem lại", `${S.wrong.length} câu sai`) + S.wrong.map(r => `<div class="card"><div class="tag">${esc(r.src.tag)}</div><p class="q">${warnIcon(r.src)}${esc(r.src.question)}</p>${qimg(r.src)}${TYPES[r.type].review(r)}</div>`).join("")
+  review: () => topbar("Xem lại", `${S.wrong.length} câu sai`) + S.wrong.map(r => `<div class="card"><div class="tag">${esc(r.src.tag)}</div><p class="q">${warnIcon(r.src)}${esc(r.src.question)}</p>${warnHTML(r.src)}${qimg(r.src)}${TYPES[r.type].review(r)}</div>`).join(""),
+
+  essay: () => {
+    const c = chap();
+    if (!c || !c.essay) return topbar("Bài văn mẫu") + `<div class="card">Chưa có bài văn mẫu.</div>`;
+    const es = c.essay;
+    const segs = es.segments || [];
+    const curSeg = segs[S.essayIdx || 0];
+    const paras = [];
+    segs.forEach((s, idx) => {
+      const pIdx = s.p !== undefined ? s.p : 0;
+      if (!paras[pIdx]) paras[pIdx] = [];
+      paras[pIdx].push({ ...s, idx });
+    });
+    const legend = [
+      { g: "intro", l: "Mở bài" },
+      { g: "same", l: "Điểm giống / Dẫn chứng" },
+      { g: "diff", l: "Điểm khác" },
+      { g: "explain", l: "Lí giải" },
+      { g: "eval", l: "Đánh giá / Bình luận" },
+      { g: "outro", l: "Kết bài" }
+    ];
+    const bodyHtml = paras.map(pSegs => `<p class="essay-p">${pSegs.map(s => `<span class="essay-seg ${s.group || ""}${s.idx === (S.essayIdx || 0) ? " active" : ""}" data-act="selseg" data-idx="${s.idx}">${esc(s.text)}</span> `).join("")}</p>`).join("");
+    const inspectorHtml = curSeg ? `
+      <div class="inspector-panel" id="inspector">
+        <div class="inspector-head">
+          <span class="inspector-tag"><i class="legend-dot ${curSeg.group || ""}"></i><b>${esc(curSeg.label)}</b></span>
+          <span class="mut" style="font-size:12px;">Đoạn ${(S.essayIdx || 0) + 1}/${segs.length}</span>
+        </div>
+        <div class="inspector-note"><b>Phân tích:</b> ${esc(curSeg.note)}</div>
+        <div class="inspector-source"><b>Lấy từ đề cương:</b> ${esc(curSeg.source)}</div>
+        <div class="inspector-nav">
+          <button class="inspector-btn" data-act="prevseg" ${(S.essayIdx || 0) <= 0 ? "disabled" : ""}>‹ Câu trước</button>
+          <span class="mut" style="font-size:11px;">Chạm vào câu bất kỳ để xem</span>
+          <button class="inspector-btn" data-act="nextseg" ${(S.essayIdx || 0) >= segs.length - 1 ? "disabled" : ""}>Câu sau ›</button>
+        </div>
+      </div>
+    ` : "";
+    return topbar(esc(c.title) + " · Bài văn", esc(es.wordCount || "Khoảng 600 chữ")) +
+      `<div class="card essay-meta">
+        <div class="eyebrow">${esc(es.type || "Nghị luận văn học")}</div>
+        <div class="big">${esc(es.title)}</div>
+        <div class="essay-legend">
+          ${legend.map(x => `<span class="legend-chip"><i class="legend-dot ${x.g}"></i>${x.l}</span>`).join("")}
+        </div>
+        <p class="mut" style="font-size:13px;margin:0;">Chạm vào từng câu có gạch chân màu để xem chi tiết phân tích và xuất xứ đề cương.</p>
+      </div>
+      <div class="card essay-body">${bodyHtml}</div>
+      ${inspectorHtml}`;
+  }
 };
 
 /* hiệu ứng sau khi render */
@@ -9640,10 +11540,10 @@ document.addEventListener("keydown", e => {
    Dữ liệu lấy từ CARD_DATA (các chương có formula: true). Thêm công thức: xem hướng dẫn ở CARD_DATA.
    ============================================================ */
 IC.formula = _svg('<path d="M16 4h-1.5A3.5 3.5 0 0 0 11 7.5v9A3.5 3.5 0 0 1 7.5 20H6"/><path d="M7 11.5h8"/>');
-const FORM_TABS = [["math", "Toán"], ["physics", "Lý"], ["chemistry", "Hóa"], ["geography", "Địa"]];
+const FORM_TABS = [["math", "Toán"], ["physics", "Lý"], ["chemistry", "Hóa"], ["geography", "Địa"], ["literature", "Văn"]];
 const formChaps = id => { const s = getSubject(id); return s ? s.chapters.filter(c => c.formula && c.cards && c.cards.length) : []; };
 const formTotal = () => FORM_TABS.reduce((a, [id]) => a + formChaps(id).reduce((x, c) => x + c.cards.length, 0), 0);
-const formTile = () => `<button class="tile" data-act="formulas"><span class="ico">${IC.formula}</span><span class="tt"><b>Công thức</b><span class="mut">Toán · Lý · Hóa · Địa · ${formTotal()} thẻ</span></span><span class="go">${IC.chev}</span></button>`;
+const formTile = () => `<button class="tile" data-act="formulas"><span class="ico">${IC.formula}</span><span class="tt"><b>Kiến thức cần nhớ</b><span class="mut">Toán · Lý · Hóa · Địa · Văn · ${formTotal()} mục</span></span><span class="go">${IC.chev}</span></button>`;
 const cleanStr = s => (s || "").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/đ/g, "d");
 
 function renderFormulaList(id, qRaw) {
@@ -9669,16 +11569,16 @@ function renderFormulaList(id, qRaw) {
         `<div class="big">${esc(c.subtitle)}</div>` +
         (c.description ? `<p class="mut">${esc(c.description)}</p>` : "") +
       `</div>` +
-      `<button class="btn fbtn" data-act="fcstudy" data-s="${id}" data-c="${c.id}">${IC.cards}<span>Học thẻ</span></button>` +
+      (id !== "literature" ? `<button class="btn fbtn" data-act="fcstudy" data-s="${id}" data-c="${c.id}">${IC.cards}<span>Học thẻ</span></button>` : "") +
     `</div>` +
-    groups.map((g, gi) => `<div class="sec fsec"><span>${esc(g.g)}</span><span class="fbadge">${g.c.length} thẻ</span></div>` +
+    groups.map((g, gi) => `<div class="sec fsec"><span>${esc(g.g)}</span><span class="fbadge">${g.c.length} mục</span></div>` +
       `<div class="card fgrp">${g.c.map((x, xi) => {
         const fid = `${c.id}-${gi}-${xi}`;
         const copyTxt = escA(x.f + "\n" + x.b);
         return `<div class="fitem">` +
           `<div class="ff">` +
             `<span>${frich(x.f)}</span>` +
-            `<button class="fcopy-btn" data-act="fcopy" data-fid="${fid}" data-txt="${copyTxt}" title="Sao chép công thức">${IC.copy}<span>Chép</span></button>` +
+            `<button class="fcopy-btn" data-act="fcopy" data-fid="${fid}" data-txt="${copyTxt}" title="Sao chép kiến thức">${IC.copy}<span>Chép</span></button>` +
           `</div>` +
           `<div class="fb">${frich(x.b)}</div>` +
         `</div>`;
@@ -9686,7 +11586,7 @@ function renderFormulaList(id, qRaw) {
   }).filter(Boolean);
 
   if (!rendered.length) {
-    return `<div class="card fempty"><p class="mut">${q ? `Không tìm thấy công thức nào phù hợp với "${esc(qRaw)}".` : "Chưa có công thức nào."}</p>${q ? `<button class="btn alt" style="margin:12px auto 0;width:auto;min-height:36px;padding:6px 16px;font-size:13.5px" data-act="fsearchclear">Xóa tìm kiếm</button>` : ""}</div>`;
+    return `<div class="card fempty"><p class="mut">${q ? `Không tìm thấy kiến thức nào phù hợp với "${esc(qRaw)}".` : "Chưa có kiến thức nào."}</p>${q ? `<button class="btn alt" style="margin:12px auto 0;width:auto;min-height:36px;padding:6px 16px;font-size:13.5px" data-act="fsearchclear">Xóa tìm kiếm</button>` : ""}</div>`;
   }
   return rendered.join("");
 }
@@ -9700,11 +11600,11 @@ VIEWS.formulas = () => {
 
   const searchHTML = `<div class="fsearch-box">` +
     `<span class="fsearch-ico">${IC.search}</span>` +
-    `<input type="text" id="fsearch" placeholder="Tìm nhanh công thức (ví dụ: Boyle, đạo hàm, tứ phân vị...)" value="${esc(S.fsearch || "")}" autocomplete="off" spellcheck="false">` +
+    `<input type="text" id="fsearch" placeholder="Tìm nhanh kiến thức (ví dụ: Boyle, đạo hàm, ngôi kể, dàn ý...)" value="${esc(S.fsearch || "")}" autocomplete="off" spellcheck="false">` +
     `<button class="fsearch-clear" data-act="fsearchclear" aria-label="Xóa tìm kiếm"${S.fsearch ? "" : " hidden"}>${IC.close}</button>` +
   `</div>`;
 
-  return topbar("Công thức") + tabsHTML + searchHTML + `<div id="flist-viewport"><div id="flist" class="flist-pane">${renderFormulaList(id, S.fsearch || "")}</div></div>`;
+  return topbar("Kiến thức cần nhớ") + tabsHTML + searchHTML + `<div id="flist-viewport"><div id="flist" class="flist-pane">${renderFormulaList(id, S.fsearch || "")}</div></div>`;
 };
 
 function render(anim = true) {
@@ -9721,7 +11621,7 @@ function go(view) { S.view = view; render(); }
    ============================================================ */
 function back() {
   if ($modal.innerHTML) return closeModal();
-  const to = { subject: "home", intro: "subject", result: "subject", review: "result", flagged: "home", answers: "intro", cards: "intro", cardsend: "intro", mockpick: "subject", formulas: "home", examresult: "subject", examreview: "examresult" }[S.view];
+  const to = { subject: "home", intro: "subject", result: "subject", review: "result", flagged: "home", answers: "intro", cards: "intro", cardsend: "intro", mockpick: "subject", formulas: "home", examresult: "subject", examreview: "examresult", essay: "intro" }[S.view];
   if (S.view === "exam") return openExamExit();
   if (S.view === "intro" && chap() && chap().formula) return go("formulas");
   if (S.view === "quiz") return S.idx === 0 && !S.locked ? go("intro") : openModal();
@@ -9911,6 +11811,212 @@ const ACTIONS = {
   },
   cyes: () => cmark(true),
   cno: () => cmark(false),
+          lit_jump: d => {
+    const el = document.getElementById(d.target);
+    if (el) {
+      el.open = true;
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      document.querySelectorAll(".lit-pill").forEach(p => p.classList.toggle("active", p.dataset.target === d.target));
+    }
+    playSound("tick");
+  },
+  lit_toggle_all: d => {
+    const shouldOpen = d.v === "open";
+    document.querySelectorAll(".lit-accordion").forEach(acc => {
+      acc.open = shouldOpen;
+    });
+    playSound("tick");
+  },
+  lit_scroll_top: () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    playSound("tick");
+  },
+  lit_toggle_ans: d => {
+    const deck = document.getElementById("lit-qa-deck-" + d.mid);
+    if (!deck) return;
+    const boxes = deck.querySelectorAll(".lit-ans-box");
+    const anyVisible = Array.from(boxes).some(b => b.style.display !== "none");
+    boxes.forEach(b => {
+      b.style.display = anyVisible ? "none" : "block";
+    });
+    const toggleBtn = document.querySelector(`[data-act="lit_toggle_ans"][data-mid="${d.mid}"]`);
+    if (toggleBtn) {
+      toggleBtn.textContent = anyVisible ? "Hiện tất cả đáp án" : "Ẩn tất cả đáp án";
+    }
+    playSound("tick");
+  },
+  lit_toggle_one_ans: d => {
+    const box = document.getElementById(d.target);
+    if (!box) return;
+    const isHidden = box.style.display === "none";
+    box.style.display = isHidden ? "block" : "none";
+    const btn = document.querySelector(`[data-act="lit_toggle_one_ans"][data-target="${d.target}"]`);
+    if (btn) {
+      btn.textContent = isHidden ? "Ẩn đáp án" : "Hiện đáp án";
+    }
+    playSound("tick");
+  },
+  lit_essay_tab: d => {
+    const mid = d.mid;
+    const tab = d.tab;
+    const readView = document.getElementById("lit-essay-view-read-" + mid);
+    const matrixView = document.getElementById("lit-essay-view-matrix-" + mid);
+    const btns = document.querySelectorAll(`[data-act="lit_essay_tab"][data-mid="${mid}"]`);
+    btns.forEach(b => b.classList.toggle("active", b.dataset.tab === tab));
+    if (readView) readView.style.display = tab === "read" ? "block" : "none";
+    if (matrixView) matrixView.style.display = tab === "matrix" ? "block" : "none";
+    playSound("tick");
+  },
+  lit_filter_essay: d => {
+    const mid = d.mid;
+    const grp = d.grp;
+    const container = document.getElementById("lit-essay-" + mid);
+    const filterChips = document.querySelectorAll(`#lit-filters-${mid} .lit-filter-chip`);
+    filterChips.forEach(c => c.classList.toggle("active", c.dataset.grp === grp));
+    if (!container) return;
+    const segs = container.querySelectorAll(".essay-seg");
+    segs.forEach(s => {
+      const isMatch = grp === "all" || s.classList.contains(grp);
+      s.classList.toggle("dimmed", !isMatch);
+      s.classList.toggle("lens-match", grp !== "all" && isMatch);
+    });
+    const firstMatch = grp === "all" ? segs[0] : container.querySelector(`.essay-seg.${grp}`);
+    if (firstMatch) {
+      ACTIONS.litseg({ mid, idx: firstMatch.dataset.idx });
+    }
+    playSound("tick");
+  },
+  lit_seg_step: d => {
+    const mid = d.mid;
+    const step = +d.step;
+    const container = document.getElementById("lit-essay-" + mid);
+    if (!container) return;
+    const curActive = container.querySelector(".essay-seg.active");
+    const curIdx = curActive ? +curActive.dataset.idx : 0;
+    const data = mid === "1" ? LIT_ESSAY_1_DATA : LIT_ESSAY_2_DATA;
+    const newIdx = Math.max(0, Math.min(data.segments.length - 1, curIdx + step));
+    ACTIONS.litseg({ mid, idx: newIdx });
+  },
+  lit_copy: d => {
+    const txt = d.txt || "";
+    if (!txt) return;
+    const doFeedback = () => {
+      const btn = document.querySelector(`[data-act="lit_copy"][data-fid="${d.fid}"]`);
+      if (btn) {
+        btn.classList.add("copied");
+        const prev = btn.textContent;
+        btn.textContent = "Đã sao chép";
+        setTimeout(() => {
+          btn.classList.remove("copied");
+          btn.textContent = prev;
+        }, 1500);
+      }
+      const row = btn ? btn.closest(".lit-tpl-row") : null;
+      if (row) {
+        row.style.borderColor = "var(--ac)";
+        row.style.boxShadow = "0 0 20px color-mix(in srgb, var(--ac) 45%, transparent)";
+        setTimeout(() => {
+          row.style.borderColor = "";
+          row.style.boxShadow = "";
+        }, 650);
+      }
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(txt).then(doFeedback).catch(() => {});
+    } else {
+      const ta = document.createElement("textarea");
+      ta.value = txt;
+      document.body.appendChild(ta);
+      ta.select();
+      try { document.execCommand("copy"); doFeedback(); } catch (e) {}
+      ta.remove();
+    }
+    playSound("ok");
+  },
+  litseg: d => {
+    const mid = d.mid;
+    const idx = +d.idx;
+    const container = document.getElementById("lit-essay-" + mid);
+    if (!container) return;
+    container.querySelectorAll(".essay-seg").forEach(el => el.classList.remove("active"));
+    const activeSeg = container.querySelector(`.essay-seg[data-idx="${idx}"]`);
+    if (activeSeg) {
+      activeSeg.classList.add("active");
+      activeSeg.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+    const insp = document.getElementById("lit-insp-" + mid);
+    const data = mid === "1" ? LIT_ESSAY_1_DATA : LIT_ESSAY_2_DATA;
+    const seg = data.segments[idx];
+    if (insp && seg) {
+      const bar = document.getElementById("lit-insp-bar-" + mid);
+      if (bar) {
+        bar.style.width = (((idx + 1) / data.segments.length) * 100) + "%";
+      }
+      const cnt = document.getElementById("lit-insp-cnt-" + mid);
+      if (cnt) cnt.textContent = `Câu ${idx + 1}/${data.segments.length}`;
+      const prevBtn = document.getElementById("lit-btn-prev-" + mid);
+      if (prevBtn) prevBtn.disabled = idx <= 0;
+      const nextBtn = document.getElementById("lit-btn-next-" + mid);
+      if (nextBtn) nextBtn.disabled = idx >= data.segments.length - 1;
+
+      const tagEl = insp.querySelector(".inspector-tag b");
+      if (tagEl) tagEl.textContent = seg.label;
+      const dotEl = insp.querySelector(".legend-dot");
+      if (dotEl) dotEl.className = "legend-dot " + (seg.group || "");
+
+      const noteEl = insp.querySelector(".inspector-note");
+      if (noteEl) noteEl.innerHTML = `<b>Phân tích cấu trúc:</b> ${esc(seg.note)}`;
+      const srcEl = insp.querySelector(".inspector-source");
+      if (srcEl) srcEl.innerHTML = `<b>Căn cứ đề cương:</b> ${esc(seg.source)}`;
+    }
+    playSound("tick");
+
+    // Lắng nghe sự kiện bàn phím và scroll nếu chưa gắn
+    if (!window._litInitEvents) {
+      window._litInitEvents = true;
+      window.addEventListener("scroll", () => {
+        if (!S || S.subjectId !== "literature" || S.view !== "intro") return;
+        const docH = document.documentElement.scrollHeight - window.innerHeight;
+        const scrolled = window.scrollY;
+        const pct = docH > 0 ? Math.min(100, Math.max(0, (scrolled / docH) * 100)) : 0;
+        const pBar = document.getElementById("lit-progress-bar");
+        if (pBar) pBar.style.width = pct + "%";
+
+        const topBtn = document.getElementById("lit-back-top");
+        if (topBtn) topBtn.classList.toggle("show", scrolled > 320);
+
+        const secs = ["lit-sec-1", "lit-sec-2", "lit-sec-3", "lit-sec-4", "lit-sec-5"];
+        let cur = null;
+        for (let s of secs) {
+          const el = document.getElementById(s);
+          if (el) {
+            const r = el.getBoundingClientRect();
+            if (r.top <= 200) cur = s;
+          }
+        }
+        if (cur) {
+          document.querySelectorAll(".lit-pill").forEach(p => {
+            p.classList.toggle("active", p.dataset.target === cur);
+          });
+        }
+      }, { passive: true });
+
+      window.addEventListener("keydown", e => {
+        if (!S || S.subjectId !== "literature" || S.view !== "intro") return;
+        if (e.target && (e.target.tagName === "INPUT" || e.target.tagName === "TEXTAREA")) return;
+        if (e.key === "ArrowLeft") {
+          e.preventDefault();
+          ACTIONS.lit_seg_step({ mid: "1", step: -1 });
+        } else if (e.key === "ArrowRight") {
+          e.preventDefault();
+          ACTIONS.lit_seg_step({ mid: "1", step: 1 });
+        }
+      });
+    }
+  },
+  
+  
+  
   menu: openMenu,
   order: () => {
     keepOrder = !keepOrder;
@@ -9993,7 +12099,52 @@ const ACTIONS = {
     const b = document.querySelector("[data-act=sound]"); if (b) b.innerHTML = sfx.on ? IC.volOn : IC.volOff;
     playSound("tick");
   },
-  chapters: () => go("subject")
+  chapters: () => go("subject"),
+  openessay: () => {
+    S.essayIdx = 0;
+    go("essay");
+  },
+  selseg: d => {
+    S.essayIdx = +d.idx;
+    render(false);
+    playSound("tick");
+  },
+  prevseg: () => {
+    if ((S.essayIdx || 0) > 0) {
+      S.essayIdx = (S.essayIdx || 0) - 1;
+      render(false);
+      playSound("tick");
+    }
+  },
+  nextseg: () => {
+    const c = chap();
+    if (c && c.essay && (S.essayIdx || 0) < c.essay.segments.length - 1) {
+      S.essayIdx = (S.essayIdx || 0) + 1;
+      render(false);
+      playSound("tick");
+    }
+  },
+  qareveal: () => {
+    const r = cur();
+    if (!r || r.type !== "qa") return;
+    r.revealed = true;
+    r.selfChecked = 1;
+    const ansEl = document.getElementById("qa-ans");
+    if (ansEl) ansEl.style.display = "block";
+    const goBtn = document.getElementById("go");
+    if (goBtn) goBtn.disabled = false;
+    const opts = document.getElementById("opts");
+    if (opts) opts.innerHTML = TYPES.qa.render(r);
+    playSound("tick");
+  },
+  qaself: d => {
+    const r = cur();
+    if (!r || r.type !== "qa") return;
+    r.selfChecked = +d.v;
+    const opts = document.getElementById("opts");
+    if (opts) opts.innerHTML = TYPES.qa.render(r);
+    playSound("tick");
+  }
 };
 
 /* ---------- Thi thử: thao tác ---------- */
@@ -10255,6 +12406,11 @@ document.addEventListener("keydown", e => {
   if (S.view !== "quiz" || S.locked || cur().type !== "short" || e.ctrlKey || e.metaKey) return;
   if (/^[0-9]$/.test(e.key)) keySA(e.key); else if (e.key === "," || e.key === ".") keySA(","); else if (e.key === "Backspace") keySA("del");
   else if (e.key === "Enter") { const b = document.getElementById("go"); if (b && !b.disabled) b.click(); }
+});
+document.addEventListener("keydown", e => {
+  if (S.view !== "essay" || e.ctrlKey || e.metaKey) return;
+  if (e.key === "ArrowLeft") ACTIONS.prevseg();
+  else if (e.key === "ArrowRight") ACTIONS.nextseg();
 });
 document.addEventListener("keydown", e => {
   if (S.view !== "cards" || e.ctrlKey || e.metaKey) return;
