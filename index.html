@@ -569,8 +569,8 @@ body[data-view=intro] .dock {
 .pick.opts button:last-child { border-bottom: 0; }
 .pick.opts button.on { background: none; color: var(--tx); font-weight: 500; }
 .pick.opts button svg { width: 18px; height: 18px; color: var(--mut); }
-#ordbtn::after, #kpbtn::after, #rvbtn::after, #cordbtn::after, #mulbtn::after { content: "Tắt"; font-size: 12px; font-weight: 700; letter-spacing: .2px; padding: 3px 11px; border-radius: 999px; line-height: 1.4; color: var(--mut); background: var(--bd); }
-#ordbtn.on::after, #kpbtn.on::after, #rvbtn.on::after, #cordbtn.on::after, #mulbtn.on::after { content: "Bật"; color: #fff; background: var(--ac); }
+#ordbtn::after, #kpbtn::after, #rvbtn::after, #cordbtn::after, #mulbtn::after, #scrbtn::after { content: "Tắt"; font-size: 12px; font-weight: 700; letter-spacing: .2px; padding: 3px 11px; border-radius: 999px; line-height: 1.4; color: var(--mut); background: var(--bd); }
+#ordbtn.on::after, #kpbtn.on::after, #rvbtn.on::after, #cordbtn.on::after, #mulbtn.on::after, #scrbtn.on::after { content: "Bật"; color: #fff; background: var(--ac); }
 
 /* Danh sách lối tắt cuối trang chủ */
 .gears { display: flex; flex-direction: column; margin: 28px 0 8px; background: var(--card); border: 1px solid var(--bd); border-radius: var(--r); overflow: hidden; }
@@ -964,9 +964,9 @@ body[data-view=result] main, body[data-view=examresult] main { padding-top: calc
   }
 
   /* Màn làm bài (quiz) & thi thử (exam): Rõ ràng, tối ưu tốc độ đọc */
-  body[data-view=quiz] .card, body[data-view=exam] .card { padding: 24px 28px; border-radius: 16px; }
-  body[data-view=quiz] .q, body[data-view=exam] .q { font-size: 20px; line-height: 1.5; margin-bottom: 14px; }
-  body[data-view=quiz] .opt, body[data-view=exam] .opt { font-size: 16.5px; min-height: 54px; padding: 12px 16px 12px 12px; margin: 10px 0; border-radius: 12px; }
+  body[data-view=quiz] .card, body[data-view=scroll] .card, body[data-view=exam] .card { padding: 24px 28px; border-radius: 16px; }
+  body[data-view=quiz] .q, body[data-view=scroll] .q, body[data-view=exam] .q { font-size: 20px; line-height: 1.5; margin-bottom: 14px; }
+  body[data-view=quiz] .opt, body[data-view=scroll] .opt, body[data-view=exam] .opt { font-size: 16.5px; min-height: 54px; padding: 12px 16px 12px 12px; margin: 10px 0; border-radius: 12px; }
   body[data-view=quiz] .dock .btn, body[data-view=cards] .dock .btn, body[data-view=exam] .dock .btn { min-height: 52px; font-size: 16.5px; }
 
   /* Flashcard & kết quả */
@@ -2587,6 +2587,44 @@ body[data-view=result] main, body[data-view=examresult] main { padding-top: calc
   transform: scale(0.95);
 }
 
+
+/* ===== Quay lại câu trước, sao đánh dấu, chế độ cuộn, lưu và thoát ===== */
+.dock.qd { display: flex; gap: 10px; align-items: stretch; }
+.dock.qd .btn { width: auto; }
+.dock.qd #go { flex: 1; }
+.dock.qd #skip { flex: 0 0 auto; padding-left: 16px; padding-right: 16px; }
+.dock.qd .ib { flex: none; width: 52px; min-height: 52px; display: grid; place-items: center; border-radius: 12px; background: var(--card); border: 1px solid var(--bd2); color: var(--tx); transition: background .15s ease, border-color .15s ease, opacity .15s ease; }
+.dock.qd .ib svg { width: 22px; height: 22px; }
+.dock.qd .ib:disabled { opacity: .35; cursor: not-allowed; }
+.dock.qd .ib:not(:disabled):active { opacity: .8; }
+#go[hidden] { display: none !important; }
+@media (max-width: 480px) { .dock.qd .ib { width: 46px; } .dock.qd #skip { padding-left: 12px; padding-right: 12px; } }
+@media (hover: hover) and (pointer: fine) { .dock.qd .ib:not(:disabled):hover { background: var(--card2); border-color: var(--ac); } }
+.card.qc { position: relative; }
+.qc .tag { min-height: 30px; padding-right: 44px; }
+.star { position: absolute; top: 6px; right: 6px; width: 38px; height: 38px; display: grid; place-items: center; border-radius: 10px; color: var(--mut); transition: color .15s ease, transform .15s ease; }
+.star svg { width: 24px; height: 24px; }
+.star.on { color: #f5b301; }
+.star.on svg { fill: currentColor; }
+.star:active { transform: scale(.9); }
+body[data-view=scroll] main { padding-top: calc(14px + env(safe-area-inset-top, 0px)); padding-bottom: calc(40px + env(safe-area-inset-bottom, 0px)); }
+.sopts.locked { pointer-events: none; }
+.sinp { display: flex; gap: 10px; margin-top: 10px; }
+.sinp .sa { flex: 1; min-width: 0; }
+.sinp .btn { width: auto; margin-top: 0; padding-left: 18px; padding-right: 18px; }
+.sqb { display: flex; gap: 10px; margin-top: 10px; }
+.sqb .btn { margin-top: 0; }
+.sm:empty { display: none; }
+.sm .msg { margin-top: 10px; }
+.sdone { margin-top: 18px; }
+/* ===== Câu Đúng/Sai và câu có đề rất dài: chữ nhỏ gọn, ít rối ===== */
+body[data-view] .q.tf-q { font-size: 14.5px; font-weight: 600; line-height: 1.5; margin-bottom: 8px; }
+body[data-view] .card:has(.q.tf-q) .opt { font-size: 15px; min-height: 46px; padding-top: 8px; padding-bottom: 8px; }
+body[data-view] .card:has(.q.tf-q) .row { padding: 8px 0; }
+body[data-view] .card:has(.q.tf-q) .row .st { font-size: 14px; line-height: 1.45; }
+body[data-view] .card:has(.q.tf-q) .tf { gap: 8px; margin-top: 6px; }
+body[data-view] .card:has(.q.tf-q) .tf .opt { font-size: 14px; min-height: 38px; padding: 6px 10px; margin: 0; border-radius: 10px; }
+body[data-view] .card:has(.q.tf-q) .pill { font-size: 11px; line-height: 18px; }
 </style>
 <script>try{var _t=localStorage.getItem("quiz.theme");if(_t)document.documentElement.dataset.theme=_t}catch(e){}</script>
 <link rel="manifest" href="manifest.json">
@@ -11853,8 +11891,8 @@ function startQuiz(subjectId, chapterId, tag = "all", retryList = null) {
   const ch = getChapter(subjectId, chapterId); if (!ch) return;
   const src = retryList || ch.questions.filter(q => qMatch(q, tag));
   if (!src.length) return;
-  Object.assign(S, { subjectId, chapterId, tag, retry: !!retryList, list: (retryList || tag !== "all" ? shuffle(src) : [...shuffle(src), ...shuffle(src.filter(q => q.hot))]).map(prepare), idx: 0, correct: 0, wrong: [], locked: false, t0: Date.now(), dur: 0 });
-  go("quiz");
+  Object.assign(S, { subjectId, chapterId, tag, retry: !!retryList, list: (retryList || tag !== "all" ? shuffle(src) : [...shuffle(src), ...shuffle(src.filter(q => q.hot))]).map(prepare), idx: 0, correct: 0, wrong: [], locked: false, t0: Date.now(), dur: 0, saveId: null });
+  go(scrollMode ? "scroll" : "quiz");
 }
 
 /* ============================================================
@@ -11911,12 +11949,8 @@ function statsHTML() {
   const days = new Set(h.map(x => dkey(x.t))); let st = 0; const d = new Date();
   if (!days.has(dkey(d))) d.setDate(d.getDate() - 1);
   while (days.has(dkey(d))) { st++; d.setDate(d.getDate() - 1); }
-  const wk = []; for (let i = 6; i >= 0; i--) { const e = new Date(); e.setDate(e.getDate() - i); const k = dkey(e); wk.push({ l: ["CN", "T2", "T3", "T4", "T5", "T6", "T7"][e.getDay()], v: h.filter(x => dkey(x.t) === k).reduce((a, x) => a + x.n, 0) }); }
-  const mx = Math.max(...wk.map(x => x.v), 1);
-  const bars = wk.map(x => `<div class="${x.v ? "" : "z"}"><span class="mut" style="font-size:11px">${x.v || ""}</span><i style="height:${Math.round(x.v / mx * 62) + 3}px"></i><em>${x.l}</em></div>`).join("");
   const rows = histRowsHTML(histAll);
-  return `<div class="sec st1">Thống kê học tập</div><div class="kpis"><div class="kpi a"><b data-n="${pc}" data-s="%">${pc}%</b><span>Độ chính xác</span></div><div class="kpi"><b data-n="${h.length}">${h.length}</b><span>Bài đã làm</span></div><div class="kpi"><b data-n="${N}">${N}</b><span>Câu đã trả lời</span></div><div class="kpi"><b data-n="${st}">${st}</b><span>Ngày liên tiếp</span></div></div>` +
-    `<div class="card st-chart" style="margin:10px 0 0"><div class="mut">Số câu đã làm 7 ngày gần đây</div><div class="chart">${bars}</div></div>` +
+  return `<div class="sec st1">Thống kê</div><div class="kpis"><div class="kpi a"><b data-n="${pc}" data-s="%">${pc}%</b><span>Độ chính xác</span></div><div class="kpi"><b data-n="${h.length}">${h.length}</b><span>Bài đã làm</span></div><div class="kpi"><b data-n="${N}">${N}</b><span>Câu đã trả lời</span></div><div class="kpi"><b data-n="${st}">${st}</b><span>Ngày liên tiếp</span></div></div>` +
     `<div class="sec st2">Gần đây</div><div class="card st-rows" id="hrows" style="margin:0">${rows}</div>${h.length > 4 ? `<button class="lnk st-more" id="hmore" data-act="histmore">${histAll ? "Thu gọn" : "Xem thêm (" + (h.length - 4) + ")"}</button>` : ""}<button class="lnk st-lnk" data-act="resetstats">Xóa thống kê</button>`;
 }
 function fmtScore(x) { return String(+x.toFixed(2)); }
@@ -12630,8 +12664,8 @@ Mình vẫn còn một thứ quả non xanh?
 
 
 const VIEWS = {
-  home: () => `<div class="top"><button class="icon-btn" data-act="menu" aria-label="Menu">${IC.menu}</button></div>${titleHTML()}${resumeHTML()}<div class="sec">Môn học</div><div class="grid two stagger">` +
-    homeSubjects().map((s, i) => { const n = s.chapters ? s.chapters.filter(c => !c.formula).length : 0; const qCount = s.chapters ? s.chapters.reduce((a, c) => a + (c.questions ? c.questions.length : 0), 0) : 0; return `<button class="tile ${n ? "" : "off"}" style="--i:${i}" ${n ? `data-act="subject" data-id="${s.id}"` : "disabled"}><span class="ico">${subjIcon(s)}</span><span class="tt"><b>${esc(s.name)}</b><span class="mut">${n ? `${n} bài học · ${qCount} câu` : "Sắp ra mắt"}</span></span>${n ? `<span class="go">${IC.chev}</span>` : '<span class="chip lock">Sắp có</span>'}</button>`; }).join("") + formTile() + `</div>` + statsHTML() + `<div class="gears"><button class="gear" data-act="themes">${IC.theme}<span>Màu giao diện</span><span class="go">${IC.chev}</span></button><button class="gear" data-act="custom">${IC.tune}<span>Tùy chỉnh</span><span class="go">${IC.chev}</span></button>${flaggedList().length ? `<button class="gear" data-act="flagged">${IC.flag}<span>Câu chưa chắc (${flaggedList().length})</span><span class="go">${IC.chev}</span></button>` : ""}</div>`,
+  home: () => `<div class="top"><button class="icon-btn" data-act="menu" aria-label="Menu">${IC.menu}</button></div>${titleHTML()}${savedHTML()}${resumeHTML()}<div class="sec">Môn học</div><div class="grid two stagger">` +
+    homeSubjects().map((s, i) => { const n = s.chapters ? s.chapters.filter(c => !c.formula).length : 0; const qCount = s.chapters ? s.chapters.reduce((a, c) => a + (c.questions ? c.questions.length : 0), 0) : 0; return `<button class="tile ${n ? "" : "off"}" style="--i:${i}" ${n ? `data-act="subject" data-id="${s.id}"` : "disabled"}><span class="ico">${subjIcon(s)}</span><span class="tt"><b>${esc(s.name)}</b><span class="mut">${n ? `${n} bài học · ${qCount} câu` : "Sắp ra mắt"}</span></span>${n ? `<span class="go">${IC.chev}</span>` : '<span class="chip lock">Sắp có</span>'}</button>`; }).join("") + formTile() + `</div>` + statsHTML() + `<div class="gears">${markedList().length ? `<button class="gear" data-act="markedview">${IC.star}<span>Câu đã gắn sao (${markedList().length})</span><span class="go">${IC.chev}</span></button>` : ""}<button class="gear" data-act="themes">${IC.theme}<span>Màu giao diện</span><span class="go">${IC.chev}</span></button><button class="gear" data-act="custom">${IC.tune}<span>Tùy chỉnh</span><span class="go">${IC.chev}</span></button>${flaggedList().length ? `<button class="gear" data-act="flagged">${IC.flag}<span>Câu chưa chắc (${flaggedList().length})</span><span class="go">${IC.chev}</span></button>` : ""}</div>`,
 
   subject: () => { const s = getSubject(S.subjectId); return topbar(`${esc(s.name)}`, "Chọn bài học") + (MOCK[s.id] ? mockTile(s) : "") + (s.combo ? comboTile(s) : "") + `<div class="grid two stagger">` +
     sortedChapters(s).map(({ c }, i) => { return `<button class="tile chap" style="--i:${i}" data-act="chapter" data-id="${c.id}"><span class="eyebrow">${esc(c.title)}</span><b>${esc(c.subtitle)}</b>${c.description ? `<span class="mut">${esc(c.description)}</span>` : ""}<span class="chips">${c.questions.length ? `<span class="chip">${c.questions.length} câu</span>` : ""}${c.cards && c.cards.length ? `<span class="chip">${c.cards.length} thẻ</span>` : ""}${chapterTags(c).map(([t]) => `<span class="chip">${esc(t)}</span>`).join("")}</span></button>`; }).join("") + `</div>`; },
@@ -12646,13 +12680,22 @@ const VIEWS = {
     const sum = c.summary && c.summary.length ? `<details class="sum"><summary>Tóm tắt ý cần nhớ<span class="chev">${IC.chev}</span></summary><div class="sumbody">${c.summary.map((g, i) => `<div class="sh"><span class="sn">${i + 1}</span>${esc(g.title)}</div>${g.img ? `<img class="qimg" src="${g.img}" alt="Minh họa">` : ""}<ul>${g.points.map(p => `<li>${pt(p)}</li>`).join("")}</ul>`).join("")}</div></details>` : "";
     return topbar(esc(s.name)) + `<div class="card"><div class="eyebrow">${esc(c.title)}</div><div class="big">${esc(c.subtitle)}</div>${c.description ? `<p class="mut">${esc(c.description)}</p>` : ""}${c.questions.length ? `<p class="mut">${c.questions.length} câu hỏi</p>` : ""}` +
     (c.id === COMBO ? comboPickHTML(S.subjectId) : "") + (tags.length > 1 ? `<div class="pick" id="pick">${pickHTML(c)}</div>` : "") + (new Set(c.questions.map(q => q.type).filter(t => TL[t])).size > 1 ? `<div class="pick" id="tpick" style="display:${S.multi ? "" : "none"}">${typePickHTML(c)}</div>` : "") +
-    (c.questions.length ? `<div class="pick opts"><button id="ordbtn" class="${keepOrder ? "on" : ""}" data-act="order">Giữ thứ tự câu</button><button id="rvbtn" class="${revealWrong ? "on" : ""}" data-act="reveal">Hiện đáp án khi chọn sai</button>${(tags.length > 1 || new Set(c.questions.map(q => q.type).filter(t => TL[t])).size > 1) ? `<button id="mulbtn" class="${S.multi ? "on" : ""}" data-act="multi">Chọn nhiều bài / loại câu</button>` : ""}<button data-act="answers">Xem đáp án${IC.chev}</button>${hasShort ? `<button id="kpbtn" class="${shortChoice ? "" : "on"}" data-act="kpmode">Nhập số (trả lời ngắn)</button>` : ""}</div>` : "") + `</div>` + renderSim(c) + cardsIntro(c, c.questions.length > 0) + (c.essay ? `<div class="card essay-intro-card" data-act="openessay" style="cursor:pointer;"><div class="eyebrow" style="color:var(--ac2);">Bài văn mẫu · ${esc(c.essay.wordCount || "Khoảng 600 chữ")}</div><div class="big" style="font-size:17px;line-height:1.35;margin:4px 0 6px;">${esc(c.essay.title)}</div><p class="mut" style="font-size:13px;line-height:1.5;margin:0 0 12px;">Chạm từng câu để xem nhãn, phân tích &amp; nguồn đề cương</p><button class="btn alt" style="width:100%;margin-top:0;justify-content:center;gap:8px;" data-act="openessay"><span>Đọc bài văn mẫu</span>${IC.chev}</button></div>` : "") + sum +
+    (c.questions.length ? `<div class="pick opts"><button id="ordbtn" class="${keepOrder ? "on" : ""}" data-act="order">Giữ thứ tự câu</button><button id="rvbtn" class="${revealWrong ? "on" : ""}" data-act="reveal">Hiện đáp án khi chọn sai</button><button id="scrbtn" class="${scrollMode ? "on" : ""}" data-act="scrollmode">Cuộn một trang (chọn là hiện đáp án)</button>${(tags.length > 1 || new Set(c.questions.map(q => q.type).filter(t => TL[t])).size > 1) ? `<button id="mulbtn" class="${S.multi ? "on" : ""}" data-act="multi">Chọn nhiều bài / loại câu</button>` : ""}<button data-act="answers">Xem đáp án${IC.chev}</button>${hasShort ? `<button id="kpbtn" class="${shortChoice ? "" : "on"}" data-act="kpmode">Nhập số (trả lời ngắn)</button>` : ""}</div>` : "") + `</div>` + renderSim(c) + cardsIntro(c, c.questions.length > 0) + (c.essay ? `<div class="card essay-intro-card" data-act="openessay" style="cursor:pointer;"><div class="eyebrow" style="color:var(--ac2);">Bài văn mẫu · ${esc(c.essay.wordCount || "Khoảng 600 chữ")}</div><div class="big" style="font-size:17px;line-height:1.35;margin:4px 0 6px;">${esc(c.essay.title)}</div><p class="mut" style="font-size:13px;line-height:1.5;margin:0 0 12px;">Chạm từng câu để xem nhãn, phân tích &amp; nguồn đề cương</p><button class="btn alt" style="width:100%;margin-top:0;justify-content:center;gap:8px;" data-act="openessay"><span>Đọc bài văn mẫu</span>${IC.chev}</button></div>` : "") + sum +
     (c.questions.length ? `<div class="dock"><button class="btn" id="start" data-act="start">Bắt đầu kiểm tra (${countFor(c, S.tag)} câu)</button></div>` : ""); },
 
-  quiz: () => { const r = cur(), n = S.list.length;
+  quiz: () => { const r = cur(), n = S.list.length, done = !!r.done, last = S.idx === n - 1, inst = instantFor(r) && !done, mk = isMarked(r.src);
+    const body = done ? `<div id="opts" class="locked">${TYPES[r.type].review(r)}</div><div id="res"><div class="msg ${r.missed ? "bad" : "ok"}">${r.missed ? IC.no : IC.check}<span>${r.missed ? "Câu này bạn đã làm sai." : "Chính xác!"}</span></div></div>` : `<div id="opts">${TYPES[r.type].render(r)}</div><div id="res"></div>`;
     return `<div class="qhead"><button class="icon-btn" data-act="back" aria-label="Thoát">${IC.back}</button><div class="bar"><i id="bar" style="transform:scaleX(${S.idx / n})"></i></div><span class="count">${S.idx + 1}/${n}</span><button class="icon-btn snd" data-act="sound" aria-label="Bật/tắt âm thanh">${sfx.on ? IC.volOn : IC.volOff}</button></div>` +
-    `<div class="card"><div class="tag">${S.retry ? "LÀM LẠI · " : ""}${esc(chap().title)}${r.src._cs ? " · " + esc(r.src._cs) : ""} · ${r.src.hot ? "Trọng tâm · " : ""}${esc(r.src.tag)}</div><p class="q">${warnIcon(r.src)}${esc(r.src.question)}</p>${warnHTML(r.src)}${qimg(r.src)}<div id="opts">${TYPES[r.type].render(r)}</div><div id="res"></div></div>` +
-    `<div class="dock${r.type === "true_false" ? " two" : ""}"${instantFor(r) ? " hidden" : ""}>${r.type === "true_false" ? '<button class="btn alt" id="skip" data-act="skip">Bỏ qua</button>' : ""}<button class="btn" id="go" data-act="next" disabled>Xác nhận</button></div>`; },
+    `<div class="card qc"><button class="star${mk ? " on" : ""}" id="mk" data-act="mark" aria-label="Gắn sao" aria-pressed="${mk}">${IC.star}</button><div class="tag">${S.retry ? "LÀM LẠI · " : ""}${esc(chap().title)}${r.src._cs ? " · " + esc(r.src._cs) : ""} · ${r.src.hot ? "Trọng tâm · " : ""}${esc(r.src.tag)}</div><p class="q${tfc(r.src)}">${warnIcon(r.src)}${esc(r.src.question)}</p>${warnHTML(r.src)}${qimg(r.src)}${body}</div>` +
+    `<div class="dock qd"><button class="ib" id="prv" data-act="prev" aria-label="Câu trước"${S.idx === 0 ? " disabled" : ""}>${IC.undo}</button>${r.type === "true_false" && !done ? '<button class="btn alt" id="skip" data-act="skip">Bỏ qua</button>' : ""}<button class="btn" id="go" data-act="next"${done ? "" : " disabled"}${inst ? " hidden" : ""}>${done ? (last ? "Xem kết quả" : "Câu tiếp theo") : "Xác nhận"}</button></div>`; },
+
+  scroll: () => { const n = S.list.length, d = S.list.filter(r => r.done).length;
+    return `<div class="qhead"><button class="icon-btn" data-act="back" aria-label="Thoát">${IC.back}</button><div class="bar"><i id="bar" style="transform:scaleX(${d / n})"></i></div><span class="count" id="cnt">${d}/${n}</span><button class="icon-btn snd" data-act="sound" aria-label="Bật/tắt âm thanh">${sfx.on ? IC.volOn : IC.volOff}</button></div>` +
+    S.list.map(scrollCard).join("") + `<div class="sdone"><button class="btn" data-act="sfinish">Xem kết quả</button></div>`; },
+
+  marked: () => { const list = markedList(); let last = "";
+    const rv = q => q.type === "single" ? { options: q.options, answer: q.answer, picked: null } : q.type === "short" || q.type === "short_mc" ? { answers: q.answers } : q.type === "qa" ? { answer: q.answer, rationale: q.rationale } : { statements: q.statements.map(t => ({ text: t.text, answer: t.answer, picked: t.answer })) };
+    return topbar("Câu đã gắn sao", `${list.length} câu`) + (list.length ? list.map(({ sub, ch, q, n }) => { const key = sub.id + ch.id, head = key !== last ? `<div class="sec">${esc(sub.name)} · ${esc(ch.title)}</div>` : ""; last = key; return head + `<div class="card qc"><button class="star on" data-act="mark" data-id="${q.id}" aria-label="Gắn sao" aria-pressed="true">${IC.star}</button><div class="tag">${esc(q.tag)} · Câu ${n}</div><p class="q${tfc(q)}">${warnIcon(q)}${esc(q.question)}</p>${warnHTML(q)}${qimg(q)}${TYPES[q.type].review(rv(q))}</div>`; }).join("") : `<div class="card"><p class="mut">Chưa có câu nào gắn sao. Bấm ngôi sao ở góc câu hỏi khi làm bài để gom lại đây.</p></div>`); },
 
   result: () => { const n = S.list.length, w = n - S.correct, sc = fmtScore(S.correct / n * 10), c = chap(), sb = getSubject(S.subjectId);
     const ico = { clock: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>', ok: '<svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12.5l2.7 2.7L16 9.8"/></svg>' };
@@ -12662,6 +12705,7 @@ const VIEWS = {
     `<div class="rrow"><span class="ri">${ico.ok}</span><span class="rl">Số câu trắc nghiệm đúng</span><b>${S.correct}/${n}</b></div>` +
     `<button class="btn alt or" data-act="restart">Luyện tập lại</button>` +
     (w ? `<button class="btn alt bl" data-act="review">Xem đáp án${IC.chev}</button><button class="btn alt" data-act="retry">Làm lại ${w} câu đã sai</button>` : "") +
+    (S.list.some(r => isMarked(r.src)) ? `<button class="btn alt" data-act="retrymark">Làm lại ${S.list.filter(r => isMarked(r.src)).length} câu đã đánh dấu</button>` : "") +
     `<button class="lnk" data-act="chapters">Về danh sách bài</button></div></div>`; },
 
   cards: () => { const c = chap(), n = S.deck.length, d = S.deck[S.ci];
@@ -12679,13 +12723,13 @@ const VIEWS = {
   answers: () => { const c = chap(), cnt = {};
     const rows = c.questions.map(q => { cnt[q.tag] = (cnt[q.tag] || 0) + 1; return { q, n: cnt[q.tag] }; }).filter(x => qMatch(x.q, S.tag));
     const rv = q => q.type === "single" ? { options: q.options, answer: q.answer, picked: null } : q.type === "short" || q.type === "short_mc" ? { answers: q.answers } : q.type === "qa" ? { answer: q.answer, rationale: q.rationale } : { statements: q.statements.map(t => ({ text: t.text, answer: t.answer, picked: t.answer })) };
-    return topbar(`${esc(c.title)} · Đáp án`, `${rows.length} câu · đúng thứ tự đề`) + rows.map(({ q, n }) => `<div class="card"><div class="tag">${q.hot ? "Trọng tâm · " : ""}${esc(q.tag)} · Câu ${n}</div><p class="q">${warnIcon(q)}${esc(q.question)}</p>${warnHTML(q)}${qimg(q)}${TYPES[q.type].review(rv(q))}</div>`).join(""); },
+    return topbar(`${esc(c.title)} · Đáp án`, `${rows.length} câu · đúng thứ tự đề`) + rows.map(({ q, n }) => `<div class="card"><div class="tag">${q.hot ? "Trọng tâm · " : ""}${esc(q.tag)} · Câu ${n}</div><p class="q${tfc(q)}">${warnIcon(q)}${esc(q.question)}</p>${warnHTML(q)}${qimg(q)}${TYPES[q.type].review(rv(q))}</div>`).join(""); },
 
   flagged: () => { const list = flaggedList(); let last = "";
     const rv = q => q.type === "single" ? { options: q.options, answer: q.answer, picked: null } : q.type === "short" || q.type === "short_mc" ? { answers: q.answers } : q.type === "qa" ? { answer: q.answer, rationale: q.rationale } : { statements: q.statements.map(t => ({ text: t.text, answer: t.answer, picked: t.answer })) };
-    return topbar("Câu chưa chắc", `${list.length} câu · nên hỏi lại thầy/cô`) + list.map(({ sub, ch, q, n }) => { const key = sub.id + ch.id, head = key !== last ? `<div class="sec">${esc(sub.name)} · ${esc(ch.title)}</div>` : ""; last = key; return head + `<div class="card"><div class="tag">${esc(q.tag)} · Câu ${n}</div><p class="q">${warnIcon(q)}${esc(q.question)}</p>${warnHTML(q)}${qimg(q)}${TYPES[q.type].review(rv(q))}</div>`; }).join(""); },
+    return topbar("Câu chưa chắc", `${list.length} câu · nên hỏi lại thầy/cô`) + list.map(({ sub, ch, q, n }) => { const key = sub.id + ch.id, head = key !== last ? `<div class="sec">${esc(sub.name)} · ${esc(ch.title)}</div>` : ""; last = key; return head + `<div class="card"><div class="tag">${esc(q.tag)} · Câu ${n}</div><p class="q${tfc(q)}">${warnIcon(q)}${esc(q.question)}</p>${warnHTML(q)}${qimg(q)}${TYPES[q.type].review(rv(q))}</div>`; }).join(""); },
 
-  review: () => topbar("Xem lại", `${S.wrong.length} câu sai`) + S.wrong.map(r => `<div class="card"><div class="tag">${esc(r.src.tag)}</div><p class="q">${warnIcon(r.src)}${esc(r.src.question)}</p>${warnHTML(r.src)}${qimg(r.src)}${TYPES[r.type].review(r)}</div>`).join(""),
+  review: () => topbar("Xem lại", `${S.wrong.length} câu sai`) + S.wrong.map(r => `<div class="card"><div class="tag">${esc(r.src.tag)}</div><p class="q${tfc(r.src)}">${warnIcon(r.src)}${esc(r.src.question)}</p>${warnHTML(r.src)}${qimg(r.src)}${TYPES[r.type].review(r)}</div>`).join(""),
 
   essay: () => {
     const c = chap();
@@ -12738,6 +12782,104 @@ const VIEWS = {
 };
 
 /* hiệu ứng sau khi render */
+
+Object.assign(IC, {
+  undo: _svg('<path d="M9 14L4 9l5-5"/><path d="M4 9h10.5a5.5 5.5 0 0 1 0 11H11"/>'),
+  star: _svg('<path d="M12 3.5l2.7 5.6 6.1.9-4.4 4.3 1 6.1-5.4-2.9-5.4 2.9 1-6.1-4.4-4.3 6.1-.9z"/>')
+});
+/* Câu Đúng/Sai hoặc đề quá dài -> chữ nhỏ gọn */
+const tfc = q => q && (q.type === "true_false" || String(q.question || "").length > 200) ? " tf-q" : "";
+/* Gắn sao câu hỏi: lưu theo mã câu hỏi (localStorage, chỉ trên máy này) */
+const MARK_KEY = "quiz.marks";
+const marks = () => { try { return new Set(JSON.parse(localStorage.getItem(MARK_KEY)) || []); } catch (e) { return new Set(); } };
+const isMarked = q => !!(q && q.id) && marks().has(q.id);
+function flipMark(id) { const m = marks(), on = !m.has(id); if (on) m.add(id); else m.delete(id); try { localStorage.setItem(MARK_KEY, JSON.stringify([...m])); } catch (e) {} playSound("tick"); return on; }
+function toggleMark(d) {
+  let id, b;
+  if (S.view === "quiz") { const r = cur(); id = r && r.src.id; b = document.getElementById("mk"); }
+  else if (S.view === "scroll" && d && d.i != null) { const r = S.list[+d.i]; id = r && r.src.id; b = document.querySelector('.star[data-i="' + d.i + '"]'); }
+  else if (S.view === "marked" && d && d.id) { id = d.id; b = document.querySelector('.star[data-id="' + d.id + '"]'); }
+  if (!id) return;
+  const on = flipMark(id); if (b) { b.classList.toggle("on", on); b.setAttribute("aria-pressed", String(on)); }
+}
+const markedList = () => { const m = marks(), out = []; quizData.subjects.forEach(sub => sub.chapters.forEach(ch => { const cnt = {}; ch.questions.forEach(q => { cnt[q.tag] = (cnt[q.tag] || 0) + 1; if (m.has(q.id)) out.push({ sub, ch, q, n: cnt[q.tag] }); }); })); return out; };
+/* Quay lại câu trước: câu đã xong hiện lại ở dạng xem đáp án, không tính điểm lần nữa */
+function clearPick(r) { if (r.options) r.picked = null; if (r.statements) r.statements.forEach(t => t.picked = null); if (r.type === "short") r.picked = null; }
+function prev() {
+  if (S.view !== "quiz" || S.idx <= 0 || $modal.innerHTML) return;
+  if (autoT) { clearTimeout(autoT); autoT = null; }
+  const r = cur(); if (!r.done) clearPick(r);
+  S.idx--; S.locked = !!cur().done; render();
+}
+document.addEventListener("keydown", e => {
+  if (S.view !== "quiz" || e.ctrlKey || e.metaKey || e.altKey || $modal.innerHTML) return;
+  if (e.key === "ArrowLeft") { e.preventDefault(); prev(); }
+  else if ((e.key === "m" || e.key === "M") && !e.repeat) toggleMark();
+  else if (e.key === "ArrowRight" && S.locked && !e.repeat) { e.preventDefault(); if (autoT) { clearTimeout(autoT); autoT = null; } next(); }
+});
+/* ---- Chế độ cuộn một trang ---- */
+let scrollMode = false; try { scrollMode = localStorage.getItem("quiz.scroll") === "1"; } catch (e) {}
+const normAns = x => String(x).toLowerCase().replace(/[’‘`´]/g, "'").replace(/\s+/g, "").replace(/,/g, ".").replace(/\.$/, "");
+function scrollMsg(r, good) {
+  if (good) return `<div class="msg ok">${IC.check}<span>Chính xác!</span></div>`;
+  const hint = r.options ? ` Đáp án đúng: ${LETTERS[r.answer]}.` : r.answers ? ` Đáp án đúng: ${esc(r.answers[0])}.` : " Đáp án đúng đã được hiển thị.";
+  return `<div class="msg bad">${IC.no}<span>Chưa đúng.${hint}</span></div>`;
+}
+function scrollBody(r, i) {
+  if (r.done) return `<div class="sopts locked">${TYPES[r.type].review(r)}</div><div class="sm" id="sm${i}">${scrollMsg(r, !r.missed)}</div>`;
+  let h;
+  if (r.type === "short") h = `<div class="sinp"><input class="sa" id="si${i}" type="text" inputmode="decimal" autocomplete="off" placeholder="Nhập đáp án"><button class="btn" data-act="schk" data-i="${i}">Kiểm tra</button></div>`;
+  else if (r.type === "qa") h = `<div class="qa-prompt mut">Tự suy nghĩ rồi xem gợi ý đáp án.</div><button class="btn alt" data-act="sqa" data-i="${i}" data-v="r" style="width:100%;margin-top:8px">Xem đáp án</button>`;
+  else h = TYPES[r.type].render(r).replace(/data-act="ans"/g, `data-act="sans" data-i="${i}"`);
+  return `<div class="sopts" id="so${i}">${h}</div><div class="sm" id="sm${i}"></div>`;
+}
+function scrollCard(r, i) {
+  const on = isMarked(r.src);
+  return `<div class="card qc" id="sc${i}"><button class="star${on ? " on" : ""}" data-act="mark" data-i="${i}" aria-label="Gắn sao" aria-pressed="${on}">${IC.star}</button><div class="tag">${S.retry ? "LÀM LẠI · " : ""}${esc(chap().title)}${r.src._cs ? " · " + esc(r.src._cs) : ""} · ${r.src.hot ? "Trọng tâm · " : ""}${esc(r.src.tag)} · Câu ${i + 1}</div><p class="q${tfc(r.src)}">${warnIcon(r.src)}${esc(r.src.question)}</p>${warnHTML(r.src)}${qimg(r.src)}${scrollBody(r, i)}</div>`;
+}
+function updScroll() {
+  const n = S.list.length, d = S.list.filter(r => r.done).length, b = document.getElementById("bar"), c = document.getElementById("cnt");
+  if (b) b.style.transform = `scaleX(${d / n})`; if (c) c.textContent = d + "/" + n;
+}
+function scrollFinishCard(r, i, good) {
+  r.done = true;
+  if (good) { if (!r.missed) S.correct++; playSound("ok"); }
+  else { if (!r.missed) { r.missed = true; S.wrong.push(r); } playSound("wrong"); try { navigator.vibrate && navigator.vibrate([40, 30, 40]); } catch (e) {} }
+  const so = document.getElementById("so" + i), sm = document.getElementById("sm" + i);
+  if (so) so.classList.add("locked"); if (sm) sm.innerHTML = scrollMsg(r, good);
+  updScroll();
+}
+/* ---- Lưu và thoát (hiện trong hộp thoại khi bấm thoát lúc đang làm bài) ---- */
+const SAVE_KEY = "quiz.save";
+function saveSession() {
+  if (S.view !== "quiz" && S.view !== "scroll") return false;
+  const data = { id: Date.now(), mode: S.view, s: S.subjectId, c: S.chapterId, sel: S.chapterId === COMBO ? [...comboSel(S.subjectId)] : null, tag: S.tag, retry: !!S.retry, idx: S.idx, y: window.scrollY || 0, el: Date.now() - S.t0, t: Date.now(),
+    items: S.list.map(r => ({ id: r.src.id, d: r.done ? (r.missed ? 2 : 1) : (r.missed ? 3 : 0) })) };
+  try { localStorage.setItem(SAVE_KEY, JSON.stringify(data)); } catch (e) { return false; }
+  S.saveId = data.id; return true;
+}
+const saveOK = d => !!(d && d.items && d.items.length && getSubject(d.s) && (d.c === COMBO ? getSubject(d.s).combo : getChapter(d.s, d.c)));
+const readSave = () => { try { const d = JSON.parse(localStorage.getItem(SAVE_KEY)); return saveOK(d) ? d : null; } catch (e) { return null; } };
+function clearSave() { try { const d = JSON.parse(localStorage.getItem(SAVE_KEY)); if (d && d.id === S.saveId) localStorage.removeItem(SAVE_KEY); } catch (e) {} }
+function loadSession() {
+  const d = readSave(); if (!d) return;
+  if (d.c === COMBO && Array.isArray(d.sel) && d.sel.length) { combo.sel[d.s] = new Set(d.sel); combo.cache = null; }
+  const ch = getChapter(d.s, d.c); if (!ch) return;
+  const byId = new Map(ch.questions.map(q => [q.id, q])), list = [];
+  d.items.forEach(it => { const q = byId.get(it.id); if (!q) return; const r = prepare(q); if (it.d === 1 || it.d === 2) r.done = true; if (it.d === 2 || it.d === 3) r.missed = true; list.push(r); });
+  if (!list.length) return;
+  Object.assign(S, { subjectId: d.s, chapterId: d.c, tag: d.tag || "all", retry: !!d.retry, list, idx: Math.min(d.idx || 0, list.length - 1), correct: list.filter(r => r.done && !r.missed).length, wrong: list.filter(r => r.missed), t0: Date.now() - (d.el || 0), dur: 0, saveId: d.id });
+  S.locked = !!cur().done;
+  go(d.mode === "scroll" ? "scroll" : "quiz");
+  if (d.mode === "scroll" && d.y) setTimeout(() => window.scrollTo(0, d.y), 60);
+}
+function savedHTML() {
+  const d = readSave(); if (!d) return "";
+  const sb = getSubject(d.s), c = getChapter(d.s, d.c), done = d.items.filter(x => x.d === 1 || x.d === 2).length;
+  const nm = d.c === COMBO ? c.title : (c.subtitle || c.title);
+  return `<div class="resume-card" data-act="loadsave" role="button" tabindex="0"><div class="r-info"><b>Bài đang lưu · ${esc(sb.name)} · ${esc(nm)}</b><span class="mut">${done}/${d.items.length} câu đã làm · ${agoText(d.t)}</span></div><span class="r-act">Làm tiếp${IC.chev}</span></div>`;
+}
+
 const AFTER = {
   home() {
     document.querySelectorAll(".kpi b[data-n]").forEach((el, i) => {
@@ -12849,7 +12991,7 @@ function mxBody(it) {
 VIEWS.exam = () => {
   const n = M.items.length, it = M.items[M.idx], done = M.items.filter(mxDone).length, last = M.idx === n - 1;
   return `<div class="qhead"><button class="icon-btn" data-act="back" aria-label="Thoát">${IC.back}</button><div class="bar"><i id="bar" style="transform:scaleX(${done / n})"></i></div><span class="count">${M.idx + 1}/${n}</span><button class="icon-btn" data-act="mxgrid" aria-label="Danh sách câu">${IC.grid}</button></div>` +
-    `<div class="card"><div class="tag">Thi thử · ${MTAG[it.type]} · ${esc(it.src.tag)}</div><p class="q">${warnIcon(it.src)}${esc(it.src.question)}</p>${qimg(it.src)}<div id="opts">${mxBody(it)}</div></div>` +
+    `<div class="card"><div class="tag">Thi thử · ${MTAG[it.type]} · ${esc(it.src.tag)}</div><p class="q${tfc(it.src)}">${warnIcon(it.src)}${esc(it.src.question)}</p>${qimg(it.src)}<div id="opts">${mxBody(it)}</div></div>` +
     `<div class="dock two"><button class="btn alt" id="mxprev" data-act="mxprev"${M.idx === 0 ? " disabled" : ""}>Trước</button><button class="btn" id="mxnext" data-act="${last ? "mxsubmit" : "mxnext"}">${last ? "Nộp bài" : "Tiếp"}</button></div>`;
 };
 VIEWS.examresult = () => {
@@ -12876,7 +13018,7 @@ VIEWS.examreview = () => {
     if (it.type === "single") body = it.options.map((o, k) => `<div class="opt static ${k === it.answer ? "ok" : k === it.picked ? "bad" : ""}"><b>${LETTERS[k]}</b><span>${esc(o)}</span></div>`).join("");
     else if (it.type === "true_false") body = it.statements.map((s, k) => `<div class="row"><div class="st"><b>${"abcdefgh"[k]})</b> ${esc(s.text)}<span class="pill ${s.answer ? "ok" : "no"}">${s.answer ? "Đúng" : "Sai"}</span>${s.picked === null ? ' <span class="mut">· bỏ trống</span>' : s.picked !== s.answer ? ` <span class="mut">· bạn chọn ${s.picked ? "Đúng" : "Sai"}</span>` : ""}</div></div>`).join("");
     else body = `<div class="opt static ok"><span>Đáp án: ${esc(it.answers[0])}</span></div>` + (it.picked && !g.ok ? `<div class="opt static bad"><span>Bạn nhập: ${esc(it.picked)}</span></div>` : !it.picked ? '<p class="mut">Bạn chưa nhập.</p>' : "");
-    return `<div class="card"><div class="tag">Câu ${i + 1} · ${MTAG[it.type]} ${st}</div><p class="q">${warnIcon(it.src)}${esc(it.src.question)}</p>${qimg(it.src)}${body}</div>`;
+    return `<div class="card"><div class="tag">Câu ${i + 1} · ${MTAG[it.type]} ${st}</div><p class="q${tfc(it.src)}">${warnIcon(it.src)}${esc(it.src.question)}</p>${qimg(it.src)}${body}</div>`;
   }).join("");
 };
 AFTER.examresult = AFTER.result;
@@ -12980,16 +13122,17 @@ function go(view) { S.view = view; render(); }
    ============================================================ */
 function back() {
   if ($modal.innerHTML) return closeModal();
-  const to = { subject: "home", intro: "subject", result: "subject", review: "result", flagged: "home", answers: "intro", cards: "intro", cardsend: "intro", mockpick: "subject", formulas: "home", examresult: "subject", examreview: "examresult", essay: "intro" }[S.view];
+  const to = { subject: "home", intro: "subject", result: "subject", review: "result", flagged: "home", marked: "home", answers: "intro", cards: "intro", cardsend: "intro", mockpick: "subject", formulas: "home", examresult: "subject", examreview: "examresult", essay: "intro" }[S.view];
   if (S.view === "exam") return openExamExit();
   if (S.view === "intro" && chap() && chap().formula) return go("formulas");
+  if (S.view === "scroll") return S.list.some(r => r.done) ? openModal() : go("intro");
   if (S.view === "quiz") return S.idx === 0 && !S.locked ? go("intro") : openModal();
   if (to) go(to);
 }
-function openModal() { $modal.innerHTML = `<div class="scrim"><div class="dialog"><h2>Thoát bài kiểm tra?</h2><p class="mut">Tiến trình làm bài hiện tại sẽ bị mất.</p><button class="btn" data-act="stay">Tiếp tục làm bài</button><button class="btn alt" data-act="leave">Thoát</button></div></div>`; }
+function openModal() { $modal.innerHTML = `<div class="scrim"><div class="dialog"><h2>Thoát bài kiểm tra?</h2><p class="mut">Lưu lại để làm tiếp sau, hoặc thoát và bỏ tiến trình hiện tại.</p><button class="btn" data-act="stay">Tiếp tục làm bài</button><button class="btn alt" data-act="saveexit">Lưu và thoát</button><button class="btn alt" data-act="leave">Thoát không lưu</button></div></div>`; }
 function closeModal() { $modal.innerHTML = ""; }
 
-function finish() { S.dur = Date.now() - S.t0; saveResult(); go("result"); }
+function finish() { S.dur = Date.now() - S.t0; saveResult(); clearSave(); go("result"); }
 
 /* Từ khóa gợi ý: câu có q.keys sẽ được in đậm + hiệu ứng khi chọn sai */
 const kwRe = keys => keys && keys.length ? new RegExp(keys.map(k => esc(k).replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).sort((x, y) => y.length - x.length).join("|"), "gi") : null;
@@ -13017,7 +13160,7 @@ function revealAnswer(r, btn, res) {
     if (sa) { sa.value = r.answers[0]; sa.classList.remove("bad"); sa.classList.add("ok"); }
     $app.querySelectorAll(".kp button").forEach(b => b.disabled = true);
   }
-  S.locked = true;
+  S.locked = r.done = true;
   const sk = document.getElementById("skip"); if (sk) sk.hidden = true;
   document.getElementById("opts").classList.add("locked");
   res.innerHTML = `<div class="msg bad">${IC.no}<span>Chưa đúng. Đáp án đúng đã được hiển thị.</span></div>` + showKeys(r);
@@ -13026,7 +13169,7 @@ function revealAnswer(r, btn, res) {
 }
 function next() {
   const r = cur(), T = TYPES[r.type], n = S.list.length, btn = document.getElementById("go");
-  if (S.locked) { S.idx++; S.locked = false; return S.idx >= n ? finish() : render(); }
+  if (S.locked) { S.idx++; S.locked = S.idx < n && !!S.list[S.idx].done; return S.idx >= n ? finish() : render(); }
   if (!T.ready(r)) return;
   const good = T.mark(r, $app), res = document.getElementById("res");
   if (!good) {
@@ -13040,7 +13183,7 @@ function next() {
     btn.disabled = true;
     return;
   }
-  S.locked = true;
+  S.locked = r.done = true;
   const sk0 = document.getElementById("skip"); if (sk0) sk0.hidden = true;
   document.getElementById("opts").classList.add("locked");
   const last = S.idx === n - 1;
@@ -13137,7 +13280,7 @@ function skip() {
     el.classList.remove("sel", "bad", "ok");
     if ((el.dataset.v === "1") === s.answer) el.classList.add("ok");
   });
-  S.locked = true;
+  S.locked = r.done = true;
   document.getElementById("opts").classList.add("locked");
   document.getElementById("res").innerHTML = showKeys(r);
   document.getElementById("bar").style.transform = `scaleX(${(S.idx + 1) / n})`;
@@ -13447,6 +13590,41 @@ ttype: d => { const k = S.types.indexOf(d.type); k < 0 ? S.types.push(d.type) : 
   start: () => startQuiz(S.subjectId, S.chapterId, S.tag),
   ans: d => { if (S.locked || autoT) return; const r = cur(); if (instantFor(r)) return instantPick(d); TYPES[r.type].select(r, d, $app); document.getElementById("go").disabled = !TYPES[r.type].ready(r); },
   next,
+  prev,
+  mark: toggleMark,
+  markedview: () => go("marked"),
+  scrollmode: () => { scrollMode = !scrollMode; try { localStorage.setItem("quiz.scroll", scrollMode ? "1" : "0"); } catch (e) {} const b = document.getElementById("scrbtn"); if (b) b.classList.toggle("on", scrollMode); playSound("tick"); },
+  saveexit: () => { if (saveSession()) { closeModal(); go("home"); } },
+  loadsave: loadSession,
+  retrymark: () => { const m = marks(), l = [...new Set(S.list.filter(r => m.has(r.src.id)).map(r => r.src))]; if (l.length) startQuiz(S.subjectId, S.chapterId, S.tag, l); },
+  sans: d => {
+    const i = +d.i, r = S.list[i]; if (!r || r.done) return;
+    const card = document.getElementById("sc" + i); if (!card) return;
+    if (r.options) {
+      const k = +d.k, els = card.querySelectorAll("[data-act=sans]"); if (!els[k]) return;
+      r.picked = k; els[r.answer].classList.add("ok"); if (k !== r.answer) els[k].classList.add("bad");
+      scrollFinishCard(r, i, k === r.answer);
+    } else if (r.statements) {
+      const k = +d.k, v = d.v === "1", st = r.statements[k]; if (!st || st.picked !== null) return;
+      st.picked = v;
+      card.querySelectorAll("[data-act=sans]").forEach(el => { if (+el.dataset.k !== k) return; const isV = el.dataset.v === "1"; if (isV === st.answer) el.classList.add("ok"); else if (isV === v) el.classList.add("bad"); });
+      if (r.statements.every(t => t.picked !== null)) scrollFinishCard(r, i, r.statements.every(t => t.picked === t.answer));
+    }
+  },
+  schk: d => {
+    const i = +d.i, r = S.list[i]; if (!r || r.done) return;
+    const el = document.getElementById("si" + i); if (!el || !el.value.trim()) return;
+    const good = r.answers.some(a => normAns(a) === normAns(el.value));
+    el.classList.add(good ? "ok" : "bad"); el.readOnly = true;
+    scrollFinishCard(r, i, good);
+  },
+  sqa: d => {
+    const i = +d.i, r = S.list[i]; if (!r || r.done) return;
+    const so = document.getElementById("so" + i); if (!so) return;
+    if (d.v === "r") { so.innerHTML = TYPES.qa.review(r) + `<div class="sqb"><button class="btn alt" data-act="sqa" data-i="${i}" data-v="0">Chưa đúng</button><button class="btn" data-act="sqa" data-i="${i}" data-v="1">Đã đúng</button></div>`; return; }
+    scrollFinishCard(r, i, d.v === "1");
+  },
+  sfinish: () => { S.list.forEach(r => { if (!r.done && !r.missed) { r.missed = true; S.wrong.push(r); } }); finish(); },
   key: d => keySA(d.k),
   back,
   stay: closeModal,
@@ -13702,7 +13880,7 @@ function instantPick(d) {
   const k = +d.k, els = $app.querySelectorAll("[data-act=ans]"); if (!els[k] || els[k].disabled) return;
   TYPES[r.type].select(r, d, $app);
   const good = r.picked === r.answer, n = S.list.length, last = S.idx === n - 1, res = document.getElementById("res");
-  S.locked = true;
+  S.locked = r.done = true;
   document.getElementById("opts").classList.add("locked");
   els.forEach(el => el.classList.remove("sel"));
   els[r.answer].classList.add("ok");
@@ -13753,7 +13931,7 @@ document.addEventListener("keydown", e => {
     if (autoT) { e.preventDefault(); clearTimeout(autoT); autoT = null; return next(); }
     if (r.type === "short" && !S.locked) return;   /* câu nhập số đã có xử lý Enter riêng */
     const b = document.getElementById("go");
-    if (b && !b.disabled && !b.closest(".dock").hidden) { e.preventDefault(); b.click(); }
+    if (b && !b.disabled && !b.hidden && !b.closest(".dock").hidden) { e.preventDefault(); b.click(); }
   }
 });
 function setSA(v) { const r = cur(), el = document.getElementById("sa"); r.picked = v; el.value = v; el.classList.remove("bad"); const m = document.getElementById("res"); if (m) m.innerHTML = ""; document.getElementById("go").disabled = !v; }
